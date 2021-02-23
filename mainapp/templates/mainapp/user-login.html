@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+  <body class="login-page">
+    <main>
+      <div class="login-block">
+        <img src="{% static 'img/logo.png' %}" alt="logo">
+        <h1>Войдите в аккаунт</h1>
+
+        <form action="#">
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="ti-email"></i></span>
+              <input type="text" class="form-control" placeholder="Email">
+            </div>
+          </div>
+          
+          <hr class="hr-xs">
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="ti-unlock"></i></span>
+              <input type="password" class="form-control" placeholder="Пароль">
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-block" type="submit">Вход</button>
+
+          <div class="login-footer">
+            <h6>Или войдите через</h6>
+            <ul class="social-icons">
+              <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a class="vk" href="#"><i class="fa fa-vk"></i></a></li>
+              <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+            </ul>
+          </div>
+        </form>
+      </div>
+
+      <div class="login-links">
+        <a class="pull-left" href="/forget-pass/">Забыли пароль?</a>
+        <a class="pull-right" href="/register/">Регистрация</a>
+      </div>
+    </main>
+  </body>
+{% endblock %}
