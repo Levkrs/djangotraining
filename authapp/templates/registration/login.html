@@ -5,28 +5,27 @@
   <body class="login-page">
     <main>
       <div class="login-block">
-        <img src="{% static 'img/logo.png' %}" alt="logo">
+        <a class="logo" href="{% url 'mainapp:index' %}"><img src="{% static 'img/logo1.png' %}" alt="logo"></a>
         <h1>Войдите в аккаунт</h1>
-
-        <form action="#">
+        <form method="POST"> {% csrf_token %}
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="ti-email"></i></span>
-              <input type="text" class="form-control" placeholder="Email">
+              <input type="email" class="form-control" placeholder="Email" name="username" maxlength="64" required id="id_username">
             </div>
           </div>
-          
+  
           <hr class="hr-xs">
-
+  
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="ti-unlock"></i></span>
-              <input type="password" class="form-control" placeholder="Пароль">
+              <input type="password" class="form-control" placeholder="Пароль" name="password" required id="id_password">
             </div>
           </div>
-
+  
           <button class="btn btn-primary btn-block" type="submit">Вход</button>
-
+  
           <div class="login-footer">
             <h6>Или войдите через</h6>
             <ul class="social-icons">
@@ -37,10 +36,10 @@
           </div>
         </form>
       </div>
-
+  
       <div class="login-links">
-        <a class="pull-left" href="/forget-pass/">Забыли пароль?</a>
-        <a class="pull-right" href="/register/">Регистрация</a>
+        <a class="pull-left" href="{% url 'authapp:forget-pass' %}">Забыли пароль?</a>
+        <a class="pull-right" href="{% url 'authapp:register' %}">Регистрация</a>
       </div>
     </main>
   </body>

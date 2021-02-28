@@ -5,7 +5,7 @@
   <body class="login-page">
     <main>
       <div class="login-block">
-        <img src="{% static 'img/logo.png' %}" alt="logo">
+        <a class="logo" href="{% url 'mainapp:index' %}"><img src="{% static 'img/logo1.png' %}" alt="logo"></a>
         <h1>Сброс пароля</h1>
 
         <form action="#">
@@ -20,7 +20,7 @@
       </div>
 
       <div class="login-links">
-        <p class="text-center"><a href="/login/">Вход</a></p>
+        <p class="text-center"><a href="{% url 'authapp:login' %}">Вход</a></p>
       </div>
     </main>
   </body>
