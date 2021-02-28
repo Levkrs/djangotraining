@@ -30,5 +30,6 @@ if settings.DEBUG:
     urlpatterns += path('__debug__/', include(debug_toolbar.urls)),
 
 urlpatterns += [
+    path('users/', include('authapp.urls')),
     re_path(r'', include('mainapp.urls')),
 ]

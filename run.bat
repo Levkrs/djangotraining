@@ -2,7 +2,7 @@ ECHO OFF
 CLS
 ECHO.
 ECHO ...............................................
-ECHO PRESS 1, 2 or 3 or 4 to select your task.
+ECHO PRESS 1, 2 or 3 or 4 or 5 to select your task.
 ECHO ...............................................
 ECHO.
 ECHO 1 - makemigrations
