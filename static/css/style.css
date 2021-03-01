@@ -7,3 +7,16 @@
 .subscribe {
     background: url(../img/bg-3.jpg) fixed no-repeat;
 }
+.user-account .dropdown-toggle img {
+    width: 44px;
+    height: 44px;
+}
+.user-account .dropdown-menu {
+    right: -45px;
+}
+.user-account .dropdown-menu:before {
+    right: 63px;
+}
+.nav-menu a {
+    font-size: 15px;
+}

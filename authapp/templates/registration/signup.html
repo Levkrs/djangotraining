@@ -8,11 +8,14 @@
         <a class="logo" href="{% url 'mainapp:index' %}"><img src="{% static 'img/logo1.png' %}" alt="logo"></a>
         <h1>Регистрация</h1>
 
-        <form action="#">
+        <form method="POST"> {% csrf_token %}
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="ti-user"></i></span>
-              <input type="text" class="form-control" placeholder="Ваше Имя">
+              <select class="form-control" name="role" id="id_role" required>
+                <option value="HR">Работодатель</option>
+                <option value="REC" selected>Соискатель</option>
+              </select>
             </div>
           </div>
           
@@ -21,7 +24,7 @@
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="ti-email"></i></span>
-              <input type="text" class="form-control" placeholder="Ваш email">
+              <input type="email" class="form-control" placeholder="Ваш email" name="email" maxlength="64" required id="id_email">
             </div>
           </div>
           
@@ -30,20 +33,26 @@
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="ti-unlock"></i></span>
-              <input type="password" class="form-control" placeholder="Выберите пароль">
+              <input type="password" class="form-control" placeholder="Выберите пароль" name="password1" maxlength="128" required id="id_password1">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="ti-key"></i></span>
+              <input type="password" class="form-control" placeholder="Подтвердите пароль" name="password2" maxlength="128" required id="id_password2">
             </div>
           </div>
 
           <button class="btn btn-primary btn-block" type="submit">Зарегистрировать</button>
 
-          <div class="login-footer">
+          <!-- <div class="login-footer">
             <h6>Или зарегистрируйтесь через</h6>
             <ul class="social-icons">
               <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
               <li><a class="vk" href="#"><i class="fa fa-vk"></i></a></li>
               <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
             </ul>
-          </div>
+          </div> -->
         </form>
       </div>
 
