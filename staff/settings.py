@@ -18,10 +18,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '7_ts#mx_28diob4$3c7k&n4+o(gav2z3(b6%g4(wcno$w#2e8i'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 if DEBUG:
@@ -30,8 +28,6 @@ else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 ALLOWED_HOSTS = ['*']
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -137,9 +133,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.1/topics/i18n/
-
 LANGUAGE_CODE = 'ru-ru'
 LANGUAGES = (
     ('ru', 'русский'),
@@ -154,7 +147,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = (BASE_DIR / 'static',)
+if DEBUG:
+    STATICFILES_DIRS = (BASE_DIR / 'static',)
+else:
+    STATIC_ROOT = (BASE_DIR / 'static')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = (BASE_DIR / 'media')

@@ -20,3 +20,15 @@
 .nav-menu a {
     font-size: 15px;
 }
+.agree {
+    margin-top: 15px;
+    margin-bottom: -25px;
+}
+div.agree label {
+    font-weight: 300;
+    font-size: 13px;
+    vertical-align: middle;
+}
+.ti-eye {
+    cursor: pointer;
+}
