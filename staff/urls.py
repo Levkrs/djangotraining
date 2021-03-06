@@ -32,4 +32,5 @@ if settings.DEBUG:
 urlpatterns += [
     path('users/', include('authapp.urls')),
     re_path(r'', include('mainapp.urls')),
+    path('applicant/', include('applicantapp.urls')),
 ]
