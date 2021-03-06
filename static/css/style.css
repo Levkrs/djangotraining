@@ -32,3 +32,17 @@ div.agree label {
 .ti-eye {
     cursor: pointer;
 }
+.item-block header .news {
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 13px;
+    font-weight: 400;
+    border-radius: 6px;
+    padding: 9px 9px;
+    margin-top: 16px;
+}
+div.category-grid img {
+    width: 64px;
+    border-radius: 50%;
+}

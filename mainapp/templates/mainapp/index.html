@@ -8,24 +8,23 @@
     <section class="bg-alt">
       <div class="container">
         <header class="section-header">
-          <span>Latest</span>
-          <h2>Recent jobs</h2>
-          <p>Here's the last five job posted on the website</p>
+          <h2>Недавние вакансии</h2>
+          <p>Последние предложения о работе, размещённые на сайте</p>
         </header>
 
         <div class="row item-blocks-connected">
           <!-- Job item -->
           <div class="col-xs-12">
-            <a class="item-block" href="job-detail.html">
+            <a class="item-block" href="#">
               <header>
                 <img src="{% static 'img/logo-google.jpg' %}" alt="" />
                 <div class="hgroup">
-                  <h4>Senior front-end developer</h4>
+                  <h4>Сеньор Frontend разработчик</h4>
                   <h5>Google</h5>
                 </div>
                 <div class="header-meta">
-                  <span class="location">Menlo park, CA</span>
-                  <span class="label label-success">Full-time</span>
+                  <span class="location">Калифорния</span>
+                  <span class="label label-success">Полная занятость</span>
                 </div>
               </header>
             </a>
@@ -34,7 +33,7 @@
 
           <!-- Job item -->
           <div class="col-xs-12">
-            <a class="item-block" href="job-detail.html">
+            <a class="item-block" href="#">
               <header>
                 <img src="{% static 'img/logo-linkedin.png' %}" alt="" />
                 <div class="hgroup">
@@ -42,8 +41,9 @@
                   <h5>Linkedin</h5>
                 </div>
                 <div class="header-meta">
-                  <span class="location">Livermore, CA</span>
-                  <span class="label label-warning">Part-time</span>
+                  <span class="location">Ливермор, Калифорния</span>
+                  <span class="label label-success">Удалённо</span>
+                  <span class="label label-warning">Частичная занятость</span>
                 </div>
               </header>
             </a>
@@ -52,16 +52,16 @@
 
           <!-- Job item -->
           <div class="col-xs-12">
-            <a class="item-block" href="job-detail.html">
+            <a class="item-block" href="#">
               <header>
                 <img src="{% static 'img/logo-envato.png' %}" alt="" />
                 <div class="hgroup">
-                  <h4>Full Stack Web Developer</h4>
+                  <h4>FullStack Web разработчик</h4>
                   <h5>Envato</h5>
                 </div>
                 <div class="header-meta">
-                  <span class="location">San Francisco, CA</span>
-                  <span class="label label-info">Freelance</span>
+                  <span class="location">Сан Франциско, Калифорния</span>
+                  <span class="label label-info">Фриланс</span>
                 </div>
               </header>
             </a>
@@ -70,16 +70,16 @@
 
           <!-- Job item -->
           <div class="col-xs-12">
-            <a class="item-block" href="job-detail.html">
+            <a class="item-block" href="#">
               <header>
                 <img src="{% static 'img/logo-facebook.png' %}" alt="" />
                 <div class="hgroup">
-                  <h4>Web Applications Developer</h4>
+                  <h4>Web разработчик</h4>
                   <h5>Facebook</h5>
                 </div>
                 <div class="header-meta">
-                  <span class="location">Lexington, MA</span>
-                  <span class="label label-danger">Internship</span>
+                  <span class="location">Лексингтон, Массачусетс</span>
+                  <span class="label label-danger">Стажировка</span>
                 </div>
               </header>
             </a>
@@ -88,16 +88,17 @@
 
           <!-- Job item -->
           <div class="col-xs-12">
-            <a class="item-block" href="job-detail.html">
+            <a class="item-block" href="#">
               <header>
                 <img src="{% static 'img/logo-microsoft.jpg' %}" alt="" />
                 <div class="hgroup">
-                  <h4>Sr. SQL Server Developer</h4>
+                  <h4>Сеньор SQL Server разработчик</h4>
                   <h5>Microsoft</h5>
                 </div>
                 <div class="header-meta">
-                  <span class="location">Palo Alto, CA</span>
-                  <span class="label label-success">Remote</span>
+                  <span class="location">Пало Альта, Калифорния</span>
+                  <span class="label label-success">Удалённо</span>
+                  <span class="label label-success">Полная занятость</span>
                 </div>
               </header>
             </a>
@@ -106,7 +107,7 @@
         </div>
 
         <br /><br />
-        <p class="text-center"><a class="btn btn-info" href="job-list.html">Больше вакансий</a></p>
+        <p class="text-center"><a class="btn btn-info" href="#">Больше вакансий</a></p>
       </div>
     </section>
     <!-- END Recent jobs -->
@@ -139,57 +140,56 @@
     </section>
     <!-- END Facts -->
 
-    <!-- Categories -->
+    <!-- Companies -->
     <section class="bg-alt">
       <div class="container">
         <header class="section-header">
-          <span>Categories</span>
-          <h2>Popular jobs</h2>
-          <p>Here's the most popular categories</p>
+          <h2>Наши партнёры</h2>
+          <p>IT-Компании</p>
         </header>
 
         <div class="category-grid">
           <a href="#">
-            <i class="fa fa-laptop"></i>
-            <h6>Technology</h6>
-            <p>Designer, Developer, IT Service, Front-end developer, Project management</p>
+            <img src="{% static 'img/logo-google.jpg' %}" alt="" />
+            <h6>Google</h6>
+            <p>Цель компании – упорядочить всю информацию и сделать ее доступной</p>
           </a>
 
           <a href="#">
-            <i class="fa fa-line-chart"></i>
-            <h6>Accounting</h6>
-            <p>Finance, Tax service, Payroll manager, Book keeper, Human resource</p>
+            <img src="{% static 'img/logo-facebook.png' %}" alt="" />
+            <h6>Facebook</h6>
+            <p>Give people the power to build community and bring the world closer together</p>
           </a>
 
           <a href="#">
-            <i class="fa fa-medkit"></i>
-            <h6>Medical</h6>
-            <p>Doctor, Nurse, Hospotal, Dental service, Massagist</p>
+            <img src="{% static 'img/logo-microsoft.jpg' %}" alt="" />
+            <h6>Microsoft</h6>
+            <p>Microsoft – обеспечивает продуктивность в мире, где царят мобильность и облако</p>
           </a>
 
           <a href="#">
-            <i class="fa fa-cutlery"></i>
-            <h6>Food</h6>
-            <p>Restaurant, Food service, Coffe shop, Cashier, Waitress</p>
+            <img src="{% static 'img/logo-microsoft.jpg' %}" alt="" />
+            <h6>Microsoft</h6>
+            <p>Microsoft – обеспечивает продуктивность в мире, где царят мобильность и облако</p>
           </a>
 
           <a href="#">
-            <i class="fa fa-newspaper-o"></i>
-            <h6>Media</h6>
-            <p>Journalism, Newspaper, Reporter, Writer, Cameraman</p>
+            <img src="{% static 'img/logo-google.jpg' %}" alt="" />
+            <h6>Google</h6>
+            <p>Цель компании – упорядочить всю информацию и сделать ее доступной</p>
           </a>
 
           <a href="#">
-            <i class="fa fa-institution"></i>
-            <h6>Government</h6>
-            <p>Federal, Law, Human resource, Manager, Biologist</p>
+            <img src="{% static 'img/logo-facebook.png' %}" alt="" />
+            <h6>Facebook</h6>
+            <p>Give people the power to build community and bring the world closer together</p>
           </a>
         </div>
 
-        <p class="text-center"><a class="btn btn-info" href="">Browse all categories</a></p>
+        <p class="text-center"><a class="btn btn-info" href="#">Посмотреть всех партнёров</a></p>
       </div>
     </section>
-    <!-- END Categories -->
+    <!-- END Companies -->
 
     <!-- Newsletter -->
     <section class="bg-img text-center subscribe">
@@ -208,6 +208,72 @@
       </div>
     </section>
     <!-- END Newsletter -->
+
+    <!-- Recent news -->
+    <section class="bg-alt">
+      <div class="container">
+        <header class="section-header">
+          <h2>Последние Новости</h2>
+          <p>Самая свежая информация из мира IT-рекрутинга</p>
+        </header>
+    
+        <div class="row item-blocks-connected">
+          <!-- News item -->
+          <div class="col-xs-12">
+            <a class="item-block" href="#">
+              <header>
+                <div class="hgroup">
+                  <h4>Срочные новости из кремниевой долины</h4>
+                  <h5>Илон Маск планирует расширение компании во 2-м квартале год...</h5>
+                </div>
+                <div class="header-meta">
+                  <div class="ti-time"> 05.03.21 09.21</div>
+                  <span class="news label label-success">Подробнее...</span>
+                </div>
+              </header>
+            </a>
+          </div>
+          <!-- END News item -->
+    
+          <!-- News item -->
+          <div class="col-xs-12">
+            <a class="item-block" href="#">
+              <header>
+                <div class="hgroup">
+                  <h4>Очередные новости мира Frontend-а</h4>
+                  <h5>В ходе очередной прошедшей конференции разработчиков, отме...</h5>
+                </div>
+                <div class="header-meta">
+                  <div class="ti-time"> 04.03.21 16.40</div>
+                  <span class="news label label-success">Подробнее...</span>
+                </div>
+              </header>
+            </a>
+          </div>
+          <!-- END News item -->
+    
+          <!-- News item -->
+          <div class="col-xs-12">
+            <a class="item-block" href="#">
+              <header>
+                <div class="hgroup">
+                  <h4>Топ 15 трендов рекрутинга 2020 года</h4>
+                  <h5>Самые современные подходы, которые значительно повлияют на...</h5>
+                </div>
+                <div class="header-meta">
+                  <div class="ti-time"> 04.03.21 10.17</div>
+                  <span class="news label label-success">Подробнее...</span>
+                </div>
+              </header>
+            </a>
+          </div>
+          <!-- END News item -->
+        </div>
+        <br /><br />
+        <p class="text-center"><a class="btn btn-info" href="#">Все новости</a></p>
+      </div>
+    </section>
+    <!-- END News -->
   </main>
   <!-- END Main container -->
 
