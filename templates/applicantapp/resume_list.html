@@ -3,6 +3,6 @@
 
 {% block content %}
     {% for item in object_list.select_related %}
-    <p>item.headline</p>
+    <p>{{ item.headline }}</p>
     {% endfor %}
-{% endblock %
+{% endblock %}
