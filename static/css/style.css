@@ -2,7 +2,11 @@
     margin-bottom: 6px;
 }
 .site-header {
+    min-height: 100vh;
     background: url(../img/bg-1.jpg) fixed no-repeat;
+}
+.logo-wrapper {
+    padding-top: 4px;
 }
 .subscribe {
     background: url(../img/bg-3.jpg) fixed no-repeat;
@@ -17,8 +21,16 @@
 .user-account .dropdown-menu:before {
     right: 63px;
 }
+.nav-on-header .navbar-alt {
+    margin-top: 0;
+    background-color: rgba(21, 41, 53, 0.9);
+    transition: all .7s ease-in-out;
+}
 .nav-menu a {
     font-size: 15px;
+}
+.nav-menu ul {
+    background-color: rgb(236, 236, 236);
 }
 .agree {
     margin-top: 15px;
@@ -44,5 +56,14 @@ div.agree label {
 }
 div.category-grid img {
     width: 64px;
+}
+div.category-grid a:hover img {
     border-radius: 50%;
+    transition: .3s linear;
+}
+.counter h6, .counter p {
+    color: #b5bbc0;
+}
+.counter p::after {
+    background-color: #b5bbc0;
 }

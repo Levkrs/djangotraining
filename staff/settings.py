@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'mainapp',
     'authapp',
     'applicantapp.apps.ApplicantappConfig',
+    'companyapp',
 ]
 
 MIDDLEWARE = [
