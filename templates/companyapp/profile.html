@@ -1,23 +1,116 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block body %}
-<body class="nav-on-header">
 
-    {% block nav %}
-        {% include 'inc/nav.html' %}
-    {% endblock %}
-
-    {% block content %}
-        <h1>ЛК Компании № {{ user.pk }}</h1>
-    {% endblock %}
-
-    <!-- Back to top button -->
-    <div id="scroll-up"><i class="ti-angle-up"></i></div>
-
-    {% block js %}
-        <script defer src="{% static 'js/script.js' %}"></script>
-    {% endblock %}
-
-</body>
+{% block header %}
+    <header class="page-header bg-img size-lg" style="background-image: url(static/img/bg-2.jpg)">
+        <div class="container no-shadow">
+            <h1 class="text-center">ЛК Компании № {{ user.pk }} - {{ user.email }}</h1>
+            <p class="lead text-center">Карточка компании | Список вакансий | Избранное | Отклики</p>
+        </div>
+    </header>
 {% endblock %}
+
+{% block content %}
+    <!-- Main container -->
+    <main>
+        <section class="no-padding-top bg-alt">
+            <div class="container">
+                <div class="row item-blocks-connected">
+    
+                    <div class="col-xs-12 text-right">
+                        <br>
+                        <a class="btn btn-primary btn-sm" href="job-add.html">Добавить вакансию</a>
+                    </div>
+    
+                    <!-- Job detail -->
+                    <div class="col-xs-12">
+                        <div class="item-block">
+                            <header>
+                                <a href="#"><img src="/img/logo-google.jpg" alt=""></a>
+                                <div class="hgroup">
+                                    <h4><a href="job-detail.html">Senior front-end developer</a></h4>
+                                    <h5><a href="company-detail.html">Google</a></h5>
+                                </div>
+                                <div class="header-meta">
+                                    <span class="location">Калифорния</span>
+                                    <time datetime="10.03.2021 20:00">34 мин. назад</time>
+                                </div>
+                            </header>
+    
+                            <footer>
+                                <p class="status"><strong>Статус:</strong> Ожидает проверки</p>
+    
+                                <div class="action-btn">
+                                    <a class="btn btn-xs btn-gray" href="#">Редактировать</a>
+                                    <a class="btn btn-xs btn-danger" href="#">Удалить</a>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                    <!-- END Job detail -->
+    
+                    <!-- Job detail -->
+                    <div class="col-xs-12">
+                        <div class="item-block">
+                            <header>
+                                <a href="#"><img src="/img/logo-google.jpg" alt=""></a>
+                                <div class="hgroup">
+                                    <h4><a href="#">Мидл JavaScript разраб</a></h4>
+                                    <h5><a href="#">Google</a></h5>
+                                </div>
+                                <div class="header-meta">
+                                    <span class="location">Калифорния</span>
+                                    <time datetime="09.03.2021 20:00">8 часов назад</time>
+                                </div>
+                            </header>
+    
+                            <footer>
+                                <p class="status"><strong>Статус:</strong> Опубликована</p>
+    
+                                <div class="action-btn">
+                                    <a class="btn btn-xs btn-gray" href="#">Редактировать</a>
+                                    <a class="btn btn-xs btn-success" href="#">Закрыть</a>
+                                    <a class="btn btn-xs btn-danger" href="#">Удалить</a>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                    <!-- END Job detail -->
+    
+                    <!-- Job detail -->
+                    <div class="col-xs-12">
+                        <div class="item-block">
+                            <header>
+                                <a href="#"><img src="img/logo-microsoft.jpg" alt=""></a>
+                                <div class="hgroup">
+                                    <h4><a href="#">Full Stack Web Developer</a></h4>
+                                    <h5><a href="#">Microsoft</a> <span
+                                            class="label label-success">Закрыта</span></h5>
+                                </div>
+                                <div class="header-meta">
+                                    <span class="location">Калифорния</span>
+                                    <time datetime="10.02.2021 20:00">1 месяц назад</time>
+                                </div>
+                            </header>
+    
+                            <footer>
+                                <p class="status"><strong>Статус:</strong> Закрыта</p>
+    
+                                <div class="action-btn">
+                                    <a class="btn btn-xs btn-gray" href="#">Редактировать</a>
+                                    <a class="btn btn-xs btn-danger" href="#">Удалить</a>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                    <!-- END Job detail -->
+    
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- END Main container -->
+{% endblock %}
+
+{% block footer %} {% endblock %}
