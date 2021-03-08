@@ -67,3 +67,9 @@ div.category-grid a:hover img {
 .counter p::after {
     background-color: #b5bbc0;
 }
+.errorlist {
+    font-size: 13px;
+    color: red;
+    text-align: left;
+    padding-left: 57px;
+}

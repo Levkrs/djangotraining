@@ -26,13 +26,22 @@
             </div>
           </div>
 
+          {{ form.errors.email }}
+
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="ti-unlock"></i></span>
-              <input type="password" class="form-control" placeholder="Выберите пароль" name="password1" maxlength="128" required id="id_password1">
+              <input type="password" class="form-control" placeholder="Выберите пароль" name="password1" maxlength="128" required id="id_password1"
+              title="Пароль не должен быть слишком похож на ваш логин/email.
+Ваш пароль должен содержать как минимум 8 символов.
+Пароль не должен быть распространенным среди пользователей.
+Пароль не может состоять только из цифр.">
               <span class="input-group-addon"><i class="ti-eye"></i></span>
             </div>
           </div>
+          
+          {{ form.errors.password2 }}
+          
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="ti-key"></i></span>
