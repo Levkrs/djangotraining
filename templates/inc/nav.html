@@ -23,6 +23,7 @@
 
                 <ul class="dropdown-menu dropdown-menu-right">
                     {% if user.is_authenticated %}
+                        <li style="padding-left:8px"> {{ user.email }} </li>
                         {% if user.is_superuser %} <li><a href="/admin/">Админка</a></li> {% endif %}
                         {% if user.is_staff %} <li><a href="#">Модерировать</a></li> {% endif %}
                         {% if user.role == 'HR' %} 
