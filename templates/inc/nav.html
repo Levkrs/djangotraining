@@ -24,7 +24,13 @@
                 <ul class="dropdown-menu dropdown-menu-right">
                     {% if user.is_authenticated %}
                         {% if user.is_superuser %} <li><a href="/admin/">Админка</a></li> {% endif %}
-                        <li><a href="#">Личный кабинет</a></li>
+                        {% if user.is_staff %} <li><a href="#">Модерировать</a></li> {% endif %}
+                        {% if user.role == 'HR' %} 
+                            <li><a href="{% url 'companyapp:profile' user.pk %}">Личный кабинет</a></li> 
+                        {% endif %}
+                        {% if user.role == 'REC' and not user.is_staff %} 
+                            <li><a href="{% url 'applicantapp:profile' user.pk %}">Личный кабинет</a></li> 
+                        {% endif %}
                         <li><a href="{% url 'authapp:logout' %}">Выйти</a></li>
                     {% else %}
                         <li><a href="{% url 'authapp:login' %}">Войти</a></li>
