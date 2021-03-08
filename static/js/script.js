@@ -39,4 +39,21 @@ buttonToTop.addEventListener('click', () => {
 
 // BurgerMenu
 
+const menuWrapper = document.querySelector('.nav-on-header'),
+    menu = document.querySelector('.ti-menu')
+
+menu.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    if (menu.classList.contains('ti-menu')) {
+        menu.classList.remove('ti-menu')
+        menu.classList.add('ti-close')
+        menuWrapper.classList.add('offcanvas-show')
+    } else {
+        menuWrapper.classList.remove('offcanvas-show')
+        menu.classList.remove('ti-close')
+        menu.classList.add('ti-menu')
+    }
+})
+
 // End BurgerMenu
