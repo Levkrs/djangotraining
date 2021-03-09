@@ -88,6 +88,12 @@ class Education(models.Model):
     specialization = models.CharField(max_length=255, blank=False, verbose_name='Специальность')
     year_of_ending = models.PositiveIntegerField(blank=False, verbose_name='Год окончания')
 
+    def __repr__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
 
 class Experience(models.Model):
     """
@@ -106,3 +112,10 @@ class Experience(models.Model):
     data_from = models.DateField(blank=False, verbose_name='Дата начала работы')
     data_to = models.DateField(blank=False, verbose_name='Дата окончания работы')
     description = models.TextField(blank=True, null=True, verbose_name='Описание')
+
+
+    def __repr__(self):
+        return self.company_name
+
+    def __str__(self):
+        return self.company_name
