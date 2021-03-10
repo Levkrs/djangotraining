@@ -53,7 +53,7 @@ class Resume(models.Model):
     is_active = models.BooleanField(blank=False, default=False, verbose_name='Резюме активно')
     is_cheked = models.BooleanField(blank=False, default=False, verbose_name='Резюме проверенно модератором')
     city = models.CharField(max_length=255, blank=False, verbose_name='Город')
-    user_pic = models.ImageField(upload_to='resume/photo', verbose_name='Фото')
+    user_pic = models.ImageField(upload_to='resume/photo',blank=True, null=True, verbose_name='Фото')
     links = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка на профиль в соц. сетях или сайт')
     employment = models.CharField(max_length=20, blank=False, choices=EMPLOYMENT_CHOICES, default='FT', verbose_name='Занятость')
     work_schedule = models.CharField(max_length=20, blank=False, choices=WORK_SCHEDULE_CHOICES, default='FD', verbose_name='График работы')
