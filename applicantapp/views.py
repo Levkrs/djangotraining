@@ -1,15 +1,11 @@
 """
 Views of applicant
 """
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
 from django.views.generic import ListView, TemplateView, CreateView
 from applicantapp.forms import UserProfileForm
 from applicantapp.models import Resume
 from authapp.models import MyUser
-from icecream import ic
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -20,6 +16,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        print(context)
         return context
 
 

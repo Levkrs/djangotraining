@@ -44,6 +44,8 @@ class Resume(models.Model):
         ('DOCTOR', 'Доктор наук'),
     )
 
+    # Choise на status
+
     user_id = models.ForeignKey(to=MyUser, on_delete=models.CASCADE)
     headline = models.CharField(max_length=255, blank=False, verbose_name='Заголовок')
     first_name = models.CharField(max_length=255, blank=False, verbose_name='Имя')
