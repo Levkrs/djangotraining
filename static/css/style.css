@@ -73,3 +73,40 @@ div.category-grid a:hover img {
     text-align: left;
     padding-left: 57px;
 }
+.context_profile {
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+.form-container{
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 50%;
+    position: absolute;
+}
+.resume-container{
+    padding-top: 20px;
+}
+.wrapper{
+    display: grid;
+}
+.middle {
+    line-height:2;
+}
+.foto-file{
+    text-align: center;
+}
+textarea {
+    resize: vertical;
+}
+.form-resume{
+    margin-bottom: 100px;
+}
+.btn-save{
+    border-radius: 0.35rem;
+    width: 120px;
+}
+.btn-save-pos{
+    text-align: center;
+}
