@@ -44,12 +44,12 @@ class CreateResume(LoginRequiredMixin, CreateView):
         user_for_reg = MyUser.objects.get(id=self.request.user.id)
         form.instance.user_id = user_for_reg
         return super(CreateResume, self).form_valid(form)
-
+    #
     # def from_invalid(self, form):
     #     text=form
     #     ic(form)
     #     return super(CreateResume, self).from_invalid(form)
-
+    #
     # def post(self, request, **kwargs):
     #     request.POST = request.POST.copy()
     #     ic(request.POST)
