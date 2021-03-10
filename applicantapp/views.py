@@ -1,12 +1,12 @@
 """
 Views of applicant
 """
-from authapp.models import MyUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView, TemplateView
 
 from applicantapp.forms import UserProfileForm
 from applicantapp.models import Resume
+from authapp.models import MyUser
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
