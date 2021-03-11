@@ -7,6 +7,7 @@ from django.views.generic import CreateView, ListView, TemplateView
 from applicantapp.forms import UserProfileForm
 from applicantapp.models import Resume
 from authapp.models import MyUser
+from icecream import ic
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -50,8 +51,8 @@ class CreateResume(LoginRequiredMixin, CreateView):
     #     ic(form)
     #     return super(CreateResume, self).from_invalid(form)
     #
-    # def post(self, request, **kwargs):
-    #     request.POST = request.POST.copy()
-    #     ic(request.POST)
-    #     # request.POST['owner'] = 2
-    #     return super(CreateResume, self).post(request, **kwargs)
+    def post(self, request, **kwargs):
+        request.POST = request.POST.copy()
+        ic(request.POST)
+        # request.POST['owner'] = 2
+        return super(CreateResume, self).post(request, **kwargs)
