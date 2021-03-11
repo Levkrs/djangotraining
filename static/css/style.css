@@ -103,10 +103,18 @@ textarea {
 .form-resume{
     margin-bottom: 100px;
 }
-.btn-save{
+.btn-save {
     border-radius: 0.35rem;
-    width: 120px;
+    width: 180px;
+    border-color: black;
 }
+
 .btn-save-pos{
     text-align: center;
 }
+
+.btn-draft{
+    /*width: 180px;*/
+    height: 44px;
+}
+
