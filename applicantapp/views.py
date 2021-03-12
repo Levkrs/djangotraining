@@ -2,6 +2,7 @@
 Views of applicant
 """
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView
 
 from applicantapp.forms import UserProfileForm
@@ -34,8 +35,10 @@ class CreateResume(LoginRequiredMixin, CreateView):
     """
     form_class = UserProfileForm
     template_name = 'applicantapp/create_resume.html'
-    success_url = '/'
 
+    def get_success_url(self):
+        print(self.object.id)
+        return reverse_lazy('applicantapp:profile',args=(self.request.user.id,))
 
     def get_context_data(self, **kwargs):
         ctx = super(CreateResume, self).get_context_data(**kwargs)

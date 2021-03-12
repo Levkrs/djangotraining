@@ -6,9 +6,6 @@ from django.db import models
 
 from authapp.models import MyUser
 
-def get_status_code():
-    obj = StatusResume.objects.get(id=1)
-    return obj
 
 class StatusResume(models.Model):
 
