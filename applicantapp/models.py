@@ -14,8 +14,9 @@ class StatusResume(models.Model):
 
     status_name = models.CharField(max_length=250, blank=True, null=True)
 
-    def __init__(self):
-        super(StatusResume, self).__init__()
+    def __repr__(self):
+        return self.status_name
+
 
 class Resume(models.Model):
     """
