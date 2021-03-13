@@ -28,7 +28,7 @@ class Company(models.Model):
     detail = models.TextField('Подробное описание', blank=True)
     location = models.CharField('Местонахождение', max_length=255, blank=False, db_index=True)
     link = models.CharField('Ссылка на сайт / соц.сеть', max_length=255, blank=True)
-    moder_comment = models.TextField('Заключение модератора', blank=False, null=True)
+    moder_comment = models.TextField('Заключение модератора', blank=False, default='Комментарий: ')
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
     views_count = models.PositiveIntegerField('Число просмотров', default=0)
@@ -43,6 +43,13 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def create(instance):
+    """
+    Создание заготовки компании по сигналу вновь зарегистрированного работодателя
+    """
+    Company.objects.create(user_id=instance,)
 
 
 class Job(models.Model):
@@ -118,7 +125,7 @@ class Job(models.Model):
     short_description = models.CharField('Краткое описание', max_length=255, blank=False)
     description = models.TextField('Подробное описание', blank=True, null=True)
     skills = models.CharField('Навыки', max_length=255, blank=True)
-    moder_comment = models.TextField('Заключение модератора', blank=False, null=True)
+    moder_comment = models.TextField('Заключение модератора', blank=False, default='Комментарий: ')
     created_at = models.DateTimeField('Дата создания', auto_now_add=True)
     updated_at = models.DateTimeField('Дата обновления', auto_now=True)
     views_count = models.PositiveIntegerField('Число просмотров', default=0)

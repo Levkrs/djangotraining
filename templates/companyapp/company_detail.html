@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <header class="page-header bg-img size-lg">
+        <div class="container">
+            <div class="header-detail">
+                {% if object.logo %}
+                    <img class="logo" src="{{ object.logo.url }}" alt="">
+                {% endif %}
+                <div class="hgroup">
+                    <h1>{{ object.name }}</h1>
+                    <h3>{{ object.headline }}</h3>
+                </div>
+                <hr>
+                <p class="lead">{{ object.short_description }}</p>
+            
+                <ul class="details cols-2">
+                    <li class="text-left">
+                        <i class="fa fa-map-marker"></i>
+                        <span>{{ object.location }}</span>
+                    </li>
+            
+                    <li class="text-right">
+                        <i class="fa fa-globe"></i>
+                        <a href="http://{{ object.link }}/">{{ object.link }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- Main container -->
+    <main>
+        <!-- Company detail -->
+        <section>
+            <div class="container">
+        
+                <header class="section-header">
+                    <h2>О Компании</h2>
+                </header>
+        
+                <p>{{ object.detail }}</p>
+        
+            </div>
+        </section>
+        <!-- END Company detail -->
+
+        <!-- Open positions -->
+        <section id="open-positions" class="bg-alt">
+            <div class="container">
+                <header class="section-header">
+                    <h2>Открытые вакансии</h2>
+                </header>
+        
+                <div class="row">
+                    {% for item in object.jobs.select_related %}
+                        <p>{{ item.status }}</p>
+                    {% endfor %}
+                    <!-- Job item -->
+                    <div class="col-xs-12">
+                        <a class="item-block" href="job-detail.html">
+                            <header>
+                                <img src="assets/img/logo-google.jpg" alt="">
+                                <div class="hgroup">
+                                    <h4>Senior front-end developer</h4>
+                                    <h5>Google <span class="label label-success">Полная занятость</span></h5>
+                                </div>
+                                <time datetime="">2 дня назад</time>
+                            </header>
+        
+                            <div class="item-body">
+                                <p>Быстрорастущая наикрутейшая компашка.</p>
+                            </div>
+        
+                            <footer>
+                                <ul class="details cols-2">
+                                    <li class="text-left">
+                                        <i class="fa fa-map-marker"></i>
+                                        <span>Калифорния</span>
+                                    </li>
+        
+                                    <li class="text-right">
+                                        <i class="fa fa-money"></i>
+                                        <span>150 000</span>
+                                    </li>
+                                </ul>
+                            </footer>
+                        </a>
+                    </div>
+                    <!-- END Job item -->
+                </div>
+            </div>
+        </section>
+        <!-- END Open positions -->
+
+    </main>
+    <!-- END Main container -->
+{% endblock %}
+
+{% block footer %} {% endblock %}

@@ -31,7 +31,7 @@ if settings.DEBUG:
 
 urlpatterns += [
     path(r'', include('mainapp.urls')),
-    path('users/', include('authapp.urls')),
+    path('accounts/', include('authapp.urls')),
     path('applicant/', include('applicantapp.urls')),
     path('company/', include('companyapp.urls')),
 ]

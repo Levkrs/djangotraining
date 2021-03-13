@@ -5,7 +5,9 @@
     <header class="page-header bg-img size-lg" style="background-image: url(static/img/bg-2.jpg)">
         <div class="container no-shadow">
             <h1 class="text-center">ЛК Компании № {{ user.pk }} - {{ user.email }}</h1>
-            <p class="lead text-center">Карточка компании | Список вакансий | Избранное | Отклики</p>
+            <p class="lead text-center">
+                <a href="{% url 'companyapp:card' user.company.pk %}">Карточка компании</a>
+                 | Список вакансий | Избранное | Отклики</p>
         </div>
     </header>
 {% endblock %}

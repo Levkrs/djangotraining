@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.db.models.signals import post_save
 from django.urls import reverse
+
+import companyapp
 
 
 class MyUserManager(BaseUserManager):
@@ -53,3 +56,15 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         ordering = ('email',)
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+def create_company(instance, created, **kwargs):
+    """
+    После регистрации пользователя-работодателя,
+    по сигналу, создается новая компания.
+    """
+    if created and instance.role == 'HR':
+        companyapp.models.create(instance)
+
+
+post_save.connect(create_company, sender=MyUser)
