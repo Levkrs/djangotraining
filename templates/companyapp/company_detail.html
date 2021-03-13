@@ -7,6 +7,8 @@
             <div class="header-detail">
                 {% if object.logo %}
                     <img class="logo" src="{{ object.logo.url }}" alt="">
+                {% else %}
+                    <img class="logo" src="{% static 'img/logo-default.png' %}" alt="">
                 {% endif %}
                 <div class="hgroup">
                     <h1>{{ object.name }}</h1>
@@ -26,6 +28,14 @@
                         <a href="http://{{ object.link }}/">{{ object.link }}</a>
                     </li>
                 </ul>
+
+                {% if user.pk == object.user_id.pk %}
+                    <div class="button-group">
+                        <div class="action-buttons">
+                            <a class="btn btn-primary" href="{% url 'companyapp:edit' object.pk %}">Редактировать карточку компании</a>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </header>
@@ -37,13 +47,10 @@
         <!-- Company detail -->
         <section>
             <div class="container">
-        
                 <header class="section-header">
                     <h2>О Компании</h2>
                 </header>
-        
-                <p>{{ object.detail }}</p>
-        
+                <p>{{ object.detail }}</p>       
             </div>
         </section>
         <!-- END Company detail -->
