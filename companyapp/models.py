@@ -46,9 +46,17 @@ class Company(models.Model):
 
     def views_counter(self):
         """ Счетчик просмотров карточки компании """
+        if Company.objects.filter(pk=self).exists():
+            with transaction.atomic():
+                self = Company.objects.get(id=self)
+                self.views_count += 1
+                self.save()
+
+    def change_status(self, status):
+        """ Смена статуса карточки компании """
         with transaction.atomic():
             self = Company.objects.get(id=self)
-            self.views_count += 1
+            self.status = status
             self.save()
 
 

@@ -23,8 +23,8 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
     model = Company
 
     def get(self, request, *args, **kwargs):
-        if Company.objects.filter(pk=self.kwargs['pk']).exists():
-            Company.views_counter(self.kwargs['pk'])
+        """ Счётчик просмотров """
+        Company.views_counter(self.kwargs['pk'])
         return super().get(self, request, *args, **kwargs)
 
 
