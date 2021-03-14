@@ -1,8 +1,21 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
-    {% for item in object_list.select_related %}
-    <p>{{ item.headline }}</p>
-    {% endfor %}
+{% block body %}
+    {% block header %}
+        {% include 'inc/nav.html' %}
+    {% endblock %}
+
+    {% block nav %}
+        {#                {% include 'inc/nav.html' %}#}
+    {% endblock %}
+
+    {% block content %}
+        <div class="container resume-container">
+        {% for item in object_list.select_related %}
+        <p>{{ item.headline }}</p>
+        {% endfor %}
+        </div>
+    {% endblock %}
+
 {% endblock %}
