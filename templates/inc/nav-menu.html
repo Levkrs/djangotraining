@@ -5,7 +5,7 @@
             <li><a href="#">Поиск вакансий</a></li>
             <li><a href="#">Подробная вакансия</a></li>
             <li><a href="#">Разместить вакансию</a></li>
-            <li><a href="#">Управление вакансиями</a></li>
+            <li><a href="{% url 'companyapp:job-list'%}">Управление вакансиями</a></li>
         </ul>
     </li>
     <li>
@@ -14,7 +14,7 @@
             <li><a href="#">Поиск резюме</a></li>
             <li><a href="#">Подробности резюме</a></li>
             <li><a href="{% url 'applicantapp:createresume'%}">Создать резюме</a></li>
-            <li><a href="#">Управление резюме</a></li>
+            <li><a href="{% url 'applicantapp:resume-list'%}">Управление резюме</a></li>
         </ul>
     </li>
     <li>

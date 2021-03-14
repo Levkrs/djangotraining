@@ -1,6 +1,10 @@
+"""
+Views of company
+"""
+
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, DetailView, CreateView, UpdateView
 from django.urls import reverse_lazy
+from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
 
 from .models import Company, Job
 
@@ -50,3 +54,19 @@ class JobUpdateView(LoginRequiredMixin, UpdateView):
     model = Job
     fields = ('status', 'grade', 'category', 'salary', 'city', 'employment', 'skills',
               'work_schedule', 'experience', 'short_description', 'description',)
+
+
+class JobListView(LoginRequiredMixin, ListView):
+    """
+    Список вакансий пользователя
+    """
+    model = Job
+    fields = '__all__'
+
+    def get_queryset(self):
+        try:
+            company = self.request.user.company
+        except Exception:
+            return self.model.objects.none()
+
+        return company.jobs
