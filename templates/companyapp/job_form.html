@@ -33,7 +33,7 @@
                             </div>
                             <div class="form-group">
                                 <textarea name="short_description" maxlength="255" required id="id_short_description"
-                                    class="form-control" rows="4" placeholder="Краткое описание">{{ object.short_description }}</textarea>
+                                    class="form-control" rows="3" placeholder="Краткое описание">{{ object.short_description }}</textarea>
                             </div>
                             {{ form.errors.short_description }}
                         </div>
@@ -43,23 +43,20 @@
                     <div class="row text-center">
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="input-group input-group-sm">
-                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span>
                                 <select name="grade" id="id_grade" class="form-control">
-                                    <option value="NO" selected="">Квалификация</option>
-                                    <option value="TR">Trainee</option>
-                                    <option value="JR">Junior</option>
-                                    <option value="MD">Middle</option>
-                                    <option value="SR">Senior</option>
-                                    <option value="TL">TeamLead</option>
-                                    <option value="TD">CTO</option>
+                                    {% for key, value in form.grade.field.choices %}
+                                        <option value="{{ key }}" {% if key == grade %} selected {% endif %}>{{ value }}</option>
+                                    {% endfor %}
                                 </select>
+                                    <!-- <option value="NO" selected="">Квалификация</option> -->
                             </div>
                             {{ form.errors.grade }}
                         </div>
 
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="input-group input-group-sm">
-                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-users"></i></span>
                                 <select name="category" id="id_category" class="form-control">
                                     <option value="NO" selected="">Специализация</option>
                                     <option value="FLS">Full Stack</option>
@@ -78,7 +75,7 @@
 
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="input-group input-group-sm">
-                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-money"></i></span>
                                 <input type="text" name="salary" value="{{ object.salary }}" min="0"
                                     id="id_salary" class="form-control" placeholder="Зарплата">
                             </div>
@@ -96,7 +93,7 @@
 
                         <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
                             <div class="input-group input-group-sm">
-                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 <select name="employment" id="id_employment" class="form-control">
                                     <option value="FT" selected="">Полная занятость</option>
                                     <option value="PT">Частичная занятость</option>
@@ -110,7 +107,7 @@
 
                         <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
                             <div class="input-group input-group-sm">
-                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-hourglass-half"></i></span>
                                 <select name="work_schedule" id="id_work_schedule" class="form-control">
                                     <option value="FD" selected="">Полный день</option>
                                     <option value="SSCH">Сменный график</option>
@@ -124,7 +121,7 @@
 
                         <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
                             <div class="input-group input-group-sm">
-                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-star-half-full"></i></span>
                                 <select name="experience" id="id_experience" class="form-control">
                                     <option value="WE" selected="">Без опыта</option>
                                     <option value="SM">До 1 года</option>
@@ -137,7 +134,7 @@
 
                         <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
                             <div class="input-group input-group-sm">
-                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                 <input type="text" name="skills" maxlength="255" id="id_skills" value="{{ object.city }}"
                                     class="form-control" placeholder="Ключевые навыки (введите через ,)">
                             </div>
