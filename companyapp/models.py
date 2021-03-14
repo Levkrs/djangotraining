@@ -22,7 +22,7 @@ class Company(models.Model):
     user_id = models.OneToOneField(to=MyUser, on_delete=models.PROTECT, related_name='company', verbose_name="user's id")
     name = models.CharField('Наименование компании', max_length=255, blank=False, db_index=True)
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
-    logo = models.ImageField('Логотип', upload_to=user_directory_path)
+    logo = models.ImageField('Логотип', upload_to=user_directory_path, blank=True, null=True)
     headline = models.CharField('Слоган', max_length=255, blank=True)
     short_description = models.CharField('Краткое описание', max_length=255, blank=False)
     detail = models.TextField('Подробное описание', blank=True)

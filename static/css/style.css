@@ -116,3 +116,6 @@ textarea {
 .btn-save-pos{
     text-align: center;
 }
+#moder_comment {
+    color: red;
+}

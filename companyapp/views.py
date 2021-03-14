@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, DetailView, UpdateView
+from django.urls import reverse_lazy
 
 from .models import Company, Job
 
@@ -27,4 +28,7 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     Редактор карточки компании
     """
     model = Company
-    fields = '__all__'
+    fields = ('name', 'logo', 'headline', 'short_description', 'detail', 'location', 'link',)
+
+    def get_success_url(self):
+        return reverse_lazy('companyapp:card', args=[self.object.pk])

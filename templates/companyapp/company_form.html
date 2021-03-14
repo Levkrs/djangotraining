@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block header %}
-    <form action="" method="POST" enctype="multipart/form-data"> {% csrf_token %}
-    
+    {% if user.pk == object.user_id.pk %}
+    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+         
         <!-- Page header -->
         <header class="page-header alt">
             <div class="container page-name">
@@ -21,18 +22,22 @@
                                     <input type="file" name="logo" accept="image/*" id="id_logo" class="dropify" data-default-file="{% static 'img/logo-default.png' %}">
                                     <span class="help-block">Логотип</span>
                                 </div>
+                                {{ form.errors.logo }}
                             </div>
     
                             <div class="col-xs-12 col-sm-8 col-lg-10">
                                 <div class="form-group">
-                                    <input type="text" class="name form-control input-lg" value="{{ object.name }}" maxlength="255" required id="id_name" placeholder="Наименование компании">
+                                    <input type="text" name="name" class="form-control input-lg" value="{{ object.name }}" maxlength="255" required id="id_name" placeholder="Наименование компании">
                                 </div>
+                                {{ form.errors.name }}
                                 <div class="form-group">
                                     <input type="text" name="headline" value="{{ object.headline }}" maxlength="255" id="id_headline" class="form-control" placeholder="Заголовок, слоган, кредо...">
                                 </div>
+                                {{ form.errors.headline }}
                                 <div class="form-group">
                                     <textarea name="short_description" maxlength="255" required id="id_short_description" class="form-control" rows="3" placeholder="Краткое описание">{{ object.short_description }}</textarea>
                                 </div>
+                                {{ form.errors.short_description }}
                             </div>
                         </div>
                     </div>
@@ -45,6 +50,7 @@
                                     <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
                                     <input type="text" name="location" value="{{ object.location }}" maxlength="255" required id="id_location" class="form-control" placeholder="Местонахождение">
                                 </div>
+                                {{ form.errors.location }}
                             </div>
     
                             <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
@@ -52,6 +58,7 @@
                                     <span class="input-group-addon"><i class="fa fa-globe"></i></span>
                                     <input type="text" name="link" value="{{ object.link }}" maxlength="255" id="id_link" class="form-control" placeholder="Адрес сайта / соцсеть">
                                 </div>
+                                {{ form.errors.link }}
                             </div>
                         </div>
                     </div>
@@ -70,6 +77,7 @@
                         <p>Расскажите о Вашей компании, её ценностях, преимуществах работы у Вас</p>
                     </header>
                     <textarea name="detail" id="id_detail" class="summernote-editor form-control" rows="7" placeholder="Подробное описание">{{ object.detail }}</textarea>
+                    {{ form.errors.detail }}
                 </div>
             </section>
             <!-- END Company detail -->
@@ -78,7 +86,7 @@
             {% if object.status == '0' %}
                 <section>
                     <div class="container">
-                        <label for="id_moder_comment">Замечания модератора:</label>
+                        <label for="id_moder_comment" id="moder_comment">Замечания модератора:</label>
                         <textarea name="moder_comment" rows="3" disabled id="id_moder_comment"
                             class="form-control">{{ object.moder_comment }}</textarea>
                     </div>
@@ -95,7 +103,9 @@
                         После проверки модератором, карточка Вашей компании станет доступна другим пользователям.</p>
                         <p>Или сохраните как "Черновик", чтобы позже вернуться к редактированию. Черновики не видны
                         другим пользователям.</p>
-                        <br><br>
+                        <br>
+                        {{ form.non_field_errors }}
+                        <br>
                         <button class="btn btn-primary" data-status="2" type="submit">Опубликовать</button>
                         <button class="btn btn-success" data-status="4" type="submit">Сохранить Черновик</button>
                     </header>
@@ -105,6 +115,7 @@
         </main>
         <!-- END Main container -->
     </form>
+    {% endif %}     
 {% endblock %}
 
 {% block content %} {% endblock %} 
