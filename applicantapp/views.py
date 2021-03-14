@@ -1,12 +1,11 @@
 """
 Views of applicant
 """
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, TemplateView
+from django.views.generic import CreateView, ListView, TemplateView, UpdateView
 
-from applicantapp.forms import UserProfileForm
+from applicantapp.forms import UserProfileForm, ResumeUpdateForm
 from applicantapp.models import Resume, StatusResume
 from authapp.models import MyUser
 
@@ -58,7 +57,16 @@ class CreateResume(LoginRequiredMixin, CreateView):
     #     text=form
     #     ic(form)
     #     return super(CreateResume, self).from_invalid(form)
-
+    #
     def post(self, request, **kwargs):
         request.POST = request.POST.copy()
         return super(CreateResume, self).post(request, **kwargs)
+
+class UpdateResume(LoginRequiredMixin, UpdateView):
+    """
+    Update Resume
+    """
+    model = Resume
+    form_class = ResumeUpdateForm
+    template_name = 'applicantapp/update_resume.html'
+    success_url = '/'
