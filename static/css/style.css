@@ -14,6 +14,9 @@
 .page-header {
     background: url(../img/bg-company-1.jpg) center/cover fixed no-repeat;
 }
+.page-header.alt {
+    background: url(../img/bg-2.jpg) center/cover fixed no-repeat;
+}
 .user-account .dropdown-toggle img {
     width: 44px;
     height: 44px;
