@@ -9,7 +9,7 @@
             <!-- Job item -->
                 {% if job.status == '3' %}
                     <div class="col-xs-12">
-                        <a class="item-block" href="#">
+                        <a class="item-block" href="{% url 'companyapp:edit_job' job.company_id.pk job.pk %}">
                             <header>
                                 {% if job.company_id.logo %}
                                 <img src="{{ job.company_id.logo.url }}" alt="">

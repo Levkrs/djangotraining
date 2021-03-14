@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+
+<!-- TODO Решить вопрос с безопасностью - скрыть от чужих пользователей -->
+
+<form method="POST"> {% csrf_token %}
+    <!-- Page header -->
+    <header class="page-header alt">
+        <div class="container page-name">
+            <h1 class="text-center">Карточка Вакансии</h1>
+            <p class="lead text-center">Создавайте, редактируйте и публикуйте вакансии Вашей Компании</p>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-lg-2">
+                            <div class="form-group">
+                                {% if user.company.logo %}
+                                    <img src="{{ user.company.logo.url }}" alt="">
+                                {% else %}
+                                    <img src="{% static 'img/logo-default.png' %}" alt="">
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-8 col-lg-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control input-lg" value="{{ user.company.name }}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="short_description" maxlength="255" required id="id_short_description"
+                                    class="form-control" rows="4" placeholder="Краткое описание">{{ object.short_description }}</textarea>
+                            </div>
+                            {{ form.errors.short_description }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12">
+                    <div class="row text-center">
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <select name="grade" id="id_grade" class="form-control">
+                                    <option value="NO" selected="">Квалификация</option>
+                                    <option value="TR">Trainee</option>
+                                    <option value="JR">Junior</option>
+                                    <option value="MD">Middle</option>
+                                    <option value="SR">Senior</option>
+                                    <option value="TL">TeamLead</option>
+                                    <option value="TD">CTO</option>
+                                </select>
+                            </div>
+                            {{ form.errors.grade }}
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <select name="category" id="id_category" class="form-control">
+                                    <option value="NO" selected="">Специализация</option>
+                                    <option value="FLS">Full Stack</option>
+                                    <option value="FED">Front-end</option>
+                                    <option value="BED">Back-end</option>
+                                    <option value="JVA">Java</option>
+                                    <option value="JST">JavaScript</option>
+                                    <option value="AND">Android</option>
+                                    <option value="IOS">iOS</option>
+                                    <option value="PTN">Python</option>
+                                    <option value="C">C</option>
+                                </select>
+                            </div>
+                            {{ form.errors.category }}
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <input type="text" name="salary" value="{{ object.salary }}" min="0"
+                                    id="id_salary" class="form-control" placeholder="Зарплата">
+                            </div>
+                            {{ form.errors.salary }}
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <input type="text" name="city" value="{{ object.city }}" maxlength="255"
+                                    required id="id_city" class="form-control" placeholder="Город">
+                            </div>
+                            {{ form.errors.city }}
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <select name="employment" id="id_employment" class="form-control">
+                                    <option value="FT" selected="">Полная занятость</option>
+                                    <option value="PT">Частичная занятость</option>
+                                    <option value="PW">Проектная работа</option>
+                                    <option value="VL">Волонтерство</option>
+                                    <option value="WP">Стажировка</option>
+                                </select>
+                            </div>
+                            {{ form.errors.employment }}
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <select name="work_schedule" id="id_work_schedule" class="form-control">
+                                    <option value="FD" selected="">Полный день</option>
+                                    <option value="SSCH">Сменный график</option>
+                                    <option value="FSCH">Гибкий график</option>
+                                    <option value="RW">Удаленная работа</option>
+                                    <option value="RBW">Вахтовый метод</option>
+                                </select>
+                            </div>
+                            {{ form.errors.work_schedule }}
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <select name="experience" id="id_experience" class="form-control">
+                                    <option value="WE" selected="">Без опыта</option>
+                                    <option value="SM">До 1 года</option>
+                                    <option value="MD">1-3 года</option>
+                                    <option value="BG">Более 3 лет</option>
+                                </select>
+                            </div>
+                            {{ form.errors.experience }}
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                                <input type="text" name="skills" maxlength="255" id="id_skills" value="{{ object.city }}"
+                                    class="form-control" placeholder="Ключевые навыки (введите через ,)">
+                            </div>
+                            {{ form.errors.skills }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- END Page header -->
+
+    <!-- Main container -->
+    <main>
+        <!-- Job detail -->
+        <section>
+            <div class="container">
+                <header class="section-header">
+                    <h2>Подробное описание вакансии</h2>
+                    <p>Подробно опишите вакансию, обязанности, требуемые навыки, условия работы, преимущества и т.д.</p>
+                </header>
+                <textarea name="description" id="id_description" class="summernote-editor form-control" rows="12"
+                    placeholder="Подробное описание">{{ object.description }}</textarea>
+                {{ form.errors.description }}
+            </div>
+        </section>
+        <!-- END Job detail -->
+
+        <!-- Moder Comment -->
+        {% if object.status == '0' %}
+        <section>
+            <div class="container">
+                <label for="id_moder_comment" id="moder_comment">Замечания модератора:</label>
+                <textarea name="moder_comment" rows="3" disabled id="id_moder_comment"
+                    class="form-control">{{ object.moder_comment }}</textarea>
+                {{ form.errors.moder_comment }}
+            </div>
+        </section>
+        {% endif %}
+        <!-- END Moder Comment -->
+
+        <!-- Submit -->
+        <section>
+            <div class="container">
+                <header class="section-header">
+                    <h2>Сохранить</h2>
+                    <p>Пожалуйста, проверьте указанную Вами информацию и нажмите на кнопку "Опубликовать".
+                        После проверки модератором, Вакансия станет доступна другим пользователям.</p>
+                    <p>Или сохраните как "Черновик", чтобы позже вернуться к редактированию. Черновики не видны
+                        другим пользователям.</p>
+                    <br>
+                    {{ form.non_field_errors }}
+                    <br>
+                    <div id="id_status">
+                        <button class="btn btn-primary" name="status" value="2" type="submit">Опубликовать</button>
+                        <button class="btn btn-success" name="status" value="4" type="submit">Сохранить Черновик</button>
+                    </div>
+                </header>
+            </div>
+        </section>
+        <!-- END Submit -->
+    </main>
+    <!-- END Main container -->
+</form>
+{% endblock %}
+
+{% block content %} {% endblock %}
+
+{% block footer %} {% endblock %}

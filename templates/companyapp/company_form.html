@@ -89,6 +89,7 @@
                         <label for="id_moder_comment" id="moder_comment">Замечания модератора:</label>
                         <textarea name="moder_comment" rows="3" disabled id="id_moder_comment"
                             class="form-control">{{ object.moder_comment }}</textarea>
+                        {{ form.errors.moder_comment }}
                     </div>
                 </section>
             {% endif %}
@@ -106,8 +107,10 @@
                         <br>
                         {{ form.non_field_errors }}
                         <br>
-                        <button class="btn btn-primary" data-status="2" name="status" value="{{object.id}},2" type="submit">Опубликовать</button>
-                        <button class="btn btn-success" data-status="4" name="status" value="{{object.id}},4" type="submit">Сохранить Черновик</button>
+                        <div id="id_status">
+                            <button class="btn btn-primary" name="status" value="2" type="submit">Опубликовать</button>
+                            <button class="btn btn-success" name="status" value="4" type="submit">Сохранить Черновик</button>
+                        </div>
                     </header>
                 </div>
             </section>

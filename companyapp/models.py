@@ -1,4 +1,5 @@
 from django.db import models, transaction
+from django.urls import reverse_lazy
 
 from authapp.models import MyUser
 
@@ -51,13 +52,6 @@ class Company(models.Model):
                 self = Company.objects.get(id=self)
                 self.views_count += 1
                 self.save()
-
-    def change_status(self, status):
-        """ Смена статуса карточки компании """
-        with transaction.atomic():
-            self = Company.objects.get(id=self)
-            self.status = status
-            self.save()
 
 
 def create(instance):
@@ -146,7 +140,7 @@ class Job(models.Model):
     views_count = models.PositiveIntegerField('Число просмотров', default=0)
 
     class Meta:
-        ordering = ('-created_at',)
+        ordering = ('status', '-created_at',)
         verbose_name = 'Вакансия'
         verbose_name_plural = 'Вакансии'
 
@@ -163,3 +157,13 @@ class Job(models.Model):
         ) if self.grade not in ['TL', 'TD'] else ('', '')
         grade = self.get_grade_display()
         return f'{grade} {category} {dev}'
+
+    def get_absolute_url(self):
+        return reverse_lazy('companyapp:profile', args=[self.company_id.pk])
+
+    def change_status(self, status):
+        """ Смена статуса вакансии """
+        with transaction.atomic():
+            self = Job.objects.get(id=self)
+            self.status = status
+            self.save()
