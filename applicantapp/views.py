@@ -1,6 +1,7 @@
 """
 Views of applicant
 """
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView, ListView, TemplateView
 
@@ -22,7 +23,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
 class ResumeList(LoginRequiredMixin, ListView):
     """
-    List of applicants resumes
+    Список резюме пользователя
     """
     def get_queryset(self):
         return Resume.objects.filter(user_id=self.request.user.id)

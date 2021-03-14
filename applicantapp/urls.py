@@ -10,6 +10,6 @@ app_name = 'applicantapp'
 
 urlpatterns = [
     path('<int:pk>/profile/', ProfileView.as_view(), name='profile'),
-    path('resumes', ResumeList.as_view(), name='resumes'),
+    path('resume-list', ResumeList.as_view(), name='resume-list'),
     path('createresume', CreateResume.as_view(), name='createresume'),
 ]

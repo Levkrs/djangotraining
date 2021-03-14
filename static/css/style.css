@@ -113,3 +113,20 @@ textarea {
 .btn-save-pos{
     text-align: center;
 }
+.job-list {
+    padding-top: 40px;
+}
+.job-list__table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
+.job-list__table .wide {
+     width: 40%;
+}
+.job-list__table .narrow {
+     width: 10%;
+}
+.job-list__table > caption {
+    text-align: center;
+}
