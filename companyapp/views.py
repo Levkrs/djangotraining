@@ -22,6 +22,10 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
     """
     model = Company
 
+    def get(self, request, *args, **kwargs):
+        Company.views_counter(kwargs['pk'])
+        return super().get(self, request, *args, **kwargs)
+
 
 class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     """

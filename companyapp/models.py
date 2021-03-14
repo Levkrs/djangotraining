@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 
 from authapp.models import MyUser
 
@@ -43,6 +43,13 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+    def views_counter(self):
+        """ Счетчик просмотров карточки компании """
+        with transaction.atomic():
+            self = Company.objects.get(id=self)
+            self.views_count += 1
+            self.save()
 
 
 def create(instance):
