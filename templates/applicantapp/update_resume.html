@@ -12,23 +12,19 @@
 
     {% block content %}
         <div class="container resume-container">
-
-            <form method="post" id="form_for_post" class="form-resume" enctype="multipart/form-data"> {% csrf_token %}
+            <form method="post" class="form-resume" enctype="multipart/form-data"> {% csrf_token %}
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
-                        <input class="form-control" placeholder="Заголовок" name="headline" maxlength="255" required
-                               id="id_headline">
+                        {{ form.headline }}
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <div class="input-group">
                             <span class="input-group-addon"><i class=""></i></span>
-                            <input class="form-control" placeholder="Имя" name="first_name" maxlength="255" required
-                                   id="id_first_name">
+                            {{ form.first_name }}
                             <span class="input-group-addon"><i class=""></i></span>
                         </div>
                     </div>
@@ -36,19 +32,21 @@
                     <div class="form-group col-lg-6">
                         <div class="input-group">
                             <span class="input-group-addon"><i class=""></i></span>
-                            <input class="form-control" placeholder="Фамилия" name="surname" maxlength="255" required
-                                   id="id_surname">
+                            {{ form.surname }}
                             <span class="input-group-addon"><i class=""></i></span>
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
+                        {% if form.salary.value %}
+                        {{ form.salary }}
+                        {% else %}
                         <input type="number" min="0" class="form-control" placeholder="Желаемая заработная плата"
                                name="salary" maxlength="255"
                                id="id_salary">
+                        {% endif %}
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
@@ -56,9 +54,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
-                        <input type="date" class="form-control" placeholder="Дата рождения" name="date_of_birth"
-                               required
-                               id="id_date_of_birth">
+                        {{ form.date_of_birth }}
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
@@ -81,8 +77,7 @@
                     <div class="form-group col-lg-6">
                         <div class="input-group">
                             <span class="input-group-addon"><i class=""></i></span>
-                            <input class="form-control" placeholder="Город" name="city" maxlength="255"
-                                   id="id_city">
+                            {{ form.city }}
                             <span class="input-group-addon"><i class=""></i></span>
                         </div>
                     </div>
@@ -90,10 +85,11 @@
                     <div class="form-group col-lg-6">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="">Фото:</i></span>
-
-                            <input type="file" class="form-control middle foto-file" id="id_user_pic" name="user_pic"
-                                   accept="image/*">
-
+                            {% if form.user_pic.value %}
+                            {{ form.user_pic }}
+                            {% else %}
+                            <input type="file" class="form-control middle foto-file" id="id_user_pic" name="user_pic" accept="image/*">
+                            {% endif %}
                             <span class="input-group-addon"><i class=""></i></span>
                         </div>
                     </div>
@@ -102,8 +98,12 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
+                        {% if form.links.value %}
+                        {{ form.links }}
+                        {% else %}
                         <input class="form-control" placeholder="Ссылка на профиль в соц. сетях или сайт" name="links"
                                maxlength="255" id="id_links">
+                        {% endif %}
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
@@ -112,13 +112,7 @@
                     <div class="form-group col-lg-6">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="">Занятость:</i></span>
-                            <select class="form-control" name="employment" id="id_employment">
-                                <option value="FT" selected>Полная занятость</option>
-                                <option value="PT">Частичная занятость</option>
-                                <option value="PW">Проектная работа</option>
-                                <option value="VL">Волонтерство</option>
-                                <option value="PT">Стажировка</option>
-                            </select>
+                            {{ form.employment }}
                             <span class="input-group-addon"><i class=""></i></span>
                         </div>
                     </div>
@@ -126,16 +120,7 @@
                     <div class="form-group col-lg-6">
                         <div class="input-group">
                             <span class="input-group-addon"><i class=""></i> Образование:</span>
-                            <select class="form-control" name="education_type" id="id_education_type">
-                                <option value="SECONDARY" selected>Среднее</option>
-                                <option value="SPECIAL_SECONDARY">Среднее специальное</option>
-                                <option value="UNFINISHED_HIGHER">Неоконченное высшее</option>
-                                <option value="HIGHER">Высшее</option>
-                                <option value="BACHELOR">Бакалавр</option>
-                                <option value="MASTER">Магистр</option>
-                                <option value="CANDIDATE">Кандидат наук</option>
-                                <option value="DOCTOR">Доктор наук</option>
-                            </select>
+                            {{ form.education_type }}
                             <span class="input-group-addon"><i class=""></i></span>
                         </div>
                     </div>
@@ -144,13 +129,7 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i> График работы:</span>
-                        <select class="form-control" name="work_schedule" id="id_work_schedule">
-                            <option value="FD" selected>Полный день</option>
-                            <option value="SSCH">Сменный график</option>
-                            <option value="FSCH">Гибкий график</option>
-                            <option value="RW">Удаленная работа</option>
-                            <option value="RBW">Вахтовый метод</option>
-                        </select>
+                        {{ form.work_schedule }}
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
@@ -158,8 +137,12 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
+                        {% if form.about_me.value %}
+                        {{ form.about_me }}
+                        {% else %}
                         <textarea rows="4" id="id_about_me" class="form-control" placeholder="Обо мне" name="about_me">
                         </textarea>
+                        {% endif %}
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
@@ -167,8 +150,12 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
+                        {% if form.key_skills.value %}
+                        {{ form.key_skills }}
+                        {% else %}
                         <input class="form-control" placeholder="Ключевые наваки" maxlength="255" name="key_skills"
                                id="id_key_skills">
+                        {% endif %}
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
@@ -176,10 +163,43 @@
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
-                        <input class="form-control" placeholder="Телефон" maxlength="20" name="phone"
-                               id="id_phone">
+                        {{ form.phone }}
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class=""></i></span>
+                            {% if form.created_at.value %}
+                            {{ form.created_at }}
+                            {% else %}
+                            <span class="form-control middle" id="id_created_at"> Дата создания    </span>
+                            {% endif %}
+                            <span class="input-group-addon"><i class=""></i></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-lg-6">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class=""></i></span>
+                            {% if form.updated_at.value %}
+                            {{ form.updated_at }}
+                            {% else %}
+                            <span class="form-control middle" id="id_updated_at"> Дата обновления   </span>
+                            {% endif %}
+                            <span class="input-group-addon"><i class=""></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class=""></i></span>
+                        {{ form.views_count }}
+                        <span class="input-group-addon"><i class=""></i></span>
+                    </div>
+
                 </div>
 
                 <div>{% if messages %}
@@ -188,29 +208,9 @@
                     {% endfor %}
                 {% endif %}
                 </div>
-
-
-                <div class="row">
-                    <div class="form-group col-lg-12" style="text-align: center;">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class=""></i></span>
-                            <button type="submit" class="btn btn-gray btn-save" name="submit_btn_val" value="1">
-                                Создать
-                            </button>
-                            <button type="submit" class="btn btn-gray btn-save" name="submit_btn_val" value="2">
-                                Черновик
-                            </button>
-                            <span class="input-group-addon"><i class=""></i></span>
-                        </div>
-                    </div>
-                </div>
+                <input type="submit" class="btn-gray btn-save" value="Сохранить">
             </form>
         </div>
-
-    {% endblock %}
-
-    {% block js %}
-        <script defer src="{% static 'js/create_resume.js' %}"></script>
     {% endblock %}
 
 {% endblock %}
