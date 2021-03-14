@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import models, transaction
 
 from authapp.models import MyUser
 
@@ -22,7 +22,7 @@ class Company(models.Model):
     user = models.OneToOneField(to=MyUser, on_delete=models.PROTECT, related_name='company', verbose_name="user's id")
     name = models.CharField('Наименование компании', max_length=255, blank=False, db_index=True)
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
-    logo = models.ImageField('Логотип', upload_to=user_directory_path)
+    logo = models.ImageField('Логотип', upload_to=user_directory_path, blank=True, null=True)
     headline = models.CharField('Слоган', max_length=255, blank=True)
     short_description = models.CharField('Краткое описание', max_length=255, blank=False)
     detail = models.TextField('Подробное описание', blank=True)
@@ -43,6 +43,21 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+    def views_counter(self):
+        """ Счетчик просмотров карточки компании """
+        if Company.objects.filter(pk=self).exists():
+            with transaction.atomic():
+                self = Company.objects.get(id=self)
+                self.views_count += 1
+                self.save()
+
+    def change_status(self, status):
+        """ Смена статуса карточки компании """
+        with transaction.atomic():
+            self = Company.objects.get(id=self)
+            self.status = status
+            self.save()
 
 
 def create(instance):
