@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block header %}
-    <header class="page-header bg-img size-lg">
+    <header class="page-header bg-img size-lg" style="background-image: url(static/img/bg-2.jpg)">
         <div class="container no-shadow">
             <h1 class="text-center">ЛК Соискателя № {{ user.pk }} - {{ user.email }}</h1>
             <p class="lead text-center">Список резюме | Избранное | Отклики</p>
@@ -21,70 +21,18 @@
                         <br>
                         <a class="btn btn-primary btn-sm" href="{% url 'applicantapp:createresume'%}">Добавить резюме</a>
                     </div>
-
-                    <!-- Resume item -->
-                    <div class="col-xs-12">
-                        <div class="item-block">
-                            <header>
-                                <a href="#"><img class="resume-avatar" src="media/resume/photo/S7300978.JPG"
-                                        alt=""></a>
-                                <div class="hgroup">
-                                    <h4><a href="#">Соискатель Работников</a></h4>
-                                    <h5>Front-end разраб</h5>
-                                </div>
-                                <div class="header-meta">
-                                    <span class="location">Нижний Новгород</span>
-                                    <span class="rate">125 000</span>
-                                </div>
-                            </header>
-
-                            <footer>
-                                <p class="status"><strong>Обновлено:</strong> 10.03.2021</p>
-
-                                <div class="action-btn">
-                                    <a class="btn btn-xs btn-gray" href="#">Скрыть</a>
-                                    <a class="btn btn-xs btn-gray" href="#">Редактировать</a>
-                                    <a class="btn btn-xs btn-danger" href="#">Удалить</a>
-                                </div>
-                            </footer>
-                        </div>
-                    </div>
-                    <!-- END Resume item -->
-
-                    <!-- Resume item -->
-                    <div class="col-xs-12">
-                        <div class="item-block">
-                            <header>
-                                <a href="#"><img class="resume-avatar" src="media/resume/photo/S7300978.JPG"
-                                        alt=""></a>
-                                <div class="hgroup">
-                                    <h4><a href="#">Работник соискателев</a></h4>
-                                    <h5>Python developer <span class="label label-info">Скрытое</span></h5>
-                                </div>
-                                <div class="header-meta">
-                                    <span class="location">Нижний Новгород</span>
-                                    <span class="rate">125 000</span>
-                                </div>
-                            </header>
-
-                            <footer>
-                                <p class="status"><strong>Обновлено:</strong> 27.02.2021</p>
-
-                                <div class="action-btn">
-                                    <a class="btn btn-xs btn-gray" href="#">Опубликовать</a>
-                                    <a class="btn btn-xs btn-gray" href="#">Редактировать</a>
-                                    <a class="btn btn-xs btn-danger" href="#">Удалить</a>
-                                </div>
-                            </footer>
-                        </div>
-                    </div>
-                    <!-- END Resume item -->
-
                 </div>
             </div>
         </section>
     </main>
     <!-- END Main container -->
+    <div class="col-xs-12">
+        <div class="item-block">
+            {% include 'applicantapp/resume_list.html' %}
+        </div>
+    </div>
 {% endblock %}
 
-{% block footer %} {% endblock %}
+
+{% block footer %}
+{% endblock %}

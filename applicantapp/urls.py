@@ -12,5 +12,6 @@ urlpatterns = [
     path('<int:pk>/profile/', ProfileView.as_view(), name='profile'),
     path('resume-list', ResumeList.as_view(), name='resume-list'),
     path('createresume', CreateResume.as_view(), name='createresume'),
+    path('resumelist', ProfileView.as_view(), name='resumelist'),
     path('resumes-list/update_resume/<int:pk>/', UpdateResume.as_view(), name='update_resume'),
 ]
