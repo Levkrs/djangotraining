@@ -7,6 +7,14 @@ from django.db import models
 from authapp.models import MyUser
 
 
+class StatusResume(models.Model):
+
+    status_name = models.CharField(max_length=250, blank=True, null=True)
+
+    def __repr__(self):
+        return self.status_name
+
+
 class Resume(models.Model):
     """
     Applicants resume
@@ -46,6 +54,10 @@ class Resume(models.Model):
         ('DOCTOR', 'Доктор наук'),
     )
 
+
+
+
+
     user_id = models.ForeignKey(to=MyUser, on_delete=models.CASCADE)
     headline = models.CharField(max_length=255, blank=False, verbose_name='Заголовок')
     first_name = models.CharField(max_length=255, blank=False, verbose_name='Имя')
@@ -67,12 +79,16 @@ class Resume(models.Model):
     views_count = models.PositiveIntegerField(blank=False, default=0, verbose_name='Кол-во просмотров')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+    status = models.ForeignKey(to=StatusResume, on_delete=models.DO_NOTHING, default=1, blank=True)
+
 
     def __repr__(self):
         return self.headline
 
     def __str__(self):
         return self.headline
+
+
 
 
 class Education(models.Model):

@@ -3,10 +3,11 @@ Views of applicant
 """
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView
 
 from applicantapp.forms import UserProfileForm
-from applicantapp.models import Resume
+from applicantapp.models import Resume, StatusResume
 from authapp.models import MyUser
 
 
@@ -35,7 +36,10 @@ class CreateResume(LoginRequiredMixin, CreateView):
     """
     form_class = UserProfileForm
     template_name = 'applicantapp/create_resume.html'
-    success_url = '/'
+
+    def get_success_url(self):
+        print(self.object.id)
+        return reverse_lazy('applicantapp:profile',args=(self.request.user.id,))
 
     def get_context_data(self, **kwargs):
         ctx = super(CreateResume, self).get_context_data(**kwargs)
@@ -44,15 +48,17 @@ class CreateResume(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_for_reg = MyUser.objects.get(id=self.request.user.id)
         form.instance.user_id = user_for_reg
+        if form.data['submit_btn_val']:
+            name_status = form.data['submit_btn_val']
+            status_val = StatusResume.objects.get(id=name_status)
+            form.instance.status = status_val
         return super(CreateResume, self).form_valid(form)
-    #
+
     # def from_invalid(self, form):
     #     text=form
     #     ic(form)
     #     return super(CreateResume, self).from_invalid(form)
-    #
-    # def post(self, request, **kwargs):
-    #     request.POST = request.POST.copy()
-    #     ic(request.POST)
-    #     # request.POST['owner'] = 2
-    #     return super(CreateResume, self).post(request, **kwargs)
+
+    def post(self, request, **kwargs):
+        request.POST = request.POST.copy()
+        return super(CreateResume, self).post(request, **kwargs)
