@@ -209,7 +209,7 @@
 
     {% endblock %}
 
-    {% block js %}
+    {% block js %} {{ block.super }}
         <script defer src="{% static 'js/create_resume.js' %}"></script>
     {% endblock %}
 

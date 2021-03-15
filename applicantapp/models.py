@@ -8,10 +8,16 @@ from authapp.models import MyUser
 
 
 class StatusResume(models.Model):
+    class Meta:
+        verbose_name = 'Статус Резюме'
+        verbose_name_plural = 'Статусы Резюме'
 
     status_name = models.CharField(max_length=250, blank=True, null=True)
 
     def __repr__(self):
+        return self.status_name
+
+    def __str__(self):
         return self.status_name
 
 
