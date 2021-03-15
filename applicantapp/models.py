@@ -54,10 +54,6 @@ class Resume(models.Model):
         ('DOCTOR', 'Доктор наук'),
     )
 
-
-
-
-
     user_id = models.ForeignKey(to=MyUser, on_delete=models.CASCADE)
     headline = models.CharField(max_length=255, blank=False, verbose_name='Заголовок')
     first_name = models.CharField(max_length=255, blank=False, verbose_name='Имя')
@@ -81,14 +77,11 @@ class Resume(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
     status = models.ForeignKey(to=StatusResume, on_delete=models.DO_NOTHING, default=1, blank=True)
 
-
     def __repr__(self):
         return self.headline
 
     def __str__(self):
         return self.headline
-
-
 
 
 class Education(models.Model):
@@ -130,7 +123,6 @@ class Experience(models.Model):
     data_from = models.DateField(blank=False, verbose_name='Дата начала работы')
     data_to = models.DateField(blank=False, verbose_name='Дата окончания работы')
     description = models.TextField(blank=True, null=True, verbose_name='Описание')
-
 
     def __repr__(self):
         return self.company_name
