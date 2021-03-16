@@ -9,7 +9,7 @@ class Company(models.Model):
     Компания-работодатель
     """
     def user_directory_path(instance, filename):
-        return f'logo/user_{instance.user_id.id}/{filename}'
+        return f'logo/user_{instance.user.id}/{filename}'
 
     STATUS = (
         ('0', 'Отклонена модератором'),
@@ -20,7 +20,7 @@ class Company(models.Model):
         ('9', 'Удалена'),
     )
 
-    user_id = models.OneToOneField(to=MyUser, on_delete=models.PROTECT, related_name='company', verbose_name="user's id")
+    user = models.OneToOneField(to=MyUser, on_delete=models.PROTECT, related_name='company', verbose_name="Пользователь")
     name = models.CharField('Наименование компании', max_length=255, blank=False, db_index=True)
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
     logo = models.ImageField('Логотип', upload_to=user_directory_path, blank=True, null=True)
@@ -58,7 +58,7 @@ def create(instance):
     """
     Создание заготовки компании по сигналу вновь зарегистрированного работодателя
     """
-    Company.objects.create(user_id=instance,)
+    Company.objects.create(user=instance,)
 
 
 class Job(models.Model):
@@ -91,12 +91,16 @@ class Job(models.Model):
         ('FLS', 'Full Stack'),
         ('FED', 'Front-end'),
         ('BED', 'Back-end'),
-        ('JVA', 'Java'),
-        ('JST', 'JavaScript'),
+        ('SW', 'Software'),
+        ('AI', 'AI & ML'),
+        ('BD', 'Big Data'),
         ('AND', 'Android'),
         ('IOS', 'iOS'),
-        ('PTN', 'Python'),
-        ('C', 'C'),
+        ('IOT', 'IoT'),
+        ('QA', 'QA Engineer'),
+        ('GD', 'GameDev'),
+        ('PJM', 'Project Manager'),
+        ('PDM', 'Product Manager'),
     )
 
     EMPLOYMENT = (
@@ -122,7 +126,7 @@ class Job(models.Model):
         ('BG', 'Более 3 лет'),
     )
 
-    company_id = models.ForeignKey(to=Company, on_delete=models.PROTECT, related_name='jobs', verbose_name='ID компании')
+    company = models.ForeignKey(to=Company, on_delete=models.PROTECT, related_name='jobs', verbose_name='Компания')
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
     grade = models.CharField('Классность', max_length=2, choices=GRADE, default='NO', db_index=True)
     category = models.CharField('Категория', max_length=3, choices=CATEGORY, default='NO', db_index=True)
@@ -159,7 +163,7 @@ class Job(models.Model):
         return f'{grade} {category} {dev}'
 
     def get_absolute_url(self):
-        return reverse_lazy('companyapp:profile', args=[self.company_id.pk])
+        return reverse_lazy('companyapp:profile', args=[self.company.pk])
 
     def change_status(self, status):
         """ Смена статуса вакансии """

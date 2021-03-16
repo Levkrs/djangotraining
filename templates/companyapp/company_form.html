@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block header %}
-    {% if user.pk == object.user_id.pk %}
+    {% if user.pk == object.user.pk %}
     <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
          
         <!-- Page header -->
