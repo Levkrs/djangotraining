@@ -71,3 +71,4 @@ class UpdateResume(LoginRequiredMixin, UpdateView):
     form_class = ResumeUpdateForm
     template_name = 'applicantapp/update_resume.html'
     success_url = '/'
+
