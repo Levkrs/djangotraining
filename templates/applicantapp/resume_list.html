@@ -1,21 +1,14 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block body %}
-    {% block header %}
-        {% include 'inc/nav.html' %}
-    {% endblock %}
-
-    {% block nav %}
-        {#                {% include 'inc/nav.html' %}#}
-    {% endblock %}
-
-    {% block content %}
-        <div class="container resume-container">
-        {% for item in object_list.select_related %}
-        <p>{{ item.headline }}</p>
-        {% endfor %}
-        </div>
-    {% endblock %}
-
-{% endblock %}
+{% for resume in resume_list %}
+   <div class="col-xs-12">
+      <div class="item-block">
+            <div class="hgroup">
+               <h4>{{ resume.surname }} {{ resume.first_name }} </h4>
+               <h5>{{ resume.headline }} </h5>
+            </div>
+         <div class="header-meta">
+            <span class="location"><i class="fa fa-map-marker"></i> {{ resume.city }} </span><br>
+            <span class="rate">{{ resume.salary }} руб. </span>
+         </div>
+      </div>
+   </div>
+{% endfor %}

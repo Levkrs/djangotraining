@@ -18,6 +18,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['resume_list'] = Resume.objects.filter(user_id=self.request.user.pk)
         return context
 
 
