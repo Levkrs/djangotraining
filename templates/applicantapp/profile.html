@@ -21,16 +21,19 @@
                         <br>
                         <a class="btn btn-primary btn-sm" href="{% url 'applicantapp:createresume'%}">Добавить резюме</a>
                     </div>
+                    <div class="col-xs-12">
+                        <div class="item-block">
+                            {% include 'applicantapp/resume_list.html' %}
+                        </div>
+                    </div>
                 </div>
+
             </div>
+
         </section>
     </main>
+
     <!-- END Main container -->
-    <div class="col-xs-12">
-        <div class="item-block">
-            {% include 'applicantapp/resume_list.html' %}
-        </div>
-    </div>
 {% endblock %}
 
 
