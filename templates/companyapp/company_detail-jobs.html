@@ -9,14 +9,14 @@
             <!-- Job item -->
                 {% if job.status == '3' %}
                     <div class="col-xs-12">
-                        <a class="item-block" href="{% url 'companyapp:edit_job' job.company_id.pk job.pk %}">
+                        <a class="item-block" href="{% url 'companyapp:edit-job' job.pk %}">
                             <header>
-                                {% if job.company_id.logo %}
-                                <img src="{{ job.company_id.logo.url }}" alt="">
+                                {% if job.company.logo %}
+                                <img src="{{ job.company.logo.url }}" alt="">
                                 {% endif %}
                                 <div class="hgroup">
                                     <h4>{{ job }}</h4>
-                                    <h5>{{ job.company_id.name }}
+                                    <h5>{{ job.company.name }}
                                         <span class="label label-success">{{ job.get_employment_display }}</span>
                                         <span class="label label-success">{{ job.get_work_schedule_display }}</span>
                                     </h5>

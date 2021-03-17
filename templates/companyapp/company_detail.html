@@ -32,7 +32,7 @@
                     </li>
                 </ul>
 
-                {% if user.pk == object.user_id.pk %}
+                {% if user.pk == object.user.pk %}
                     <div class="button-group">
                         <div class="action-buttons">
                             <a class="btn btn-primary" href="{% url 'companyapp:edit' object.pk %}">Редактировать карточку компании</a>

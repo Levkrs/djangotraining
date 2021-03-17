@@ -17,6 +17,9 @@
 .page-header.alt {
     background: url(../img/bg-2.jpg) center/cover fixed no-repeat;
 }
+.page-header.applicant {
+    background: url(../img/bg-recruit-1.jpg) center/cover fixed no-repeat;
+}
 .user-account .dropdown-toggle img {
     width: 44px;
     height: 44px;
@@ -135,4 +138,8 @@ textarea {
 }
 .job-list__table > caption {
     text-align: center;
+}
+
+.form_control_centr_heigh {
+    line-height: inherit;
 }

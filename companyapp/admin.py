@@ -6,7 +6,7 @@ from .models import Company, Job
 class JobInline(admin.TabularInline):
     """ Отрисовка списка вакансий внутри профиля компании """
     model = Job
-    fk_name = 'company_id'
+    fk_name = 'company'
 
 
 @admin.register(Company)
@@ -24,5 +24,5 @@ class JobAdmin(admin.ModelAdmin):
     """
     Поля таблицы Вакансии в админке
     """
-    list_display = ('id', 'company_id', 'status', 'grade', 'category', 'salary', 'city', 'employment',
+    list_display = ('id', 'company', 'status', 'grade', 'category', 'salary', 'city', 'employment',
                     'work_schedule', 'experience', 'created_at', 'updated_at', 'views_count',)

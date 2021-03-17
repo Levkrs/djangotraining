@@ -26,7 +26,7 @@ class Resume(models.Model):
     Applicants resume
     """
     def user_directory_path(instance, filename):
-        return f'resume/user_{instance.user_id.id}/{filename}'
+        return f'resume/user_{instance.user.id}/{filename}'
 
     class Meta:
         get_latest_by = '-updated_at'
@@ -60,7 +60,7 @@ class Resume(models.Model):
         ('DOCTOR', 'Доктор наук'),
     )
 
-    user_id = models.ForeignKey(to=MyUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE)
     headline = models.CharField(max_length=255, blank=False, verbose_name='Заголовок')
     first_name = models.CharField(max_length=255, blank=False, verbose_name='Имя')
     surname = models.CharField(max_length=255, blank=False, verbose_name='Фамилия')
@@ -100,7 +100,7 @@ class Education(models.Model):
         verbose_name = 'Образовательное учреждение'
         verbose_name_plural = 'Образовательные учреждения'
 
-    resume_id = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, blank=False, verbose_name='Название учреждения')
     specialization = models.CharField(max_length=255, blank=False, verbose_name='Специальность')
     year_of_ending = models.PositiveIntegerField(blank=False, verbose_name='Год окончания')
@@ -122,7 +122,7 @@ class Experience(models.Model):
         verbose_name = 'Опыт работы'
         verbose_name_plural = 'Опыт работы'
 
-    resume_id = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
     company_name = models.CharField(max_length=255, blank=False, verbose_name='Название компании')
     company_link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Сайт компании')
     position = models.CharField(max_length=255, blank=False, verbose_name='Дожность')

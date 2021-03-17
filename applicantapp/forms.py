@@ -7,12 +7,12 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Resume
         # fields = '__all__'
-        exclude = ['user_id', 'is_cheked', 'moder_comment', 'created_at', 'updated_at', 'views_count',]
+        exclude = ['user', 'is_cheked', 'moder_comment', 'created_at', 'updated_at', 'views_count',]
 
 class ResumeUpdateForm(forms.ModelForm):
     class Meta:
         model = Resume
-        exclude = ['user_id', 'is_cheked', 'moder_comment']
+        exclude = ['user', 'is_cheked', 'moder_comment']
 
 
     def __init__(self, *args, **kwargs):

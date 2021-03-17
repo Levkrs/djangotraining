@@ -32,8 +32,8 @@
                                 <input type="text" class="form-control input-lg" value="{{ user.company.name }}" disabled>
                             </div>
                             <div class="form-group">
-                                <textarea name="short_description" maxlength="255" required id="id_short_description"
-                                    class="form-control" rows="3" placeholder="Краткое описание">{{ object.short_description }}</textarea>
+                                <textarea name="short_description" maxlength="255" required id="id_short_description" class="form-control"
+                                    rows="3" placeholder="Краткое описание (255 символов максимум)">{{ object.short_description }}</textarea>
                             </div>
                             {{ form.errors.short_description }}
                         </div>
@@ -46,10 +46,11 @@
                                 <span class="input-group-addon"><i class="fa fa-graduation-cap"></i></span>
                                 <select name="grade" id="id_grade" class="form-control">
                                     {% for key, value in form.grade.field.choices %}
-                                        <option value="{{ key }}" {% if key == grade %} selected {% endif %}>{{ value }}</option>
+                                        <option value="{{ key }}" {% if key == object.grade %} selected {% endif %}>
+                                            {% firstof value 'Квалификация' %}
+                                        </option>
                                     {% endfor %}
                                 </select>
-                                    <!-- <option value="NO" selected="">Квалификация</option> -->
                             </div>
                             {{ form.errors.grade }}
                         </div>
@@ -58,16 +59,11 @@
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><i class="fa fa-users"></i></span>
                                 <select name="category" id="id_category" class="form-control">
-                                    <option value="NO" selected="">Специализация</option>
-                                    <option value="FLS">Full Stack</option>
-                                    <option value="FED">Front-end</option>
-                                    <option value="BED">Back-end</option>
-                                    <option value="JVA">Java</option>
-                                    <option value="JST">JavaScript</option>
-                                    <option value="AND">Android</option>
-                                    <option value="IOS">iOS</option>
-                                    <option value="PTN">Python</option>
-                                    <option value="C">C</option>
+                                    {% for key, value in form.category.field.choices %}
+                                        <option value="{{ key }}" {% if key == object.category %} selected {% endif %}>
+                                            {% firstof value 'Специализация' %}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             {{ form.errors.category }}
@@ -95,11 +91,11 @@
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 <select name="employment" id="id_employment" class="form-control">
-                                    <option value="FT" selected="">Полная занятость</option>
-                                    <option value="PT">Частичная занятость</option>
-                                    <option value="PW">Проектная работа</option>
-                                    <option value="VL">Волонтерство</option>
-                                    <option value="WP">Стажировка</option>
+                                    {% for key, value in form.employment.field.choices %}
+                                        <option value="{{ key }}" {% if key == object.employment %} selected {% endif %}>
+                                            {{ value }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             {{ form.errors.employment }}
@@ -109,11 +105,11 @@
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><i class="fa fa-hourglass-half"></i></span>
                                 <select name="work_schedule" id="id_work_schedule" class="form-control">
-                                    <option value="FD" selected="">Полный день</option>
-                                    <option value="SSCH">Сменный график</option>
-                                    <option value="FSCH">Гибкий график</option>
-                                    <option value="RW">Удаленная работа</option>
-                                    <option value="RBW">Вахтовый метод</option>
+                                    {% for key, value in form.work_schedule.field.choices %}
+                                        <option value="{{ key }}" {% if key == object.work_schedule %} selected {% endif %}>
+                                            {{ value }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             {{ form.errors.work_schedule }}
@@ -123,10 +119,11 @@
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><i class="fa fa-star-half-full"></i></span>
                                 <select name="experience" id="id_experience" class="form-control">
-                                    <option value="WE" selected="">Без опыта</option>
-                                    <option value="SM">До 1 года</option>
-                                    <option value="MD">1-3 года</option>
-                                    <option value="BG">Более 3 лет</option>
+                                    {% for key, value in form.experience.field.choices %}
+                                        <option value="{{ key }}" {% if key == object.experience %} selected {% endif %}>
+                                            {{ value }}
+                                        </option>
+                                    {% endfor %}
                                 </select>
                             </div>
                             {{ form.errors.experience }}
@@ -135,7 +132,7 @@
                         <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                <input type="text" name="skills" maxlength="255" id="id_skills" value="{{ object.city }}"
+                                <input type="text" name="skills" maxlength="255" id="id_skills" value="{{ object.skills }}"
                                     class="form-control" placeholder="Ключевые навыки (введите через ,)">
                             </div>
                             {{ form.errors.skills }}

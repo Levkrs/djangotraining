@@ -7,10 +7,12 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
 
 from .models import Company, Job
+from applicantapp.models import Resume
+from icecream import ic
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
-    """ ЛК Компании """    
+    """ ЛК Компании """
     template_name = 'companyapp/profile.html'
 
     def get_context_data(self, **kwargs):
@@ -45,7 +47,7 @@ class JobCreateView(LoginRequiredMixin, CreateView):
               'work_schedule', 'experience', 'short_description', 'description',)
 
     def form_valid(self, form):
-        form.instance.company_id = self.request.user.company
+        form.instance.company = self.request.user.company
         return super().form_valid(form)
 
 
@@ -70,3 +72,27 @@ class JobListView(LoginRequiredMixin, ListView):
             return self.model.objects.none()
 
         return company.jobs
+
+
+class ResumeListHR(LoginRequiredMixin, ListView):
+    """
+    Список резюме c пагинацие по 25 штук
+    """
+    model = Resume
+    paginate_by = 25
+    template_name = 'companyapp/resume_list_hr.html'
+
+    def get_queryset(self):
+        return Resume.objects.filter(is_active=1)
+    
+    
+class ResumeListDetail(LoginRequiredMixin, DetailView):
+    """
+    Развернуть резюме подробнро
+    """
+    
+    model = Resume
+
+    template_name = 'companyapp/resume_detail.html'
+    def get_queryset(self):
+        return Resume.objects.filter(pk=self.kwargs['pk'])

@@ -34,15 +34,12 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     """
     Модель пользователей
     """
-    RECRUITER = 'HR'
-    RECRUIT = 'REC'
-
-    ROLE_CHOICES = (
-        (RECRUITER, 'Работодатель'),
-        (RECRUIT, 'Соискатель'),
+    ROLE = (
+        ('HR', 'Работодатель'),
+        ('REC', 'Соискатель'),
     )
 
-    role = models.CharField('Роль', max_length=3, choices=ROLE_CHOICES, default=RECRUIT, null=True, blank=False)
+    role = models.CharField('Роль', max_length=3, choices=ROLE, default='REC', null=True, blank=False)
     email = models.EmailField('e-mail', blank=False, unique=True, max_length=64,
                               error_messages={'unique': "Ваш email уже занят!",})
     is_staff = models.BooleanField('Модератор', default=False)
@@ -50,7 +47,6 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = ['role']
 
     class Meta:
         ordering = ('email',)

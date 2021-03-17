@@ -12,7 +12,7 @@
         <a href="#">Резюме</a>
         <ul>
             <li><a href="#">Поиск резюме</a></li>
-            <li><a href="#">Подробности резюме</a></li>
+            <li><a href="{% url 'companyapp:resume-list'%}">Список резюме</a></li>
             <li><a href="{% url 'applicantapp:createresume'%}">Создать резюме</a></li>
             <li><a href="{% url 'applicantapp:resume-list'%}">Управление резюме</a></li>
         </ul>

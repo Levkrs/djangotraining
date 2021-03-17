@@ -18,7 +18,7 @@ class ProfileView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['resume_list'] = Resume.objects.filter(user_id=self.request.user.pk)
+        context['resume_list'] = Resume.objects.filter(user=self.request.user.pk)
         return context
 
 
@@ -27,7 +27,7 @@ class ResumeList(LoginRequiredMixin, ListView):
     Список резюме пользователя
     """
     def get_queryset(self):
-        return Resume.objects.filter(user_id=self.request.user.id)
+        return Resume.objects.filter(user=self.request.user.id)
 
 
 class CreateResume(LoginRequiredMixin, CreateView):
@@ -47,7 +47,7 @@ class CreateResume(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         user_for_reg = MyUser.objects.get(id=self.request.user.id)
-        form.instance.user_id = user_for_reg
+        form.instance.user = user_for_reg
         if form.data['submit_btn_val']:
             name_status = form.data['submit_btn_val']
             status_val = StatusResume.objects.get(id=name_status)
@@ -71,3 +71,5 @@ class UpdateResume(LoginRequiredMixin, UpdateView):
     form_class = ResumeUpdateForm
     template_name = 'applicantapp/update_resume.html'
     success_url = '/'
+
+
