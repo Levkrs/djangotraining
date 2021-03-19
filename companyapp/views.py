@@ -95,4 +95,11 @@ class ResumeListDetail(LoginRequiredMixin, DetailView):
 
     template_name = 'companyapp/resume_detail.html'
     def get_queryset(self):
-        return Resume.objects.filter(pk=self.kwargs['pk'])
+        req = Resume.objects.filter(pk=self.kwargs['pk'])
+        return req
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context

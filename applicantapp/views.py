@@ -3,11 +3,13 @@ Views of applicant
 """
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, ListView, TemplateView, UpdateView
+from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView
 
 from applicantapp.forms import UserProfileForm, ResumeUpdateForm
 from applicantapp.models import Resume, StatusResume
 from authapp.models import MyUser
+from companyapp.models import Job
+from icecream import ic
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -72,4 +74,55 @@ class UpdateResume(LoginRequiredMixin, UpdateView):
     template_name = 'applicantapp/update_resume.html'
     success_url = '/'
 
+class JobSearchList(LoginRequiredMixin, ListView):
 
+    model = Job
+    template_name = 'applicantapp/job_search.html'
+    # paginate_by = 25
+
+    def get_queryset(self):
+        req = Job.objects.all().order_by('-id')[:10]
+        return req
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class JobListDetail(LoginRequiredMixin, DetailView):
+    """
+    Развернуть резюме подробнро
+    """
+
+    model = Resume
+
+    template_name = 'applicantapp/job_detail.html'
+
+    def get_queryset(self):
+        req = Job.objects.filter(pk=self.kwargs['pk'])
+        # CHOISE = Job()
+        # a = 'FED'
+        # result = filter(a, for iter in CHOISE.CATEGORY)
+        # result = filter(lambda x: x[0] == a, CHOISE.CATEGORY)
+        # ic(CHOISE.)
+        # ic(req.__dict__)
+        # for item in req:
+            # ic(item.__dict__)
+            # ic(item.category)
+            # cat_status = item.category
+            # get_category_name = list(filter(lambda x: x[0] == cat_status, item.CATEGORY))
+            # ic(get_category_name)
+            # item.category = get_category_name[0][1]
+            # ic(item.category)
+            # cat_choise = item['category']
+            # get_choise_name = filter(lambda x: x[0] == a, CHOISE.CATEGORY)
+            # item['category'] = get_choise_name
+            # ic(item.CATEGORY)
+        return req
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # obj = context['object']
+        # obj.category = 'ASDSAD'
+        # ic(context['object'].__dict__)
+        return context
