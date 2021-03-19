@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'authapp',
     'applicantapp.apps.ApplicantappConfig',
     'companyapp',
+    'moderapp'
 ]
 
 MIDDLEWARE = [

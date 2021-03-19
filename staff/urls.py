@@ -34,4 +34,6 @@ urlpatterns += [
     path('accounts/', include('authapp.urls')),
     path('applicant/', include('applicantapp.urls')),
     path('company/', include('companyapp.urls')),
+    path('moder/', include('moderapp.urls')),
+
 ]

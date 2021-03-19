@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <header class="page-header bg-img size-lg">
+        <div class="container no-shadow">
+            <h1 class="text-center"> Список резюме и компаний</h1>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- Main container -->
+    <main>
+        <section class="no-padding-top bg-alt">
+            <div class="container">
+                <div class="row item-blocks-connected">
+
+
+                    <div class="tab">
+                        <button class="tablinks" onclick="openCity(event, 'Resume')">
+                            Resume {{ resume_for_aprove.count }}</button>
+                        <button class="tablinks" onclick="openCity(event, 'Job')">
+                            Job {{ job_for_aprove.count }}</button>
+                        <button class="tablinks" onclick="openCity(event, 'Company')">
+                            Company {{ company_for_aprove.count }}</button>
+                    </div>
+
+                    <!-- Tab content -->
+
+                    <div id="Resume" class="tabcontent">
+                        <h3>Resume</h3>
+                        <span>
+                            {% for resume in resume_for_aprove %}
+                                <div class="col-xs-12">
+                                    <div class="item-block">
+                                        <header>
+                                            <div class="hgroup">
+                                                <h4>{{ resume }}</h4>
+                                            </div>
+
+                                    </header>
+
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </span>
+                    </div>
+
+                    <div id="Job" class="tabcontent" style="display: none">
+                        <h3>Job</h3>
+                        <span>
+                            {% for job in job_for_aprove %}
+                                <div class="col-xs-12">
+                                    <div class="item-block">
+                                        <header>
+                                            <div class="hgroup">
+                                                <h4>{{ job }}</h4>
+                                            </div>
+
+                                    </header>
+
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </span>
+                    </div>
+
+                    <div id="Company" class="tabcontent" style="display: none">
+                        <h3>Company</h3>
+                        <span>
+                            {% for company in company_for_aprove %}
+                                <div class="col-xs-12">
+                                    <div class="item-block">
+                                        <header>
+                                            <div class="hgroup">
+                                                <h4>{{ company }}</h4>
+                                            </div>
+
+                                    </header>
+
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </span>
+                    </div>
+                    <!-- END Tab content -->
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- END Main container -->
+{% endblock %}
+
+{% block footer %} {% endblock %}
+
+{#<img src="{% static 'img/logo-google.jpg' %}" alt="" >#}
