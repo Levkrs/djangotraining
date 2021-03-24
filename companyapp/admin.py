@@ -7,6 +7,7 @@ class JobInline(admin.TabularInline):
     """ Отрисовка списка вакансий внутри профиля компании """
     model = Job
     fk_name = 'company'
+    fields = ('short_description', 'city', 'status')
 
 
 @admin.register(Company)
