@@ -70,7 +70,7 @@ class Resume(models.Model):
         ('DOCTOR', 'Доктор наук'),
     )
 
-    user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE, null=True)
     headline = models.CharField(max_length=255, blank=False, verbose_name='Заголовок')
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
     first_name = models.CharField(max_length=255, blank=False, verbose_name='Имя')
