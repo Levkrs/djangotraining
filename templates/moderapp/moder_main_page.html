@@ -36,7 +36,8 @@
                                     <div class="item-block">
                                         <header>
                                             <div class="hgroup">
-                                                <h4>{{ resume }}</h4>
+{#                                                <h4>{{ resume }}</h4>#}
+                                                <h4><a href="{% url 'moderapp:resume_for_aprove' resume.pk %}">{{ resume }} </a></h4>
                                             </div>
 
                                     </header>
@@ -55,7 +56,9 @@
                                     <div class="item-block">
                                         <header>
                                             <div class="hgroup">
-                                                <h4>{{ job }}</h4>
+{#                                                <h4>{{ job }}</h4>#}
+                                                <h4><a href="{% url 'moderapp:job_for_aprove' job.pk %}">{{ job }} </a></h4>
+
                                             </div>
 
                                     </header>
