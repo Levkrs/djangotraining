@@ -20,7 +20,7 @@ class Company(models.Model):
         ('9', 'Удалена'),
     )
 
-    user = models.OneToOneField(to=MyUser, on_delete=models.PROTECT, related_name='company', verbose_name="Пользователь")
+    user = models.OneToOneField(to=MyUser, on_delete=models.PROTECT, related_name='company', verbose_name="Пользователь", null=True)
     name = models.CharField('Наименование компании', max_length=255, blank=False, db_index=True)
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
     logo = models.ImageField('Логотип', upload_to=user_directory_path, blank=True, null=True)
@@ -126,7 +126,7 @@ class Job(models.Model):
         ('BG', 'Более 3 лет'),
     )
 
-    company = models.ForeignKey(to=Company, on_delete=models.PROTECT, related_name='jobs', verbose_name='Компания')
+    company = models.ForeignKey(to=Company, on_delete=models.PROTECT, related_name='jobs', verbose_name='Компания', null=True)
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
     grade = models.CharField('Классность', max_length=2, choices=GRADE, default='NO', db_index=True)
     category = models.CharField('Категория', max_length=3, choices=CATEGORY, default='NO', db_index=True)

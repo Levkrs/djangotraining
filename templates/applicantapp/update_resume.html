@@ -59,20 +59,6 @@
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class=""></i></span>
-                        <div class="wrapper">
-                        <span class="form-control middle">
-                            <span class=""> Резюме активно  </span>
-                            <input type="checkbox" class="" placeholder="Резюме активно" name="is_active"
-                                   id="id_is_active">
-                        </span>
-                        </div>
-                        <span class="input-group-addon"><i class=""></i></span>
-                    </div>
-                </div>
-
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <div class="input-group">
@@ -202,12 +188,38 @@
 
                 </div>
 
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class=""></i></span>
+                        <span class="input-group-addon"><i class="">Статус резюме:</i></span>
+                        {{ form.status }}
+                        <span class="input-group-addon"><i class=""></i></span>
+                        <span class="input-group-addon"><i class=""></i></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class=""></i></span>
+                        {% if form.moder_comment.value %}
+                        {{ form.moder_comment }}
+                        {% else %}
+                        <textarea rows="4" id="id_moder_comment" class="form-control" placeholder="Коммнетарий модератора" name="moder_comment">
+                        </textarea>
+                        {% endif %}
+                        <span class="input-group-addon"><i class=""></i></span>
+                    </div>
+                </div>
+
                 <div>{% if messages %}
                     {% for message in messages %}
-                        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                        <p>{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
                     {% endfor %}
                 {% endif %}
                 </div>
+
                 <input type="submit" class="btn-gray btn-save" value="Сохранить">
             </form>
         </div>

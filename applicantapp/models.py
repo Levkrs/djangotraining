@@ -33,6 +33,16 @@ class Resume(models.Model):
         verbose_name = 'Резюме'
         verbose_name_plural = 'Резюме'
 
+    STATUS = (
+        ('0', 'Отклонено модератором'),
+        ('1', 'Заготовка'),
+        ('2', 'На модерации'),
+        ('3', 'Опубликовано'),
+        ('4', 'Черновик'),
+        ('5', 'Скрыто'),
+        ('9', 'Удалено'),
+    )
+
     EMPLOYMENT_CHOICES = (
         ('FT', 'Полная занятость'),
         ('PT', 'Частичная занятость'),
@@ -62,12 +72,11 @@ class Resume(models.Model):
 
     user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE)
     headline = models.CharField(max_length=255, blank=False, verbose_name='Заголовок')
+    status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
     first_name = models.CharField(max_length=255, blank=False, verbose_name='Имя')
     surname = models.CharField(max_length=255, blank=False, verbose_name='Фамилия')
     salary = models.PositiveIntegerField(blank=True, null=True, verbose_name='Желаемая заработная плата')
     date_of_birth = models.DateField(blank=False, verbose_name='Дата рождения')
-    is_active = models.BooleanField(blank=False, default=False, verbose_name='Резюме активно')
-    is_cheked = models.BooleanField(blank=False, default=False, verbose_name='Резюме проверенно модератором')
     city = models.CharField(max_length=255, blank=False, verbose_name='Город')
     user_pic = models.ImageField(upload_to=user_directory_path, blank=True, null=True, verbose_name='Фото')
     links = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка на профиль в соц. сетях или сайт')
@@ -81,7 +90,7 @@ class Resume(models.Model):
     views_count = models.PositiveIntegerField(blank=False, default=0, verbose_name='Кол-во просмотров')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-    status = models.ForeignKey(to=StatusResume, on_delete=models.DO_NOTHING, default=1, blank=True)
+
 
     def __repr__(self):
         return self.headline
