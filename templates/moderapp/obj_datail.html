@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    {% block header %}
+        {% include 'inc/nav.html' %}
+    {% endblock %}
+
+    {% block nav %}
+        {#                {% include 'inc/nav.html' %}#}
+    {% endblock %}
+
+    {% block content %}
+        <div class="container resume-container">
+            <form method="post" class="form-resume" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <input type="submit" class="btn-gray btn-save" value="Сохранить">
+            </form>
+        </div>
+    {% endblock %}
+
+{% endblock %}

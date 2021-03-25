@@ -26,7 +26,7 @@ class ModerateResume(LoginRequiredMixin, UpdateView):
     """
     model = Resume
     form_class = ResumeModerateForm
-    template_name = 'applicantapp/update_resume.html'
+    template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
 
 
@@ -36,7 +36,7 @@ class ModerateJob(LoginRequiredMixin, UpdateView):
     """
     model = Job
     form_class = JobModerateForm
-    template_name = 'companyapp/job_form.html'
+    template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
 
 
@@ -46,5 +46,5 @@ class ModerateCompany(LoginRequiredMixin, UpdateView):
     """
     model = Company
     form_class = CompanyModerateForm
-    template_name = 'companyapp/company_detail.html'
+    template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
