@@ -74,6 +74,7 @@ class UpdateResume(LoginRequiredMixin, UpdateView):
     template_name = 'applicantapp/update_resume.html'
     success_url = '/'
 
+
 class JobSearchList(LoginRequiredMixin, ListView):
 
     model = Job

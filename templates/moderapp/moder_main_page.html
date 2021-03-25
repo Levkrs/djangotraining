@@ -36,7 +36,7 @@
                                     <div class="item-block">
                                         <header>
                                             <div class="hgroup">
-                                                <h4>{{ resume }}</h4>
+                                                <a href="{% url 'moderapp:moderate_resume' resume.pk %}"><h4>{{ resume }}</h4></a>
                                             </div>
 
                                     </header>
@@ -55,7 +55,7 @@
                                     <div class="item-block">
                                         <header>
                                             <div class="hgroup">
-                                                <h4>{{ job }}</h4>
+                                                <a href="{% url 'moderapp:moderate_job' job.pk %}"><h4>{{ job }}</h4></a>
                                             </div>
 
                                     </header>
@@ -74,7 +74,7 @@
                                     <div class="item-block">
                                         <header>
                                             <div class="hgroup">
-                                                <h4>{{ company }}</h4>
+                                                <a href="{% url 'moderapp:moderate_company' company.pk %}"><h4>{{ company }}</h4></a>
                                             </div>
 
                                     </header>

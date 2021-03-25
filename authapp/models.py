@@ -37,6 +37,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     ROLE = (
         ('HR', 'Работодатель'),
         ('REC', 'Соискатель'),
+        ('MOD', 'Модератор'),
     )
 
     role = models.CharField('Роль', max_length=3, choices=ROLE, default='REC', null=True, blank=False)
