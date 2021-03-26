@@ -11,9 +11,14 @@ from applicantapp.models import Resume
 from icecream import ic
 
 
-class ProfileView(LoginRequiredMixin, TemplateView):
+class ProfileView(LoginRequiredMixin, ListView):
     """ ЛК Компании """
     template_name = 'companyapp/profile.html'
+
+
+    def get_queryset(self):
+        """Выводим список вакансий компании"""
+        return Job.objects.filter(company__user_id=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
