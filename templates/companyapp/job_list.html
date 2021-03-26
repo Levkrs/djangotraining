@@ -22,6 +22,7 @@
                         <th class="narrow">Просмотров</th>
                         <th>Статус</th>
                     </tr>
+
                     {% for item in object_list.select_related %}
                         <tr>
                         <th class="narrow">{{ forloop.counter }}</th>
