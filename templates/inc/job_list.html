@@ -1,0 +1,21 @@
+{% for jobs in object_list %}
+<div class="col-xs-12">
+    <div class="item-block">
+        <header>
+            <a href="#"><img src="/img/logo-google.jpg" alt=""></a>
+            <div class="hgroup">
+                <h5><a href="{% url 'applicantapp:job-list-detail' jobs.pk %}">{{ jobs }} </a></h5>
+                <h5><a href="company-detail.html">Google</a></h5>
+            </div>
+            <div class="header-meta">
+                <span ><i class="fa fa-map-marker"></i> {{ jobs.city }} </span><br>
+                <span class="rate">{{ jobs.salary }} руб. </span>
+            </div>
+        </header>
+
+        <footer>
+
+        </footer>
+    </div>
+</div>
+{% endfor %}
