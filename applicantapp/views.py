@@ -10,6 +10,7 @@ from applicantapp.models import Resume, StatusResume
 from authapp.models import MyUser
 from companyapp.models import Job
 from icecream import ic
+from django.db.models import Q
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -41,7 +42,7 @@ class CreateResume(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         print(self.object.id)
-        return reverse_lazy('applicantapp:profile',args=(self.request.user.id,))
+        return reverse_lazy('applicantapp:profile', args=(self.request.user.id,))
 
     def get_context_data(self, **kwargs):
         ctx = super(CreateResume, self).get_context_data(**kwargs)
@@ -74,20 +75,21 @@ class UpdateResume(LoginRequiredMixin, UpdateView):
     template_name = 'applicantapp/update_resume.html'
     success_url = '/'
 
-
-class JobSearchList(LoginRequiredMixin, ListView):
-
-    model = Job
-    template_name = 'applicantapp/job_search.html'
-    # paginate_by = 25
-
-    def get_queryset(self):
-        req = Job.objects.all().order_by('-id')[:10]
-        return req
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+# class JobSearchList(LoginRequiredMixin, ListView):
+#
+#     model = Job
+#     template_name = 'applicantapp/job_search.html'
+#     paginate_by = 10
+#
+#     def get_queryset(self):
+#         query = self.request.GET.get('q')
+#         if query:
+#             object_list = Job.objects.filter(
+#                 Q(description__icontains=query) | Q(short_description__icontains=query)
+#             )
+#             return object_list
+#         else:
+#             return Job.objects.all()
 
 
 class JobListDetail(LoginRequiredMixin, DetailView):
