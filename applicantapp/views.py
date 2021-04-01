@@ -1,16 +1,19 @@
 """
 Views of applicant
 """
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from applicantapp.forms import UserProfileForm, ResumeUpdateForm
 from applicantapp.models import Resume, StatusResume
 from authapp.models import MyUser
 from companyapp.models import Job
+from authapp.permissions import PERMISSION_DENIED_MESSAGE
 from icecream import ic
 from django.db.models import Q
+
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -33,12 +36,14 @@ class ResumeList(LoginRequiredMixin, ListView):
         return Resume.objects.filter(user=self.request.user.id)
 
 
-class CreateResume(LoginRequiredMixin, CreateView):
+class CreateResume(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """
     Создание резюме
     """
     form_class = UserProfileForm
     template_name = 'applicantapp/create_resume.html'
+    permission_required = ('applicantapp.add_resume', )
+    permission_denied_message = PERMISSION_DENIED_MESSAGE
 
     def get_success_url(self):
         print(self.object.id)
@@ -66,7 +71,7 @@ class CreateResume(LoginRequiredMixin, CreateView):
         request.POST = request.POST.copy()
         return super(CreateResume, self).post(request, **kwargs)
 
-class UpdateResume(LoginRequiredMixin, UpdateView):
+class UpdateResume(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """
     Update Resume
     """
@@ -74,6 +79,8 @@ class UpdateResume(LoginRequiredMixin, UpdateView):
     form_class = ResumeUpdateForm
     template_name = 'applicantapp/update_resume.html'
     success_url = '/'
+    permission_required = ('applicantapp.change_resume', 'applicantapp.delete_resume')
+    permission_denied_message = PERMISSION_DENIED_MESSAGE
 
 # class JobSearchList(LoginRequiredMixin, ListView):
 #
