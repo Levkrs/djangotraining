@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import render
 
 # Create your views here.
@@ -11,7 +11,7 @@ from companyapp.models import Job, Company
 from moderapp.forms import ResumeModerateForm, JobModerateForm, CompanyModerateForm
 
 
-class ModerListPage(LoginRequiredMixin, TemplateView):
+class ModerListPage(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     template_name = 'moderapp/moder_main_page.html'
 
     def get_context_data(self, **kwargs):
@@ -31,7 +31,7 @@ class CheckedResumePage(UpdateView):
         return reverse('moderapp:moder_list_page')
 
 
-class ModerateResume(LoginRequiredMixin, UpdateView):
+class ModerateResume(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """
     Moderate Resume
     """
@@ -40,8 +40,10 @@ class ModerateResume(LoginRequiredMixin, UpdateView):
     template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
 
+    permission_required = ('applicantapp.change_resume', 'applicantapp.delete_resume')
 
-class ModerateJob(LoginRequiredMixin, UpdateView):
+
+class ModerateJob(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """
     Moderate Job
     """
@@ -50,8 +52,10 @@ class ModerateJob(LoginRequiredMixin, UpdateView):
     template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
 
+    permission_required = ('company.change_job', 'company.delete_job')
 
-class ModerateCompany(LoginRequiredMixin, UpdateView):
+
+class ModerateCompany(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """
     Moderate Company
     """
@@ -59,6 +63,8 @@ class ModerateCompany(LoginRequiredMixin, UpdateView):
     form_class = CompanyModerateForm
     template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
+
+    permission_required = ('company.change_company', 'company.delete_company')
 
 
 class CheckJobPage(UpdateView):
