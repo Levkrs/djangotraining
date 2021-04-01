@@ -2,12 +2,13 @@
 Views of company
 """
 
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
 
 from .models import Company, Job
 from applicantapp.models import Resume
+from authapp.permissions import PERMISSION_DENIED_MESSAGE
 from icecream import ic
 
 
@@ -36,8 +37,10 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
         # TODO  исключить из счета владельца, чтобы избежать накрутки
 
 
-class CompanyUpdateView(LoginRequiredMixin, UpdateView):
+class CompanyUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """ Редактор карточки компании """
+    permission_required = ('company.change_company', 'company.delete_company')
+    permission_denied_message = PERMISSION_DENIED_MESSAGE
     model = Company
     fields = ('name', 'logo', 'headline', 'short_description', 'detail', 'location', 'link',)
 
@@ -45,22 +48,28 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('companyapp:card', args=[self.object.pk])
 
 
-class JobCreateView(LoginRequiredMixin, CreateView):
+class JobCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     """ Карточка вакансии (создание) """
     model = Job
     fields = ('status', 'grade', 'category', 'salary', 'city', 'employment', 'skills',
               'work_schedule', 'experience', 'short_description', 'description',)
+
+    permission_required = ('company.add_job', )
+    permission_denied_message = PERMISSION_DENIED_MESSAGE
 
     def form_valid(self, form):
         form.instance.company = self.request.user.company
         return super().form_valid(form)
 
 
-class JobUpdateView(LoginRequiredMixin, UpdateView):
+class JobUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     """ Редактор карточки вакансии """
     model = Job
     fields = ('status', 'grade', 'category', 'salary', 'city', 'employment', 'skills',
               'work_schedule', 'experience', 'short_description', 'description',)
+
+    permission_required = ('company.change_job', 'company.delete_job')
+    permission_denied_message = PERMISSION_DENIED_MESSAGE
 
 
 class JobListView(LoginRequiredMixin, ListView):
@@ -95,15 +104,12 @@ class ResumeListDetail(LoginRequiredMixin, DetailView):
     """
     Развернуть резюме подробнро
     """
-    
     model = Resume
-
     template_name = 'companyapp/resume_detail.html'
+
     def get_queryset(self):
         req = Resume.objects.filter(pk=self.kwargs['pk'])
         return req
-
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
