@@ -10,9 +10,9 @@ from applicantapp.forms import UserProfileForm, ResumeUpdateForm
 from applicantapp.models import Resume, StatusResume
 from authapp.models import MyUser
 from companyapp.models import Job
-from authapp.permissions import PERMISSION_DENIED_MESSAGE
-from icecream import ic
-from django.db.models import Q
+from authapp.permissions import PERMISSION_DENIED_MESSAGE, ApplicantPermissionMixin
+# from icecream import ic
+# from django.db.models import Q
 
 
 
@@ -36,14 +36,13 @@ class ResumeList(LoginRequiredMixin, ListView):
         return Resume.objects.filter(user=self.request.user.id)
 
 
-class CreateResume(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class CreateResume(LoginRequiredMixin, ApplicantPermissionMixin, CreateView):
     """
     Создание резюме
     """
     form_class = UserProfileForm
     template_name = 'applicantapp/create_resume.html'
-    permission_required = ('applicantapp.add_resume', )
-    permission_denied_message = PERMISSION_DENIED_MESSAGE
+
 
     def get_success_url(self):
         print(self.object.id)
@@ -71,7 +70,7 @@ class CreateResume(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         request.POST = request.POST.copy()
         return super(CreateResume, self).post(request, **kwargs)
 
-class UpdateResume(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class UpdateResume(LoginRequiredMixin, ApplicantPermissionMixin, UpdateView):
     """
     Update Resume
     """
@@ -79,8 +78,6 @@ class UpdateResume(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = ResumeUpdateForm
     template_name = 'applicantapp/update_resume.html'
     success_url = '/'
-    permission_required = ('applicantapp.change_resume', 'applicantapp.delete_resume')
-    permission_denied_message = PERMISSION_DENIED_MESSAGE
 
 # class JobSearchList(LoginRequiredMixin, ListView):
 #
