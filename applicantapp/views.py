@@ -2,6 +2,7 @@
 Views of applicant
 """
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -133,3 +134,19 @@ class JobListDetail(LoginRequiredMixin, DetailView):
         # obj.category = 'ASDSAD'
         # ic(context['object'].__dict__)
         return context
+
+class JobSearchList(ListView):
+    """Поиск вакансий по краткому описанию"""
+    model = Job
+    template_name = 'applicantapp/job_search.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            object_list = Job.objects.filter(
+                Q(description__icontains=query) | Q(short_description__icontains=query)
+            )
+            return object_list
+        else:
+            return Job.objects.all()
