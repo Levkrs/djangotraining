@@ -4,8 +4,12 @@
 {% block header %}
     <header class="page-header applicant bg-img size-lg">
         <div class="container no-shadow">
-            <h1 class="text-center">ЛК Соискателя № {{ user.pk }} - {{ user.email }}</h1>
-            <p class="lead text-center">Список резюме | Избранное | Отклики</p>
+            <h1 class="text-center">ЛК Компании № {{ user.pk }} - {{ user.email }}</h1>
+            <p class="lead text-center">
+                <a href="{% url 'applicantapp:resume-list' %}"> Список резюме |</a>
+                <a href="{% url 'applicantapp:job_search_list' %}"> Поиск вакансий |</a>
+                <a href="#"> Приглашения |</a>
+            </p>
         </div>
     </header>
 {% endblock %}
