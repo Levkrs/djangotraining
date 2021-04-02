@@ -9,9 +9,10 @@ from django.views.generic import ListView, TemplateView, UpdateView
 from applicantapp.models import Resume
 from companyapp.models import Job, Company
 from moderapp.forms import ResumeModerateForm, JobModerateForm, CompanyModerateForm
+from authapp.permissions import ModeratorPermissionMixin
 
 
-class ModerListPage(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
+class ModerListPage(LoginRequiredMixin, ModeratorPermissionMixin, TemplateView):
     template_name = 'moderapp/moder_main_page.html'
 
     def get_context_data(self, **kwargs):
@@ -31,7 +32,7 @@ class CheckedResumePage(UpdateView):
         return reverse('moderapp:moder_list_page')
 
 
-class ModerateResume(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class ModerateResume(LoginRequiredMixin, ModeratorPermissionMixin, UpdateView):
     """
     Moderate Resume
     """
@@ -40,10 +41,8 @@ class ModerateResume(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
 
-    permission_required = ('applicantapp.change_resume', 'applicantapp.delete_resume')
 
-
-class ModerateJob(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class ModerateJob(LoginRequiredMixin, ModeratorPermissionMixin, UpdateView):
     """
     Moderate Job
     """
@@ -52,10 +51,8 @@ class ModerateJob(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
 
-    permission_required = ('company.change_job', 'company.delete_job')
 
-
-class ModerateCompany(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class ModerateCompany(LoginRequiredMixin, ModeratorPermissionMixin, UpdateView):
     """
     Moderate Company
     """
@@ -64,7 +61,6 @@ class ModerateCompany(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
 
-    permission_required = ('company.change_company', 'company.delete_company')
 
 
 class CheckJobPage(UpdateView):
