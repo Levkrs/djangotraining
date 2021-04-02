@@ -3,13 +3,14 @@ Views of company
 """
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
 
 from .models import Company, Job
 from applicantapp.models import Resume
 from authapp.permissions import CompanyPermissionMixin
-from icecream import ic
+# from icecream import ic
 
 
 class ProfileView(LoginRequiredMixin, ListView):
@@ -108,3 +109,19 @@ class ResumeListDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+class ResumeSearchList(ListView):
+    """Поиск резюме по краткому описанию"""
+    model = Resume
+    template_name = 'companyapp/resume_search.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            object_list = Resume.objects.filter(
+                Q(description__icontains=query) | Q(short_description__icontains=query)
+            )
+            return object_list
+        else:
+            return Resume.objects.all()
