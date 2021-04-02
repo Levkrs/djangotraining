@@ -8,7 +8,7 @@ from django.views.generic import CreateView, DetailView, ListView, TemplateView,
 
 from .models import Company, Job
 from applicantapp.models import Resume
-from authapp.permissions import PERMISSION_DENIED_MESSAGE
+from authapp.permissions import CompanyPermissionMixin
 from icecream import ic
 
 
@@ -37,10 +37,8 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
         # TODO  исключить из счета владельца, чтобы избежать накрутки
 
 
-class CompanyUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class CompanyUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     """ Редактор карточки компании """
-    permission_required = ('company.change_company', 'company.delete_company')
-    permission_denied_message = PERMISSION_DENIED_MESSAGE
     model = Company
     fields = ('name', 'logo', 'headline', 'short_description', 'detail', 'location', 'link',)
 
@@ -48,28 +46,24 @@ class CompanyUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
         return reverse_lazy('companyapp:card', args=[self.object.pk])
 
 
-class JobCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class JobCreateView(LoginRequiredMixin, CompanyPermissionMixin, CreateView):
     """ Карточка вакансии (создание) """
     model = Job
     fields = ('status', 'grade', 'category', 'salary', 'city', 'employment', 'skills',
               'work_schedule', 'experience', 'short_description', 'description',)
 
-    permission_required = ('company.add_job', )
-    permission_denied_message = PERMISSION_DENIED_MESSAGE
 
     def form_valid(self, form):
         form.instance.company = self.request.user.company
         return super().form_valid(form)
 
 
-class JobUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class JobUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     """ Редактор карточки вакансии """
     model = Job
     fields = ('status', 'grade', 'category', 'salary', 'city', 'employment', 'skills',
               'work_schedule', 'experience', 'short_description', 'description',)
 
-    permission_required = ('company.change_job', 'company.delete_job')
-    permission_denied_message = PERMISSION_DENIED_MESSAGE
 
 
 class JobListView(LoginRequiredMixin, ListView):
