@@ -8,7 +8,7 @@ from django.views.generic import CreateView, ListView, TemplateView, UpdateView,
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from applicantapp.forms import UserProfileForm, ResumeUpdateForm
-from applicantapp.models import Resume, StatusResume
+from applicantapp.models import Resume
 from authapp.models import MyUser
 from companyapp.models import Job
 from authapp.permissions import PERMISSION_DENIED_MESSAGE, ApplicantPermissionMixin
@@ -58,7 +58,7 @@ class CreateResume(LoginRequiredMixin, ApplicantPermissionMixin, CreateView):
         form.instance.user = user_for_reg
         if form.data['submit_btn_val']:
             name_status = form.data['submit_btn_val']
-            status_val = StatusResume.objects.get(id=name_status)
+            status_val = form.instance.status
             form.instance.status = status_val
         return super(CreateResume, self).form_valid(form)
 
