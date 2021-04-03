@@ -7,7 +7,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Resume
         # fields = '__all__'
-        exclude = ['user', 'is_cheked', 'moder_comment', 'created_at', 'updated_at', 'views_count',]
+        exclude = ['user', 'status', 'moder_comment', 'created_at', 'updated_at', 'views_count',]
 
 
 class ResumeUpdateForm(forms.ModelForm):

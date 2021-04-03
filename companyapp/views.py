@@ -92,7 +92,7 @@ class ResumeListHR(LoginRequiredMixin, ListView):
     template_name = 'companyapp/resume_list_hr.html'
 
     def get_queryset(self):
-        return Resume.objects.filter(is_active=1).filter(is_cheked=True)
+        return Resume.objects.filter(status='Опубликовано')
     
     
 class ResumeListDetail(LoginRequiredMixin, DetailView):
