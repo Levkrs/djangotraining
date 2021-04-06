@@ -4,7 +4,7 @@
 {% block header %}
     <header class="page-header bg-img size-lg">
         <div class="container no-shadow">
-            <h1 class="text-center"> Список резюме и компаний</h1>
+            <h1 class="text-center"> Резюме, вакансии, компании и новости </h1>
         </div>
     </header>
 {% endblock %}
@@ -19,11 +19,17 @@
 
                     <div class="tab">
                         <button class="tablinks" onclick="openCity(event, 'Resume')">
-                            Resume {{ resume_for_aprove.count }}</button>
+                            Resume {{ resume_for_aprove.count }}
+                        </button>
                         <button class="tablinks" onclick="openCity(event, 'Job')">
-                            Job {{ job_for_aprove.count }}</button>
+                            Job {{ job_for_aprove.count }}
+                        </button>
                         <button class="tablinks" onclick="openCity(event, 'Company')">
-                            Company {{ company_for_aprove.count }}</button>
+                            Company {{ company_for_aprove.count }}
+                        </button>
+                        <button class="tablinks news" onclick="openCity(event, 'News')">
+                            News {{ news.count }}
+                        </button>
                     </div>
 
                     <!-- Tab content -->
@@ -38,9 +44,7 @@
                                             <div class="hgroup">
                                                 <a href="{% url 'moderapp:moderate_resume' resume.pk %}"><h4>{{ resume }}</h4></a>
                                             </div>
-
-                                    </header>
-
+                                        </header>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -57,9 +61,7 @@
                                             <div class="hgroup">
                                                 <a href="{% url 'moderapp:moderate_job' job.pk %}"><h4>{{ job }}</h4></a>
                                             </div>
-
-                                    </header>
-
+                                        </header>
                                     </div>
                                 </div>
                             {% endfor %}
@@ -76,15 +78,34 @@
                                             <div class="hgroup">
                                                 <a href="{% url 'moderapp:moderate_company' company.pk %}"><h4>{{ company }}</h4></a>
                                             </div>
-
-                                    </header>
-
+                                        </header>
                                     </div>
                                 </div>
                             {% endfor %}
                         </span>
                     </div>
+
+                    <div id="News" class="tabcontent" style="display: none">
+                        <h3>News</h3>
+                        <button><a href="{% url 'moderapp:add_news' %}">Add news</a></button>
+                        <span>
+                            {% for item in news %}
+                                <div class="col-xs-12">
+                                    <div class="item-block">
+                                        <header>
+                                            <div class="hgroup">
+                                                <a href="{% url 'moderapp:update_news' item.pk %}"><h4>{{ item }}</h4></a>
+                                            </div>
+                                        </header>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </span>
+                    </div>
+
                     <!-- END Tab content -->
+
+
                 </div>
             </div>
         </section>

@@ -1,18 +1,20 @@
+from companyapp.models import Job, Company
 import django.forms as forms
 
 from applicantapp.models import Resume
+from moderapp.models import News
 
-class ResumeForChecked(forms.ModelForm):
+
+class AddUpdateNewsForm(forms.ModelForm):
     class Meta:
-        model = Resume
-        fields = '__all__'
-from companyapp.models import Job, Company
+        model = News
+        exclude = ['created_at', ]
 
 
 class ResumeModerateForm(forms.ModelForm):
     class Meta:
         model = Resume
-        exclude = ['user',]
+        exclude = ['user', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -26,7 +28,7 @@ class ResumeModerateForm(forms.ModelForm):
 class JobModerateForm(forms.ModelForm):
     class Meta:
         model = Job
-        exclude = ['user',]
+        exclude = ['user', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -40,7 +42,7 @@ class JobModerateForm(forms.ModelForm):
 class CompanyModerateForm(forms.ModelForm):
     class Meta:
         model = Company
-        exclude = ['user',]
+        exclude = ['user', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
