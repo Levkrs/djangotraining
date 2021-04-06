@@ -125,7 +125,7 @@ class ResumeSearchList(ListView):
         query = self.request.GET.get('q')
         if query:
             object_list = Resume.objects.filter(
-                Q(description__icontains=query) | Q(short_description__icontains=query)
+                Q(headline__icontains=query) | Q(key_skills__icontains=query)
             )
             return object_list
         else:
