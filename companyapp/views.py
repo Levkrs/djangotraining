@@ -64,6 +64,11 @@ class JobUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     model = Job
     fields = ('status', 'grade', 'category', 'salary', 'city', 'employment', 'skills',
               'work_schedule', 'experience', 'short_description', 'description',)
+    template_name = 'companyapp/job_form_edit.html'
+
+    def get_success_url(self):
+        print(self.object.id)
+        return reverse_lazy('companyapp:profile', args=(self.request.user.id,))
 
 
 

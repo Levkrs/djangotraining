@@ -56,10 +56,10 @@ class CreateResume(LoginRequiredMixin, ApplicantPermissionMixin, CreateView):
     def form_valid(self, form):
         user_for_reg = MyUser.objects.get(id=self.request.user.id)
         form.instance.user = user_for_reg
-        if form.data['submit_btn_val']:
-            name_status = form.data['submit_btn_val']
-            status_val = StatusResume.objects.get(id=name_status)
-            form.instance.status = status_val
+        # if form.data['submit_btn_val']:
+        #     name_status = form.data['submit_btn_val']
+        #     status_val = StatusResume.objects.get(id=name_status)
+        #     form.instance.status = status_val
         return super(CreateResume, self).form_valid(form)
 
     # def from_invalid(self, form):
@@ -79,6 +79,16 @@ class UpdateResume(LoginRequiredMixin, ApplicantPermissionMixin, UpdateView):
     form_class = ResumeUpdateForm
     template_name = 'applicantapp/update_resume.html'
     success_url = '/'
+
+    def form_valid(self, form):
+        ctx = super(UpdateResume, self).form_valid(form)
+        user_for_reg = MyUser.objects.get(id=self.request.user.id)
+        form.instance.user = user_for_reg
+        # if form.data['submit_btn_val']:
+        #     name_status = form.data['submit_btn_val']
+        #     status_val = StatusResume.objects.get(id=name_status)
+        #     form.instance.status = status_val.status_name
+        return super(UpdateResume, self).form_valid(form)
 
 # class JobSearchList(LoginRequiredMixin, ListView):
 #

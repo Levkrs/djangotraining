@@ -39,7 +39,8 @@
                             {% for item in object_list %}
                                 <tr>
                                 <th class="narrow">{{ forloop.counter }}</th>
-                                <th class="wide"><a href="#">{{ item.short_description }}</a></th>
+
+                                <th class="wide"><a href="{% url 'companyapp:edit-job' item.pk %}">{{ item.short_description }}</a></th>
                                 <th>{{ item.city }}</th>
                                 <th class="narrow">{{item.views_count}}</th>
                                 {% if item.status == "0" %}
