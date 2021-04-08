@@ -1,0 +1,16 @@
+<!-- News item -->
+<div class="col-xs-12">
+    <a class="item-block" href="{% url 'mainapp:news_detail' item.pk %}">
+        <header>
+            <div class="hgroup">
+                <h4>{{ item.title }}</h4>
+                <h5>{{ item.body|slice:80 }}</h5>
+            </div>
+            <div class="header-meta">
+                <div class="ti-time"> {{ item.created_at }}</div>
+                <span class="news label label-success">Подробнее...</span>
+            </div>
+        </header>
+    </a>
+</div>
+<!-- END News item -->
