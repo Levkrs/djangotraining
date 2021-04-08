@@ -14,7 +14,7 @@ class AddUpdateNewsForm(forms.ModelForm):
 class ResumeModerateForm(forms.ModelForm):
     class Meta:
         model = Resume
-        exclude = ['user', ]
+        exclude = ['user', 'views_count']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -28,7 +28,7 @@ class ResumeModerateForm(forms.ModelForm):
 class JobModerateForm(forms.ModelForm):
     class Meta:
         model = Job
-        exclude = ['user', ]
+        exclude = ['user', 'views_count']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -42,7 +42,7 @@ class JobModerateForm(forms.ModelForm):
 class CompanyModerateForm(forms.ModelForm):
     class Meta:
         model = Company
-        exclude = ['user', ]
+        exclude = ['user', 'views_count']
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
