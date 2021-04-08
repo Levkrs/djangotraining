@@ -1,13 +1,11 @@
-from django.urls import reverse, reverse_lazy
-from django.views.generic import TemplateView, CreateView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 
+from applicantapp.models import Resume
 from authapp.models import MyUser
 from companyapp.models import Job, Company
 from mainapp.forms import IviteForm, InviteFromHrForm
 from moderapp.models import News
-from mainapp.models import InviteRecrut
-from applicantapp.models import Resume
-
 
 
 class Index(TemplateView):
@@ -17,9 +15,26 @@ class Index(TemplateView):
     template_name = 'mainapp/index.html'
     extra_context = {
         'title_name': 'GeekStaff',
-        'news': News.objects.all().order_by('-created_at'),
+        'news': News.objects.all().order_by('-created_at')[:5],
     }
 
+
+class AllNews(ListView):
+    """
+    All news
+    """
+    template_name = 'mainapp/news_all.html'
+
+    def get_queryset(self):
+        return News.objects.all().order_by('-created_at')
+
+
+class NewsDetail(DetailView):
+    """
+    Detail of some news item
+    """
+    model = News
+    template_name = 'mainapp/news_detail.html'
 
 class InviteView(CreateView):
     """ Отклик на вакансию """
@@ -59,7 +74,6 @@ class InviteFromHr(CreateView):
         form.instance.hr = _company
         form.instance.resume = _resume
         return super(InviteFromHr, self).form_valid(form)
-
 
 
 
