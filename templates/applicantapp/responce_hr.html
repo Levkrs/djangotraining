@@ -6,10 +6,9 @@
         <div class="container no-shadow">
             <h1 class="text-center">Личный кабинет - {{ user.email }}</h1>
             <p class="lead text-center">
-                <a href="{% url 'companyapp:card' user.company.pk %}">| Карточка компании |</a>
-                <a href="{% url 'companyapp:job-list' %}"> Список вакансий |</a>
-                <a href="{% url 'companyapp:resume_search' %}"> Поиск резюме |</a>
-                <a href="{% url 'companyapp:responce_recrut_list' %}"> Отклики |</a>
+                <a href="{% url 'applicantapp:resume-list' %}"> Список резюме |</a>
+                <a href="{% url 'applicantapp:job_search_list' %}"> Поиск вакансий |</a>
+                <a href="{% url 'applicantapp:responce_resume_list' %}"> Приглашения |</a>
             </p>
         </div>
     </header>
@@ -23,43 +22,46 @@
                 <div class="row item-blocks-connected">
                     <div class="col-xs-12 text-right">
                         <br>
-                        <a class="btn btn-primary btn-sm" href="{% url 'companyapp:new-job' user.company.pk %}">Добавить вакансию</a>
+{#                        <a class="btn btn-primary btn-sm" href="{% url 'companyapp:new-job' user.company.pk %}">Добавить вакансию</a>#}
                     </div>
 
                     <div class="job-list">
                         <table class="job-list__table">
-                            <caption><h2>Вакансии:</h2></caption>
+                            <caption><h2>Отклики:</h2></caption>
                             <tr>
                                 <th class="narrow">№</th>
-                                <th class="wide">Описание</th>
-                                <th>Город</th>
-                                <th class="narrow">Просмотров</th>
+                                <th class="wide">Кто откликнулся</th>
+                                <th>Вакансия</th>
+                                <th class="narrow">Вакансия</th>
                                 <th>Статус</th>
                             </tr>
                             {% for item in object_list %}
                                 <tr>
                                 <th class="narrow">{{ forloop.counter }}</th>
 
-                                <th class="wide"><a href="{% url 'companyapp:edit-job' item.pk %}">{{ item.short_description }}</a></th>
-                                <th>{{ item.city }}</th>
-                                <th class="narrow">{{item.views_count}}</th>
-                                {% if item.status == "0" %}
-                                    <th>Отклонена модератором</th>
-                                {% elif item.status == "1" %}
-                                    <th>Заготовка</th>
-                                {% elif item.status == "2" %}
-                                    <th>На модерации</th>
-                                {% elif item.status == "3" %}
-                                    <th>Опубликована</th>
-                                {% elif item.status == "4" %}
-                                    <th>Черновик</th>
-                                {% elif item.status == "5" %}
-                                    <th>Скрыта</th>
-                                {% elif item.status == "6" %}
-                                    <th>Закрыта</th>
-                                {% elif item.status == "9" %}
-                                    <th>Удалена</th>
-                                {% endif %}
+                                <th class="wide">
+{#                                    <a href="{% url 'companyapp:resume-list-detail' item.hr.pk %}">{{ item.hr }}</a>#}
+                                    {{ item.hr }}
+                                </th>
+                                <th><a href="{% url 'applicantapp:job-list-detail' item.vacansy.pk %}">{{ item.vacansy }}</a></th>
+{#                                <th class="narrow">{{item.views_count}}</th>#}
+{#                                {% if item.status == "0" %}#}
+{#                                    <th>Отклонена модератором</th>#}
+{#                                {% elif item.status == "1" %}#}
+{#                                    <th>Заготовка</th>#}
+{#                                {% elif item.status == "2" %}#}
+{#                                    <th>На модерации</th>#}
+{#                                {% elif item.status == "3" %}#}
+{#                                    <th>Опубликована</th>#}
+{#                                {% elif item.status == "4" %}#}
+{#                                    <th>Черновик</th>#}
+{#                                {% elif item.status == "5" %}#}
+{#                                    <th>Скрыта</th>#}
+{#                                {% elif item.status == "6" %}#}
+{#                                    <th>Закрыта</th>#}
+{#                                {% elif item.status == "9" %}#}
+{#                                    <th>Удалена</th>#}
+{#                                {% endif %}#}
 
                             {% endfor %}
                             </tr>
@@ -148,7 +150,7 @@
 {#                        </div>#}
 {#                    </div>#}
                     <!-- END Job detail -->
-    
+
                 </div>
             </div>
         </section>

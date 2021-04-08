@@ -7,6 +7,8 @@ from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
 
+from authapp.models import MyUser
+from mainapp.models import InviteRecrut
 from .models import Company, Job
 from applicantapp.models import Resume
 from authapp.permissions import CompanyPermissionMixin
@@ -67,8 +69,16 @@ class JobUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     template_name = 'companyapp/job_form_edit.html'
 
     def get_success_url(self):
-        print(self.object.id)
+        # print(self.object.id)
         return reverse_lazy('companyapp:profile', args=(self.request.user.id,))
+
+
+class JobDetailView(LoginRequiredMixin, CompanyPermissionMixin, DetailView):
+    model = Job
+    fields = ('status', 'grade', 'category', 'salary', 'city', 'employment', 'skills',
+              'work_schedule', 'experience', 'short_description', 'description',)
+
+    template_name = 'companyapp/job_detail.html'
 
 
 
@@ -97,7 +107,7 @@ class ResumeListHR(LoginRequiredMixin, ListView):
     template_name = 'companyapp/resume_list_hr.html'
 
     def get_queryset(self):
-        return Resume.objects.filter(status='Опубликовано')
+        return Resume.objects.filter(status='3')
     
     
 class ResumeListDetail(LoginRequiredMixin, DetailView):
@@ -130,3 +140,16 @@ class ResumeSearchList(ListView):
             return object_list
         else:
             return Resume.objects.all()
+
+class ResponceRec(ListView):
+    model = InviteRecrut
+    template_name = 'companyapp/responce_rec.html'
+
+
+    def get_queryset(self):
+        # company_to_user = self.request.user.company.id
+        # print(company_to_user)
+        job_list_id = list(Job.objects.filter(company_id=self.request.user.company.id).values_list('id', flat=True))
+        object_list = InviteRecrut.objects.filter(vacansy_id__in=job_list_id)
+
+        return object_list

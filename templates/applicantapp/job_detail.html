@@ -145,7 +145,8 @@
                     <div class="form-group col-lg-12" style="text-align: center;">
                         <div class="input-group">
                             <span class="input-group-addon"><i class=""></i></span>
-                            <button class="btn btn-gray">Откликнуться</button>
+{#                            <button class="btn btn-gray">Откликнуться</button>#}
+                            <a href="{% url 'mainapp:invite_user' object.pk %}" class="btn btn-gray"> Откликнуться </a>
                             <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-gray"> Назад </a>
                             <span class="input-group-addon"><i class=""></i></span>
                         </div>

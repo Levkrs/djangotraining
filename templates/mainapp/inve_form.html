@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+    <body class="login-page">
+    <main>
+        <div class="login-block">
+            <h1>Выберите вакансию</h1>
+
+            <form method="POST"> {% csrf_token %}
+                {{ form.as_p }}
+
+                <button class="btn btn-primary btn-block" type="submit"> Откликнуться</button>
+                <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-primary btn-block"> Назад </a>
+
+            </form>
+        </div>
+
+
+    </main>
+
+    </body>
+{% endblock %}

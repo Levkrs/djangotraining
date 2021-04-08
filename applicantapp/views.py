@@ -14,7 +14,7 @@ from companyapp.models import Job
 from authapp.permissions import PERMISSION_DENIED_MESSAGE, ApplicantPermissionMixin
 # from icecream import ic
 # from django.db.models import Q
-
+from mainapp.models import InviteHr
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -56,17 +56,9 @@ class CreateResume(LoginRequiredMixin, ApplicantPermissionMixin, CreateView):
     def form_valid(self, form):
         user_for_reg = MyUser.objects.get(id=self.request.user.id)
         form.instance.user = user_for_reg
-        # if form.data['submit_btn_val']:
-        #     name_status = form.data['submit_btn_val']
-        #     status_val = StatusResume.objects.get(id=name_status)
-        #     form.instance.status = status_val
+
         return super(CreateResume, self).form_valid(form)
 
-    # def from_invalid(self, form):
-    #     text=form
-    #     ic(form)
-    #     return super(CreateResume, self).from_invalid(form)
-    #
     def post(self, request, **kwargs):
         request.POST = request.POST.copy()
         return super(CreateResume, self).post(request, **kwargs)
@@ -118,6 +110,8 @@ class JobListDetail(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         req = Job.objects.filter(pk=self.kwargs['pk'])
+
+
         # CHOISE = Job()
         # a = 'FED'
         # result = filter(a, for iter in CHOISE.CATEGORY)
@@ -140,6 +134,7 @@ class JobListDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         # obj = context['object']
         # obj.category = 'ASDSAD'
         # ic(context['object'].__dict__)
@@ -160,3 +155,17 @@ class JobSearchList(ListView):
             return object_list
         else:
             return Job.objects.all()
+
+class ResponceHr(ListView):
+    model = InviteHr
+    template_name = 'applicantapp/responce_hr.html'
+
+
+    def get_queryset(self):
+        # company_to_user = self.request.user.company.id
+        # print(company_to_user)
+        resume_list_id = list(Resume.objects.filter(user=self.request.user.id).values_list('id', flat=True))
+        object_list = InviteHr.objects.filter(resume_id__in=resume_list_id)
+        print('__')
+
+        return object_list

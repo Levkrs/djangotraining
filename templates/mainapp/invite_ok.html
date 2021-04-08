@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <header class="page-header bg-img size-lg">
+
+    </header>
+{% endblock %}
+
+{% block content %}
+    <!-- Main container -->
+    <main>
+        <section class="no-padding-top bg-alt">
+            <div class="container">
+                <div class="row item-blocks-connected">
+                    <div>
+                        <h1>{{ resp }} </h1>
+                    </div>
+                </div>
+                <a href="{% url 'applicantapp:job_search_list' %}" class="btn btn-gray"> К списку вакансий. </a>
+            </div>
+        </section>
+    </main>
+    <!-- END Main container -->
+{% endblock %}
+
+{% block footer %} {% endblock %}
