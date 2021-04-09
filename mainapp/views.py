@@ -17,7 +17,7 @@ class Index(TemplateView):
     template_name = 'mainapp/index.html'
     extra_context = {
         'title_name': 'GeekStaff',
-        'news': News.objects.all().order_by('-created_at')[:5],
+        'object_list': News.objects.all().order_by('-created_at')[:3]
     }
 
 
