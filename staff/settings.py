@@ -109,12 +109,25 @@ WSGI_APPLICATION = 'staff.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ.get('DB_NAME', default='geek_staff'),
+            'USER': os.environ.get('DB_USER', default='geek_staff'),
+            'PASSWORD': os.environ.get('DB_PASSWORD', default='geek_staff'),
+            'HOST': os.environ.get('DB_HOST', default='postgres'),
+            'PORT': os.environ.get('DB_PORT', default='5432'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

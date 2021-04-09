@@ -6,5 +6,6 @@
 *.yaml
 *.yml
 *.pdf
+*.sqlite3
 Jenkinsfile*
 celerybeat-schedule*

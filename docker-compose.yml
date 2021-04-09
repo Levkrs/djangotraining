@@ -3,8 +3,20 @@ version: "3"
 volumes:
   static_data:
   media_data:
+  postgres_data:
 
 services:
+
+  postgres:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=geek_staff
+      - POSTGRES_PASSWORD=geek_staff
+      - POSTGRES_DB=geek_staff
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
 
   app:
     build: .
@@ -14,6 +26,10 @@ services:
     environment:
       - DEBUG=False
     entrypoint: ./run.sh
+    depends_on:
+      - postgres
+    links:
+      - postgres
 
   nginx:
     build: ./nginx
