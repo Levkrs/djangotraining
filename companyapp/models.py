@@ -77,7 +77,6 @@ class Job(models.Model):
     )
 
     GRADE = (
-        ('NO', ''),
         ('TR', 'Trainee'),
         ('JR', 'Junior'),
         ('MD', 'Middle'),
@@ -87,7 +86,6 @@ class Job(models.Model):
     )
 
     CATEGORY = (
-        ('NO', ''),
         ('FLS', 'Full Stack'),
         ('FED', 'Front-end'),
         ('BED', 'Back-end'),
@@ -104,7 +102,6 @@ class Job(models.Model):
     )
 
     EMPLOYMENT = (
-        ('NO', ''),
         ('FT', 'Полная занятость'),
         ('PT', 'Частичная занятость'),
         ('PW', 'Проектная работа'),
@@ -113,7 +110,6 @@ class Job(models.Model):
     )
 
     WORK_SCHEDULE = (
-        ('NO', ''),
         ('FD', 'Полный день'),
         ('SSCH', 'Сменный график'),
         ('FSCH', 'Гибкий график'),
@@ -122,7 +118,6 @@ class Job(models.Model):
     )
 
     EXPERIENCE = (
-        ('NO', ''),
         ('WE', 'Без опыта'),
         ('SM', 'До 1 года'),
         ('MD', '1-3 года'),

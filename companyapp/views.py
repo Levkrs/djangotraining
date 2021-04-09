@@ -22,11 +22,7 @@ class ProfileView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         """Выводим список вакансий компании"""
-        return Job.objects.filter(company__user_id=self.kwargs['pk'])
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+        return Job.objects.filter(company__user=self.request.user)
 
 
 class CompanyDetailView(LoginRequiredMixin, DetailView):
@@ -90,12 +86,7 @@ class JobListView(LoginRequiredMixin, ListView):
     fields = '__all__'
 
     def get_queryset(self):
-        try:
-            company = self.request.user.company
-        except Exception:
-            return self.model.objects.none()
-
-        return company.jobs
+        return Job.objects.filter(company__user=self.request.user)
 
 
 class ResumeListHR(LoginRequiredMixin, ListView):
