@@ -7,7 +7,6 @@ from companyapp.models import Job
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = Resume
-        # fields = '__all__'
         exclude = ['user', 'status', 'moder_comment', 'created_at', 'updated_at', 'views_count',]
 
 

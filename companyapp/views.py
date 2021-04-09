@@ -40,6 +40,7 @@ class CompanyUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     """ Редактор карточки компании """
     model = Company
     fields = ('name', 'logo', 'headline', 'short_description', 'detail', 'location', 'link',)
+    template_name = 'companyapp/company_form.html'
 
     def get_success_url(self):
         return reverse_lazy('companyapp:card', args=[self.object.pk])
@@ -65,7 +66,6 @@ class JobUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     template_name = 'companyapp/job_form_edit.html'
 
     def get_success_url(self):
-        # print(self.object.id)
         return reverse_lazy('companyapp:profile', args=(self.request.user.id,))
 
 
