@@ -21,7 +21,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '7_ts#mx_28diob4$3c7k&n4+o(gav2z3(b6%g4(wcno$w#2e8i'
 
 DEBUG = os.environ.get('DEBUG', default='True') == 'True'  # Bool value needs more specific
-print(DEBUG)
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
