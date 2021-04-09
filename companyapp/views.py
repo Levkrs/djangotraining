@@ -153,3 +153,8 @@ class ResponceRec(ListView):
         object_list = InviteRecrut.objects.filter(vacansy_id__in=job_list_id)
 
         return object_list
+
+class RespJobDetail(JobDetailView):
+
+    template_name = 'companyapp/responce_rec_detail.html'
+

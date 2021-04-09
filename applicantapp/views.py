@@ -169,3 +169,38 @@ class ResponceHr(ListView):
         print('__')
 
         return object_list
+
+class ResponceJobDetail(LoginRequiredMixin, DetailView):
+    """
+    Развернуть резюме подробнро
+    """
+
+    model = Resume
+
+    template_name = 'applicantapp/responce_job_detail.html'
+
+    def get_queryset(self):
+        req = Job.objects.filter(pk=self.kwargs['pk'])
+        # CHOISE = Job()
+        # a = 'FED'
+        # result = filter(a, for iter in CHOISE.CATEGORY)
+        # result = filter(lambda x: x[0] == a, CHOISE.CATEGORY)
+        # ic(CHOISE.)
+        # ic(req.__dict__)
+        # for item in req:
+            # ic(item.__dict__)
+            # ic(item.category)
+            # cat_status = item.category
+            # get_category_name = list(filter(lambda x: x[0] == cat_status, item.CATEGORY))
+            # ic(get_category_name)
+            # item.category = get_category_name[0][1]
+            # ic(item.category)
+            # cat_choise = item['category']
+            # get_choise_name = filter(lambda x: x[0] == a, CHOISE.CATEGORY)
+            # item['category'] = get_choise_name
+            # ic(item.CATEGORY)
+        return req
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
