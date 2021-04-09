@@ -22,11 +22,13 @@ class ResumeUpdateForm(forms.ModelForm):
 class JobSearchForm(forms.Form):
     search_field = forms.CharField(required=False)
     city_field = forms.CharField(required=False)
-    choice_grade = forms.ChoiceField(choices=Job.GRADE)
-    choice_category = forms.ChoiceField(choices=Job.CATEGORY)
-    choice_employment = forms.ChoiceField(choices=Job.EMPLOYMENT)
-    choice_work_shedule= forms.ChoiceField(choices=Job.WORK_SCHEDULE)
-    choice_experience = forms.ChoiceField(choices=Job.EXPERIENCE)
+
+    blank_choice = (('', '--- Пусто ---'),)
+    choice_grade = forms.ChoiceField(choices=blank_choice + Job.GRADE, required=False)
+    choice_category = forms.ChoiceField(choices=blank_choice + Job.CATEGORY, required=False)
+    choice_employment = forms.ChoiceField(choices=blank_choice + Job.EMPLOYMENT, required=False)
+    choice_work_shedule= forms.ChoiceField(choices=blank_choice + Job.WORK_SCHEDULE, required=False)
+    choice_experience = forms.ChoiceField(choices=blank_choice + Job.EXPERIENCE, required=False)
     # salary_field = forms.IntegerField(required=False)
 
     # def __init__(self, *args, **kwargs):
