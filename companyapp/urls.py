@@ -20,6 +20,6 @@ urlpatterns = [
     path('resume-detail/<int:pk>/', ResumeListDetail.as_view(), name='resume-list-detail'),
     path('resume-search/', ResumeSearchList.as_view(), name='resume_search'),
     path('responce-rec/', ResponceRec.as_view(), name='responce_recrut_list'),
-    path('responce/<int:pk>/detail/', RespJobDetail.as_view(), name='responce_job_detail'),
+    path('responce/<int:pk>/detail/<int:inv_id>/', RespJobDetail.as_view(), name='responce_job_detail'),
 
 ]

@@ -41,7 +41,7 @@
 {#                                    <a href="{% url 'companyapp:resume-list-detail' item.hr.pk %}">{{ item.hr }}</a>#}
                                     {{ item.hr }}
                                 </th>
-                                <th><a href="{% url 'applicantapp:respince_job_detail' item.vacansy.pk %}">{{ item.vacansy }}</a></th>
+                                <th><a href="{% url 'applicantapp:respince_job_detail' item.vacansy.pk item.id %}">{{ item.vacansy }}</a></th>
 {#                                <th class="narrow">{{item.views_count}}</th>#}
 {#                                {% if item.status == "0" %}#}
 {#                                    <th>Отклонена модератором</th>#}

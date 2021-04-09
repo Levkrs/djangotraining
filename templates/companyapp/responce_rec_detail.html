@@ -3,7 +3,7 @@
 
 {% block header %}
 
-<!-- TODO Решить вопрос с безопасностью - скрыть от чужих пользователей -->
+    <!-- TODO Решить вопрос с безопасностью - скрыть от чужих пользователей -->
 
     <!-- Page header -->
     <header class="page-header alt">
@@ -31,8 +31,8 @@
                                 <span class="form-control">{{ user.company.name }}</span>
                             </div>
                             <div class="form-group">
-{#                                <textarea name="short_description" maxlength="255" required id="id_short_description" class="form-control"#}
-{#                                    rows="3" placeholder="Краткое описание (255 символов максимум)">{{ object.short_description }}</textarea>#}
+                                {#                                <textarea name="short_description" maxlength="255" required id="id_short_description" class="form-control"#}
+                                {#                                    rows="3" placeholder="Краткое описание (255 символов максимум)">{{ object.short_description }}</textarea>#}
                                 <span class="form-control input-lg"> {{ object.short_description }}</span>
                             </div>
                             {{ form.errors.short_description }}
@@ -72,7 +72,7 @@
                         <div class="form-group col-xs-12 col-sm-6 col-md-6">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><i class="fa fa-money"></i></span>
-                                <span id="id_salary" class="form-control" > {{ object.salary }}</span>
+                                <span id="id_salary" class="form-control"> {{ object.salary }}</span>
                             </div>
                             {{ form.errors.salary }}
                         </div>
@@ -90,7 +90,8 @@
                                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 <select name="employment" id="id_employment" class="form-control">
                                     {% for key, value in form.employment.field.choices %}
-                                        <option value="{{ key }}" {% if key == object.employment %} selected {% endif %}>
+                                        <option value="{{ key }}" {% if key == object.employment %}
+                                                selected {% endif %}>
                                             {{ value }}
                                         </option>
                                     {% endfor %}
@@ -104,7 +105,8 @@
                                 <span class="input-group-addon"><i class="fa fa-hourglass-half"></i></span>
                                 <select name="work_schedule" id="id_work_schedule" class="form-control">
                                     {% for key, value in form.work_schedule.field.choices %}
-                                        <option value="{{ key }}" {% if key == object.work_schedule %} selected {% endif %}>
+                                        <option value="{{ key }}" {% if key == object.work_schedule %}
+                                                selected {% endif %}>
                                             {{ value }}
                                         </option>
                                     {% endfor %}
@@ -118,7 +120,8 @@
                                 <span class="input-group-addon"><i class="fa fa-star-half-full"></i></span>
                                 <select name="experience" id="id_experience" class="form-control">
                                     {% for key, value in form.experience.field.choices %}
-                                        <option value="{{ key }}" {% if key == object.experience %} selected {% endif %}>
+                                        <option value="{{ key }}" {% if key == object.experience %}
+                                                selected {% endif %}>
                                             {{ value }}
                                         </option>
                                     {% endfor %}
@@ -130,8 +133,9 @@
                         <div class="form-group col-xs-12 col-sm-6 col-md-6 text-right">
                             <div class="input-group input-group-sm">
                                 <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                <input type="text" name="skills" maxlength="255" id="id_skills" value="{{ object.skills }}"
-                                    class="form-control" placeholder="Ключевые навыки (введите через ,)">
+                                <input type="text" name="skills" maxlength="255" id="id_skills"
+                                       value="{{ object.skills }}"
+                                       class="form-control" placeholder="Ключевые навыки (введите через ,)">
                             </div>
                             {{ form.errors.skills }}
                         </div>
@@ -152,7 +156,7 @@
                     <p>Подробно опишите вакансию, обязанности, требуемые навыки, условия работы, преимущества и т.д.</p>
                 </header>
                 <textarea name="description" id="id_description" class="summernote-editor form-control" rows="12"
-                    placeholder="Подробное описание">{{ object.description }}</textarea>
+                          placeholder="Подробное описание">{{ object.description }}</textarea>
                 {{ form.errors.description }}
             </div>
         </section>
@@ -160,14 +164,14 @@
 
         <!-- Moder Comment -->
         {% if object.status == '0' %}
-        <section>
-            <div class="container">
-                <label for="id_moder_comment" id="moder_comment">Замечания модератора:</label>
-                <textarea name="moder_comment" rows="3" disabled id="id_moder_comment"
-                    class="form-control">{{ object.moder_comment }}</textarea>
-                {{ form.errors.moder_comment }}
-            </div>
-        </section>
+            <section>
+                <div class="container">
+                    <label for="id_moder_comment" id="moder_comment">Замечания модератора:</label>
+                    <textarea name="moder_comment" rows="3" disabled id="id_moder_comment"
+                              class="form-control">{{ object.moder_comment }}</textarea>
+                    {{ form.errors.moder_comment }}
+                </div>
+            </section>
         {% endif %}
         <!-- END Moder Comment -->
 
@@ -175,20 +179,27 @@
         <section>
             <div class="container">
                 <header class="section-header">
-{#                    <h2>Сохранить</h2>#}
-{#                    <p>Пожалуйста, проверьте указанную Вами информацию и нажмите на кнопку "Опубликовать".#}
-{#                        После проверки модератором, Вакансия станет доступна другим пользователям.</p>#}
-{#                    <p>Или сохраните как "Черновик", чтобы позже вернуться к редактированию. Черновики не видны#}
-{#                        другим пользователям.</p>#}
-{#                    <br>#}
+
+                    <form action="{% url 'mainapp:status_invite_update' view.kwargs.inv_id %}" method="post"
+                          id="form_for_post" class="form-resume"
+                          enctype="multipart/form-data"> {% csrf_token %}
+
+                        <button type="submit" class="btn btn-gray btn-save" name="status" value="1">
+                            Откликнуться
+                        </button>
+
+                        <button type="submit" class="btn btn-gray btn-save" name="status" value="2">
+                            Отклонить
+                        </button>
+                    </form>
                     {{ form.non_field_errors }}
                     <br>
                     <div id="id_status">
-{#                        <button class="btn btn-primary" name="status" value="2" type="submit">Опубликовать</button>#}
-{#                        <button class="btn btn-success" name="status" value="4" type="submit">Сохранить Черновик</button>#}
-{#                        <button class="btn btn-primary" name="status" value="6" type="submit">Закрыта</button>#}
-{#                        <button class="btn btn-success" name="status" value="4" type="submit">Сохранить Черновик</button>#}
-                        <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-success"> Назад </a>
+                        {#                        <button class="btn btn-primary" name="status" value="2" type="submit">Опубликовать</button>#}
+                        {#                        <button class="btn btn-success" name="status" value="4" type="submit">Сохранить Черновик</button>#}
+                        {#                        <button class="btn btn-primary" name="status" value="6" type="submit">Закрыта</button>#}
+                        {#                        <button class="btn btn-success" name="status" value="4" type="submit">Сохранить Черновик</button>#}
+                        <a href="{{ request.META.HTTP_REFERER|escape }}" class="btn btn-success"> Назад </a>
                     </div>
                 </header>
             </div>

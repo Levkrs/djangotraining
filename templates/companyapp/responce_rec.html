@@ -41,7 +41,7 @@
                                 <th class="narrow">{{ forloop.counter }}</th>
 
                                 <th class="wide"><a href="{% url 'companyapp:resume-list-detail' item.applicant.pk %}">{{ item.applicant }}</a></th>
-                                <th><a href="{% url 'companyapp:responce_job_detail' item.vacansy.pk %}">{{ item.vacansy }}</a></th>
+                                <th><a href="{% url 'companyapp:responce_job_detail' item.vacansy.pk item.id%}">{{ item.vacansy }}</a></th>
 {#                                <th class="narrow">{{item.views_count}}</th>#}
 {#                                {% if item.status == "0" %}#}
 {#                                    <th>Отклонена модератором</th>#}

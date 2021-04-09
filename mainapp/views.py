@@ -1,10 +1,12 @@
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import TemplateView, ListView, DetailView, CreateView
 
 from applicantapp.models import Resume
 from authapp.models import MyUser
 from companyapp.models import Job, Company
 from mainapp.forms import IviteForm, InviteFromHrForm
+from mainapp.models import InviteHr, InviteRecrut
 from moderapp.models import News
 
 
@@ -75,5 +77,25 @@ class InviteFromHr(CreateView):
         form.instance.resume = _resume
         return super(InviteFromHr, self).form_valid(form)
 
+
+def statusInviteUpdate(request, inv_id):
+    if request.method == 'POST':
+        print('POST')
+        if request.user.role == "REC":
+            object_inv = InviteHr.objects.get(id=inv_id)
+            resume = object_inv.resume
+            status = request.POST['status']
+            if resume.user_id == request.user.id:
+                object_inv.status = request.POST['status']
+                object_inv.save()
+        elif request.user.role == "HR":
+            object_inv = InviteRecrut.objects.get(id=inv_id)
+            job = object_inv.vacansy
+            if job.company.user.pk == request.user.pk:
+                object_inv.status = request.POST['status']
+                object_inv.save()
+        else:
+            pass
+        return HttpResponseRedirect(reverse('mainapp:index'))
 
 

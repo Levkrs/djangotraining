@@ -8,7 +8,8 @@ class IviteForm(forms.ModelForm):
 
     class Meta:
         model = InviteRecrut
-        exclude = ['applicant','created_at','updated_at','vacansy']
+        fields = ['resume']
+        # exclude = ['applicant','created_at','updated_at','vacansy']
 
 class InviteFromHrForm(forms.ModelForm):
     class Meta:

@@ -13,145 +13,156 @@
     {% block content %}
         <div class="container resume-container">
 
-                <div class="form-group">
-                    <div class="input-group" style="text-align: center">
-                        <span class="input-group-addon"><i class=""></i></span>
-                            <img src="/media/{{ object.company.logo }}" alt="Logo" height="150">
-                        <span class="input-group-addon"><i class=""></i></span>
-                    </div>
+            <div class="form-group">
+                <div class="input-group" style="text-align: center">
+                    <span class="input-group-addon"><i class=""></i></span>
+                    <img src="/media/{{ object.company.logo }}" alt="Logo" height="150">
+                    <span class="input-group-addon"><i class=""></i></span>
                 </div>
-
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="">Название</i></span>
-                        <span class="form-control form_control_centr_heigh"
-                              id="id_headline"> {{ object }}</span>
-                        <span class="input-group-addon"><i class=""></i></span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-lg-6">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="">Классность</i></span>
-                            <span class="form-control form_control_centr_heigh"
-                                  id="id_first_name"> {{ object.get_grade_display }}</span>
-                            <span class="input-group-addon"><i class=""></i></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-lg-6">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class="">Категория</i></span>
-                            <span class="form-control form_control_centr_heigh"
-                                   id="id_surname">{{ object.get_category_display  }}</span>
-                            <span class="input-group-addon"><i class=""></i></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">Зарплата<i class=""></i></span>
-                        <span type="number" min="0" class="form-control form_control_centr_heigh"
-                              id="id_salary">{{ object.salary }}</span>
-                        <span class="input-group-addon"><i class=""></i></span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="">Дата рождения</i></span>
-                        <span type="date" class="form-control form_control_centr_heigh"
-                               id="id_date_of_birth">{{ object.date_of_birth }} </span>
-                        <span class="input-group-addon"><i class=""></i></span>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-lg-6">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class=""> Город </i></span>
-                            <span class="form-control form_control_centr_heigh"
-                                  id="id_city"> {{ object.city }}</span>
-                            <span class="input-group-addon"><i class=""></i></span>
-                        </div>
-                    </div>
-
-                    <div class="form-group col-lg-6">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class=""> Занятость </i></span>
-                            <span class="form-control form_control_centr_heigh"
-                                  id="id_city"> {{ object.get_employment_display }}</span>
-                            <span class="input-group-addon"><i class=""></i></span>
-                        </div>
-                    </div>
-
-                </div>
+            </div>
 
             <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="">Название</i></span>
+                    <span class="form-control form_control_centr_heigh"
+                          id="id_headline"> {{ object }}</span>
+                    <span class="input-group-addon"><i class=""></i></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-6">
                     <div class="input-group">
-                        <span class="input-group-addon "><i class="">График работы</i></span>
+                        <span class="input-group-addon"><i class="">Классность</i></span>
                         <span class="form-control form_control_centr_heigh"
-                               id="id_links"> {{ object.get_work_schedule_display }}</span>
+                              id="id_first_name"> {{ object.get_grade_display }}</span>
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
 
-                 <div class="form-group">
+                <div class="form-group col-lg-6">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="">Опыт работы</i></span>
+                        <span class="input-group-addon"><i class="">Категория</i></span>
                         <span class="form-control form_control_centr_heigh"
-                               id="id_employment"> {{ object.get_experience_display}}</span>
+                              id="id_surname">{{ object.get_category_display }}</span>
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
+            </div>
 
-                <div class="form-group">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Зарплата<i class=""></i></span>
+                    <span type="number" min="0" class="form-control form_control_centr_heigh"
+                          id="id_salary">{{ object.salary }}</span>
+                    <span class="input-group-addon"><i class=""></i></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="">Дата рождения</i></span>
+                    <span type="date" class="form-control form_control_centr_heigh"
+                          id="id_date_of_birth">{{ object.date_of_birth }} </span>
+                    <span class="input-group-addon"><i class=""></i></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-6">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="">Краткое описание</i></span>
+                        <span class="input-group-addon"><i class=""> Город </i></span>
                         <span class="form-control form_control_centr_heigh"
-                               id="id_education_type"> {{ object.short_description}}</span>
+                              id="id_city"> {{ object.city }}</span>
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group col-lg-6">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="">Подробное описание:</i></span>
+                        <span class="input-group-addon"><i class=""> Занятость </i></span>
                         <span class="form-control form_control_centr_heigh"
-                               id="id_work_schedule"> {{ object.description}}</span>
+                              id="id_city"> {{ object.get_employment_display }}</span>
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
                 </div>
 
-                <div class="form-group">
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon "><i class="">График работы</i></span>
+                    <span class="form-control form_control_centr_heigh"
+                          id="id_links"> {{ object.get_work_schedule_display }}</span>
+                    <span class="input-group-addon"><i class=""></i></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="">Опыт работы</i></span>
+                    <span class="form-control form_control_centr_heigh"
+                          id="id_employment"> {{ object.get_experience_display }}</span>
+                    <span class="input-group-addon"><i class=""></i></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="">Краткое описание</i></span>
+                    <span class="form-control form_control_centr_heigh"
+                          id="id_education_type"> {{ object.short_description }}</span>
+                    <span class="input-group-addon"><i class=""></i></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="">Подробное описание:</i></span>
+                    <span class="form-control form_control_centr_heigh"
+                          id="id_work_schedule"> {{ object.description }}</span>
+                    <span class="input-group-addon"><i class=""></i></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="">Навыки</i></span>
+                    <span class="form-control form_control_centr_heigh"> {{ object.skills }}</span>
+                    <span class="input-group-addon"><i class=""></i></span>
+                </div>
+            </div>
+
+
+            <div>{% if messages %}
+                {% for message in messages %}
+                    <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+            </div>
+
+            <div class="row">
+                <div class="form-group col-lg-12" style="text-align: center;">
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="">Навыки</i></span>
-                        <span class="form-control form_control_centr_heigh"> {{ object.skills }}</span>
                         <span class="input-group-addon"><i class=""></i></span>
+                        {#                            <button class="btn btn-gray">Откликнуться</button>#}
+                        {#                            <a href="{% url 'mainapp:invite_user' object.pk %}" class="btn btn-gray"> Откликнуться </a>#}
+                        <form action="{% url 'mainapp:status_invite_update' view.kwargs.inv_id  %}" method="post" id="form_for_post" class="form-resume"
+                              enctype="multipart/form-data"> {% csrf_token %}
+                            <button type="submit" class="btn btn-gray btn-save" name="status" value="1">
+                                Откликнуться
+                            </button>
+                            <button type="submit" class="btn btn-gray btn-save" name="status" value="2">
+                                Отклонить
+                            </button>
+                        </form>
+                        <a href="{{ request.META.HTTP_REFERER|escape }}" class="btn btn-gray"> Назад </a>
+
+                        <span class="input-group-addon"><i class=""></i></span>
+{#                        <span> {{ view.kwargs.inv_id }}</span>#}
                     </div>
                 </div>
-
-
-                <div>{% if messages %}
-                    {% for message in messages %}
-                        <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
-                    {% endfor %}
-                {% endif %}
-                </div>
-
-                <div class="row">
-                    <div class="form-group col-lg-12" style="text-align: center;">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class=""></i></span>
-{#                            <button class="btn btn-gray">Откликнуться</button>#}
-{#                            <a href="{% url 'mainapp:invite_user' object.pk %}" class="btn btn-gray"> Откликнуться </a>#}
-                            <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-gray"> Назад </a>
-                            <span class="input-group-addon"><i class=""></i></span>
-                        </div>
-                    </div>
-                </div>
+            </div>
 
         </div>
 

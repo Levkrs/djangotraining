@@ -181,6 +181,7 @@ class ResponceJobDetail(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
         req = Job.objects.filter(pk=self.kwargs['pk'])
+        inv_id = self.kwargs['inv_id']
         # CHOISE = Job()
         # a = 'FED'
         # result = filter(a, for iter in CHOISE.CATEGORY)
