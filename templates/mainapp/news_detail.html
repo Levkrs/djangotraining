@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <header class="page-header bg-img size-lg">
+        <div class="container no-shadow">
+            <h1 class="text-center"> {{ object.title  }} </h1>
+        </div>
+    </header>
+{% endblock %}
+
+{% block content %}
+
+        <div class="container">
+            <div class="row item-blocks-connected">
+
+                <h5>{{ object.body }}</h5>
+
+                <p class="text-center"><a class="btn btn-info" href="{% url 'mainapp:news_all' %}">Все новости</a></p>
+
+            </div>
+        </div>
+
+{% endblock %}

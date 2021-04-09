@@ -1,0 +1,28 @@
+version: "3"
+
+volumes:
+  static_data:
+  media_data:
+
+services:
+
+  app:
+    build: .
+    volumes:
+      - static_data:/opt/app/static
+      - media_data:/opt/app/media
+    environment:
+      - DEBUG=False
+    entrypoint: ./run.sh
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_data:/opt/web/static
+      - media_data:/opt/web/media
+    ports:
+      - 8888:80
+    depends_on:
+      - app
+    links:
+      - app

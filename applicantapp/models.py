@@ -7,15 +7,41 @@ from django.db import models
 from authapp.models import MyUser
 
 
+class StatusResume(models.Model):
+    class Meta:
+        verbose_name = 'Статус Резюме'
+        verbose_name_plural = 'Статусы Резюме'
+
+    status_name = models.CharField(max_length=250, blank=True, null=True)
+
+    def __repr__(self):
+        return self.status_name
+
+    def __str__(self):
+        return self.status_name
+
+
 class Resume(models.Model):
     """
     Applicants resume
     """
+    def user_directory_path(instance, filename):
+        return f'resume/user_{instance.user.id}/{filename}'
 
     class Meta:
         get_latest_by = '-updated_at'
         verbose_name = 'Резюме'
         verbose_name_plural = 'Резюме'
+
+    STATUS = (
+        ('0', 'Отклонено модератором'),
+        ('1', 'Заготовка'),
+        ('2', 'На модерации'),
+        ('3', 'Опубликовано'),
+        ('4', 'Черновик'),
+        ('5', 'Скрыто'),
+        ('9', 'Удалено'),
+    )
 
     EMPLOYMENT_CHOICES = (
         ('FT', 'Полная занятость'),
@@ -44,16 +70,15 @@ class Resume(models.Model):
         ('DOCTOR', 'Доктор наук'),
     )
 
-    user_id = models.ForeignKey(to=MyUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE, null=True)
     headline = models.CharField(max_length=255, blank=False, verbose_name='Заголовок')
+    status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
     first_name = models.CharField(max_length=255, blank=False, verbose_name='Имя')
     surname = models.CharField(max_length=255, blank=False, verbose_name='Фамилия')
     salary = models.PositiveIntegerField(blank=True, null=True, verbose_name='Желаемая заработная плата')
     date_of_birth = models.DateField(blank=False, verbose_name='Дата рождения')
-    is_active = models.BooleanField(blank=False, default=False, verbose_name='Резюме активно')
-    is_cheked = models.BooleanField(blank=False, default=False, verbose_name='Резюме проверенно модератором')
     city = models.CharField(max_length=255, blank=False, verbose_name='Город')
-    user_pic = models.ImageField(upload_to='resume/photo',blank=True, null=True, verbose_name='Фото')
+    user_pic = models.ImageField(upload_to=user_directory_path, blank=True, null=True, verbose_name='Фото')
     links = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка на профиль в соц. сетях или сайт')
     employment = models.CharField(max_length=20, blank=False, choices=EMPLOYMENT_CHOICES, default='FT', verbose_name='Занятость')
     work_schedule = models.CharField(max_length=20, blank=False, choices=WORK_SCHEDULE_CHOICES, default='FD', verbose_name='График работы')
@@ -65,6 +90,7 @@ class Resume(models.Model):
     views_count = models.PositiveIntegerField(blank=False, default=0, verbose_name='Кол-во просмотров')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
+
 
     def __repr__(self):
         return self.headline
@@ -83,7 +109,7 @@ class Education(models.Model):
         verbose_name = 'Образовательное учреждение'
         verbose_name_plural = 'Образовательные учреждения'
 
-    resume_id = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
     name = models.CharField(max_length=255, blank=False, verbose_name='Название учреждения')
     specialization = models.CharField(max_length=255, blank=False, verbose_name='Специальность')
     year_of_ending = models.PositiveIntegerField(blank=False, verbose_name='Год окончания')
@@ -105,14 +131,13 @@ class Experience(models.Model):
         verbose_name = 'Опыт работы'
         verbose_name_plural = 'Опыт работы'
 
-    resume_id = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
     company_name = models.CharField(max_length=255, blank=False, verbose_name='Название компании')
     company_link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Сайт компании')
     position = models.CharField(max_length=255, blank=False, verbose_name='Дожность')
     data_from = models.DateField(blank=False, verbose_name='Дата начала работы')
     data_to = models.DateField(blank=False, verbose_name='Дата окончания работы')
     description = models.TextField(blank=True, null=True, verbose_name='Описание')
-
 
     def __repr__(self):
         return self.company_name

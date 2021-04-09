@@ -15,11 +15,22 @@ class SignUp(CreateView):
 
 
 class Login(UserPassesTestMixin, LoginView):
+    """ Логин и редирект в зависимости от роли """
     def test_func(self):
         return not self.request.user.is_authenticated
 
+    def get_success_url(self):
+        if self.request.user.role == 'HR':
+            url = f'/company/{self.request.user.pk}/profile/'
+        elif self.request.user.role == 'REC' and not self.request.user.is_staff:
+            url = f'/applicant/{self.request.user.pk}/profile/'
+        else:
+            url = '/'
+        return url
+
 
 class Logout(LoginRequiredMixin, LogoutView):
+    """ Выход из системы """
     def get_next_page(self):
         return super().get_next_page()
 

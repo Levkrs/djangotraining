@@ -1,6 +1,9 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
+from django.db.models.signals import post_save
 from django.urls import reverse
+
+import companyapp
 
 
 class MyUserManager(BaseUserManager):
@@ -31,15 +34,13 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     """
     Модель пользователей
     """
-    RECRUITER = 'HR'
-    RECRUIT = 'REC'
-
-    ROLE_CHOICES = (
-        (RECRUITER, 'Работодатель'),
-        (RECRUIT, 'Соискатель'),
+    ROLE = (
+        ('HR', 'Работодатель'),
+        ('REC', 'Соискатель'),
+        ('MOD', 'Модератор'),
     )
 
-    role = models.CharField('Роль', max_length=3, choices=ROLE_CHOICES, default=RECRUIT, null=True, blank=False)
+    role = models.CharField('Роль', max_length=3, choices=ROLE, default='REC', null=True, blank=False)
     email = models.EmailField('e-mail', blank=False, unique=True, max_length=64,
                               error_messages={'unique': "Ваш email уже занят!",})
     is_staff = models.BooleanField('Модератор', default=False)
@@ -47,9 +48,20 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
-    # REQUIRED_FIELDS = ['role']
 
     class Meta:
         ordering = ('email',)
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
+
+def create_company(instance, created, **kwargs):
+    """
+    После регистрации пользователя-работодателя,
+    по сигналу, создается новая компания.
+    """
+    if created and instance.role == 'HR':
+        companyapp.models.create(instance)
+
+
+post_save.connect(create_company, sender=MyUser)

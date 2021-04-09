@@ -28,11 +28,13 @@ buttonToTop.addEventListener('mouseover', () => {
 })
 buttonToTop.addEventListener('mouseout', () => {
     buttonToTop.style.cursor = ''
-    if (pageYOffset >= yPoint) { buttonToTop.style.opacity = '.6' }
+    if (pageYOffset >= yPoint) {
+        buttonToTop.style.opacity = '.6'
+    }
 })
 
 buttonToTop.addEventListener('click', () => {
-    window.scrollTo({ pageXOffset, top: 0, behavior: 'smooth' })
+    window.scrollTo({pageXOffset, top: 0, behavior: 'smooth'})
 })
 
 // End BackToTop button
@@ -89,3 +91,18 @@ document.querySelectorAll('.counter p span').forEach(($el) => {
 })
 
 // End CounterAnimation
+
+
+function openCity(evt, cityName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+}

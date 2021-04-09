@@ -1,0 +1,10 @@
+**/venv
+**/env
+**/logs
+**/nginx
+*.sql
+*.yaml
+*.yml
+*.pdf
+Jenkinsfile*
+celerybeat-schedule*

@@ -3,13 +3,22 @@
 }
 .site-header {
     min-height: 100vh;
-    background: url(../img/bg-1.jpg) fixed no-repeat;
+    background: url(../img/bg-1.jpg) center/cover fixed no-repeat;
 }
 .logo-wrapper {
     padding-top: 4px;
 }
 .subscribe {
-    background: url(../img/bg-3.jpg) fixed no-repeat;
+    background: url(../img/bg-3.jpg) center/cover fixed no-repeat;
+}
+.page-header {
+    background: url(../img/bg-company-1.jpg) center/cover fixed no-repeat;
+}
+.page-header.alt {
+    background: url(../img/bg-2.jpg) center/cover fixed no-repeat;
+}
+.page-header.applicant {
+    background: url(../img/bg-recruit-1.jpg) center/cover fixed no-repeat;
 }
 .user-account .dropdown-toggle img {
     width: 44px;
@@ -105,8 +114,36 @@ textarea {
 }
 .btn-save{
     border-radius: 0.35rem;
-    width: 120px;
+    width: 135px;
 }
 .btn-save-pos{
     text-align: center;
+}
+#moder_comment {
+    color: red;
+}
+.job-list {
+    padding-top: 40px;
+}
+.job-list__table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
+.job-list__table .wide {
+     width: 40%;
+}
+.job-list__table .narrow {
+     width: 10%;
+}
+.job-list__table > caption {
+    text-align: center;
+}
+
+.form_control_centr_heigh {
+    line-height: inherit;
+}
+
+button.news {
+    margin-left: 42em;
 }
