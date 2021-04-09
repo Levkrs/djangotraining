@@ -159,18 +159,18 @@
                 <div class="form-group col-lg-12" style="text-align: center;">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
-                        {#                            <button class="btn btn-gray">Пригласить</button>#}
-                        {#                            <a href="{% url 'mainapp:invite_from_hr' object.pk %}" class="btn btn-gray"> Пригласить </a>#}
-                        <form action="{% url 'mainapp:status_invite_update' view.kwargs.inv_id %}" method="post"
-                              id="form_for_post" class="form-resume"
-                              enctype="multipart/form-data"> {% csrf_token %}
-                            <button type="submit" class="btn btn-gray btn-save" name="status" value="1">
-                                Откликнуться
-                            </button>
-                            <button type="submit" class="btn btn-gray btn-save" name="status" value="2">
-                                Отклонить
-                            </button>
-                        </form>
+{#                                                    <button class="btn btn-gray">Пригласить</button>#}
+                                                    <a href="{% url 'mainapp:invite_from_hr' object.pk %}" class="btn btn-gray"> Пригласить </a>
+{#                        <form action="{% url 'mainapp:status_invite_update' %}" method="post"#}
+{#                              id="form_for_post" class="form-resume"#}
+{#                              enctype="multipart/form-data"> {% csrf_token %}#}
+{#                            <button type="submit" class="btn btn-gray btn-save" name="status" value="1">#}
+{#                                Откликнуться#}
+{#                            </button>#}
+{#                            <button type="submit" class="btn btn-gray btn-save" name="status" value="2">#}
+{#                                Отклонить#}
+{#                            </button>#}
+{#                        </form>#}
                         <a href="{{ request.META.HTTP_REFERER|escape }}" class="btn btn-gray"> Назад </a>
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>
