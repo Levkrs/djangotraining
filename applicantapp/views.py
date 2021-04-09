@@ -5,15 +5,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView
+from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-from applicantapp.forms import UserProfileForm, ResumeUpdateForm
+from applicantapp.forms import UserProfileForm, ResumeUpdateForm, JobSearchForm
 from applicantapp.models import Resume, StatusResume
 from authapp.models import MyUser
 from companyapp.models import Job
 from authapp.permissions import PERMISSION_DENIED_MESSAGE, ApplicantPermissionMixin
 # from icecream import ic
-# from django.db.models import Q
 from mainapp.models import InviteHr
 
 
@@ -82,30 +82,12 @@ class UpdateResume(LoginRequiredMixin, ApplicantPermissionMixin, UpdateView):
         #     form.instance.status = status_val.status_name
         return super(UpdateResume, self).form_valid(form)
 
-# class JobSearchList(LoginRequiredMixin, ListView):
-#
-#     model = Job
-#     template_name = 'applicantapp/job_search.html'
-#     paginate_by = 10
-#
-#     def get_queryset(self):
-#         query = self.request.GET.get('q')
-#         if query:
-#             object_list = Job.objects.filter(
-#                 Q(description__icontains=query) | Q(short_description__icontains=query)
-#             )
-#             return object_list
-#         else:
-#             return Job.objects.all()
-
 
 class JobListDetail(LoginRequiredMixin, DetailView):
     """
     Развернуть резюме подробнро
     """
-
     model = Resume
-
     template_name = 'applicantapp/job_detail.html'
 
     def get_queryset(self):
@@ -140,21 +122,49 @@ class JobListDetail(LoginRequiredMixin, DetailView):
         # ic(context['object'].__dict__)
         return context
 
-class JobSearchList(ListView):
-    """Поиск вакансий по краткому описанию"""
+class JobSearchList(ListView, FormMixin):
+    """Поиск вакансий"""
     model = Job
     template_name = 'applicantapp/job_search.html'
     paginate_by = 10
+    form_class = JobSearchForm
+
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query:
-            object_list = Job.objects.filter(
-                Q(description__icontains=query) | Q(short_description__icontains=query)
-            )
+        search_field = self.request.GET.get('search_field', None)
+        city_field = self.request.GET.get('city_field', None)
+        # salary_field = self.request.GET.get('salary_field', None)
+        choice_grade = self.request.GET.get('choice_grade', None)
+        choice_category = self.request.GET.get('choice_category', None)
+        choice_employment = self.request.GET.get('choice_employment', None)
+        choice_work_shedule = self.request.GET.get('choice_work_shedule', None)
+        choice_experience = self.request.GET.get('choice_experience', None)
+
+        query_params = {
+            'search_field': search_field, 'city': city_field, 'grade': choice_grade,
+            'category': choice_category, 'employment': choice_employment,
+            'work_schedule': choice_work_shedule, 'experience': choice_experience
+        }
+
+
+        QUERY = []
+
+        for field_name, field in query_params.items():
+            if field_name == 'search_field' and field:
+                QUERY.append((Q(description__icontains=field) | Q(short_description__icontains=field)))
+            elif field_name == 'city' and field:
+                QUERY.append(Q(city__icontains=field))
+            elif field and field != 'NO':
+                QUERY.append(Q(**{field_name: field}))
+
+
+        if any(QUERY):
+            object_list = Job.objects.filter(*QUERY)
             return object_list
-        else:
-            return Job.objects.all()
+
+        return Job.objects.filter(status='3')
+
+
 
 class ResponceHr(ListView):
     model = InviteHr
