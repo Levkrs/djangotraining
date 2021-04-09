@@ -6,12 +6,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
+from django.views.generic.edit import FormMixin
 
 from authapp.models import MyUser
 from mainapp.models import InviteRecrut
 from .models import Company, Job
 from applicantapp.models import Resume
 from authapp.permissions import CompanyPermissionMixin
+from .forms import ResumeSearchForm
 # from icecream import ic
 
 
@@ -116,21 +118,43 @@ class ResumeListDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         return context
 
-class ResumeSearchList(ListView):
-    """Поиск резюме по краткому описанию"""
+class ResumeSearchList(ListView, FormMixin):
+    """Поиск резюме"""
     model = Resume
     template_name = 'companyapp/resume_search.html'
     paginate_by = 10
+    form_class = ResumeSearchForm
+
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query:
-            object_list = Resume.objects.filter(
-                Q(headline__icontains=query) | Q(key_skills__icontains=query)
-            )
+        search_field = self.request.GET.get('search_field', None)
+        city_field = self.request.GET.get('city_field', None)
+        education_type = self.request.GET.get('education_type', None)
+        employment = self.request.GET.get('employment', None)
+        work_schedule = self.request.GET.get('work_schedule', None)
+
+        query_params = {
+            'search_field': search_field, 'city': city_field, 'education_type': education_type,
+            'employment': employment, 'work_schedule': work_schedule
+        }
+
+
+        QUERY = []
+
+        for field_name, field in query_params.items():
+            if field_name == 'search_field' and field:
+                QUERY.append((Q(headline__icontains=field) | Q(key_skills__icontains=field)))
+            elif field_name == 'city' and field:
+                QUERY.append(Q(city__icontains=field))
+            elif field and field != 'NO':
+                QUERY.append(Q(**{field_name: field}))
+
+
+        if any(QUERY):
+            object_list = Resume.objects.filter(*QUERY)
             return object_list
-        else:
-            return Resume.objects.all()
+
+        return Resume.objects.filter(status='3')
 
 class ResponceRec(ListView):
     model = InviteRecrut

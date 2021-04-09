@@ -44,6 +44,7 @@ class Resume(models.Model):
     )
 
     EMPLOYMENT_CHOICES = (
+        ('NO', ''),
         ('FT', 'Полная занятость'),
         ('PT', 'Частичная занятость'),
         ('PW','Проектная работа'),
@@ -52,6 +53,7 @@ class Resume(models.Model):
     )
 
     WORK_SCHEDULE_CHOICES = (
+        ('NO', ''),
         ('FD', 'Полный день'),
         ('SSCH', 'Сменный график'),
         ('FSCH', 'Гибкий график'),
@@ -60,6 +62,7 @@ class Resume(models.Model):
     )
 
     EDUCATION_CHOICES = (
+        ('NO', ''),
         ('SECONDARY', 'Среднее'),
         ('SPECIAL_SECONDARY','Среднее специальное'),
         ('UNFINISHED_HIGHER','Неоконченное высшее'),
@@ -80,9 +83,9 @@ class Resume(models.Model):
     city = models.CharField(max_length=255, blank=False, verbose_name='Город')
     user_pic = models.ImageField(upload_to=user_directory_path, blank=True, null=True, verbose_name='Фото')
     links = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка на профиль в соц. сетях или сайт')
-    employment = models.CharField(max_length=20, blank=False, choices=EMPLOYMENT_CHOICES, default='FT', verbose_name='Занятость')
-    work_schedule = models.CharField(max_length=20, blank=False, choices=WORK_SCHEDULE_CHOICES, default='FD', verbose_name='График работы')
-    education_type = models.CharField(max_length=20, blank=False, choices=EDUCATION_CHOICES, default='HIGHER', verbose_name='Образование')
+    employment = models.CharField(max_length=20, blank=False, choices=EMPLOYMENT_CHOICES, verbose_name='Занятость')
+    work_schedule = models.CharField(max_length=20, blank=False, choices=WORK_SCHEDULE_CHOICES, verbose_name='График работы')
+    education_type = models.CharField(max_length=20, blank=False, choices=EDUCATION_CHOICES, verbose_name='Образование')
     about_me = models.TextField(blank=True, null=True, verbose_name='Обо мне')
     key_skills = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ключевые навыки')
     phone = models.CharField(max_length=20, blank=False, verbose_name='Телефон')
