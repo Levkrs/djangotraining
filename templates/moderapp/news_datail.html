@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+
+    {% block header %}
+        {% include 'inc/nav.html' %}
+    {% endblock %}
+
+
+    {% block content %}
+        <div class="container resume-container">
+            <form method="post" class="form-resume" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                <input type="submit" class="btn btn-success" value="Сохранить изменения">
+                <a class="btn btn-primary" href="{% url 'moderapp:moder_list_page' %}">Вернуться</a>
+            </form>
+        </div>
+    {% endblock %}
+
+{% endblock %}
