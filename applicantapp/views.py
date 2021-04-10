@@ -93,33 +93,10 @@ class JobListDetail(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         req = Job.objects.filter(pk=self.kwargs['pk'])
 
-
-        # CHOISE = Job()
-        # a = 'FED'
-        # result = filter(a, for iter in CHOISE.CATEGORY)
-        # result = filter(lambda x: x[0] == a, CHOISE.CATEGORY)
-        # ic(CHOISE.)
-        # ic(req.__dict__)
-        # for item in req:
-            # ic(item.__dict__)
-            # ic(item.category)
-            # cat_status = item.category
-            # get_category_name = list(filter(lambda x: x[0] == cat_status, item.CATEGORY))
-            # ic(get_category_name)
-            # item.category = get_category_name[0][1]
-            # ic(item.category)
-            # cat_choise = item['category']
-            # get_choise_name = filter(lambda x: x[0] == a, CHOISE.CATEGORY)
-            # item['category'] = get_choise_name
-            # ic(item.CATEGORY)
         return req
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        # obj = context['object']
-        # obj.category = 'ASDSAD'
-        # ic(context['object'].__dict__)
         return context
 
 class JobSearchList(ListView, FormMixin):
@@ -172,8 +149,6 @@ class ResponceHr(ListView):
 
 
     def get_queryset(self):
-        # company_to_user = self.request.user.company.id
-        # print(company_to_user)
         resume_list_id = list(Resume.objects.filter(user=self.request.user.id).values_list('id', flat=True))
         object_list = InviteHr.objects.filter(resume_id__in=resume_list_id)
         print('__')
@@ -192,24 +167,6 @@ class ResponceJobDetail(LoginRequiredMixin, DetailView):
     def get_queryset(self):
         req = Job.objects.filter(pk=self.kwargs['pk'])
         inv_id = self.kwargs['inv_id']
-        # CHOISE = Job()
-        # a = 'FED'
-        # result = filter(a, for iter in CHOISE.CATEGORY)
-        # result = filter(lambda x: x[0] == a, CHOISE.CATEGORY)
-        # ic(CHOISE.)
-        # ic(req.__dict__)
-        # for item in req:
-            # ic(item.__dict__)
-            # ic(item.category)
-            # cat_status = item.category
-            # get_category_name = list(filter(lambda x: x[0] == cat_status, item.CATEGORY))
-            # ic(get_category_name)
-            # item.category = get_category_name[0][1]
-            # ic(item.category)
-            # cat_choise = item['category']
-            # get_choise_name = filter(lambda x: x[0] == a, CHOISE.CATEGORY)
-            # item['category'] = get_choise_name
-            # ic(item.CATEGORY)
         return req
 
     def get_context_data(self, **kwargs):

@@ -25,8 +25,6 @@ class InviteRecrut(models.Model):
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='0', db_index=True)
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
 
-    # def __str__(self):
-    #     return self.applicant.email
 
 
 

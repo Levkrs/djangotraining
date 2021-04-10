@@ -29,17 +29,11 @@ class JobSearchForm(forms.Form):
     choice_employment = forms.ChoiceField(choices=blank_choice + Job.EMPLOYMENT, required=False)
     choice_work_shedule= forms.ChoiceField(choices=blank_choice + Job.WORK_SCHEDULE, required=False)
     choice_experience = forms.ChoiceField(choices=blank_choice + Job.EXPERIENCE, required=False)
-    # salary_field = forms.IntegerField(required=False)
-
-    # def __init__(self, *args, **kwargs):
-    #     super(JobSearchForm, self).__init__(*args, **kwargs)
-    #     self.fields['search_field'].widget.attrs.update({'class' : 'search_field'})
 
     def __init__(self, *args, **kwargs):
         super(JobSearchForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'search'
             field.help_text = ''
-        # self.fields['search_field'].widget.attrs.update({'class': 'search_field'})
 
 

@@ -162,8 +162,6 @@ class ResponceRec(ListView):
 
 
     def get_queryset(self):
-        # company_to_user = self.request.user.company.id
-        # print(company_to_user)
         job_list_id = list(Job.objects.filter(company_id=self.request.user.company.id).values_list('id', flat=True))
         object_list = InviteRecrut.objects.filter(vacansy_id__in=job_list_id)
 

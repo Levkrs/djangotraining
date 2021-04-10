@@ -12,13 +12,9 @@ class ResumeSearchForm(forms.Form):
     work_schedule = forms.ChoiceField(choices=blank_choice + Resume.WORK_SCHEDULE_CHOICES)
 
 
-    # def __init__(self, *args, **kwargs):
-    #     super(JobSearchForm, self).__init__(*args, **kwargs)
-    #     self.fields['search_field'].widget.attrs.update({'class' : 'search_field'})
 
     def __init__(self, *args, **kwargs):
         super(ResumeSearchForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'search'
             field.help_text = ''
-        # self.fields['search_field'].widget.attrs.update({'class': 'search_field'})
