@@ -6,12 +6,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
+from django.views.generic.edit import FormMixin
 
 from authapp.models import MyUser
 from mainapp.models import InviteRecrut
 from .models import Company, Job
 from applicantapp.models import Resume
 from authapp.permissions import CompanyPermissionMixin
+from .forms import ResumeSearchForm
 # from icecream import ic
 
 
@@ -22,11 +24,7 @@ class ProfileView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         """Выводим список вакансий компании"""
-        return Job.objects.filter(company__user_id=self.kwargs['pk'])
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
+        return Job.objects.filter(company__user=self.request.user)
 
 
 class CompanyDetailView(LoginRequiredMixin, DetailView):
@@ -44,6 +42,7 @@ class CompanyUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     """ Редактор карточки компании """
     model = Company
     fields = ('name', 'logo', 'headline', 'short_description', 'detail', 'location', 'link',)
+    template_name = 'companyapp/company_form.html'
 
     def get_success_url(self):
         return reverse_lazy('companyapp:card', args=[self.object.pk])
@@ -69,7 +68,6 @@ class JobUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     template_name = 'companyapp/job_form_edit.html'
 
     def get_success_url(self):
-        # print(self.object.id)
         return reverse_lazy('companyapp:profile', args=(self.request.user.id,))
 
 
@@ -90,12 +88,7 @@ class JobListView(LoginRequiredMixin, ListView):
     fields = '__all__'
 
     def get_queryset(self):
-        try:
-            company = self.request.user.company
-        except Exception:
-            return self.model.objects.none()
-
-        return company.jobs
+        return Job.objects.filter(company__user=self.request.user)
 
 
 class ResumeListHR(LoginRequiredMixin, ListView):
@@ -125,21 +118,43 @@ class ResumeListDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         return context
 
-class ResumeSearchList(ListView):
-    """Поиск резюме по краткому описанию"""
+class ResumeSearchList(ListView, FormMixin):
+    """Поиск резюме"""
     model = Resume
     template_name = 'companyapp/resume_search.html'
     paginate_by = 10
+    form_class = ResumeSearchForm
+
 
     def get_queryset(self):
-        query = self.request.GET.get('q')
-        if query:
-            object_list = Resume.objects.filter(
-                Q(headline__icontains=query) | Q(key_skills__icontains=query)
-            )
+        search_field = self.request.GET.get('search_field', None)
+        city_field = self.request.GET.get('city_field', None)
+        education_type = self.request.GET.get('education_type', None)
+        employment = self.request.GET.get('employment', None)
+        work_schedule = self.request.GET.get('work_schedule', None)
+
+        query_params = {
+            'search_field': search_field, 'city': city_field, 'education_type': education_type,
+            'employment': employment, 'work_schedule': work_schedule
+        }
+
+
+        QUERY = []
+
+        for field_name, field in query_params.items():
+            if field_name == 'search_field' and field:
+                QUERY.append((Q(headline__icontains=field) | Q(key_skills__icontains=field)))
+            elif field_name == 'city' and field:
+                QUERY.append(Q(city__icontains=field))
+            elif field and field != 'NO':
+                QUERY.append(Q(**{field_name: field}))
+
+
+        if any(QUERY):
+            object_list = Resume.objects.filter(*QUERY)
             return object_list
-        else:
-            return Resume.objects.all()
+
+        return Resume.objects.filter(status='3')
 
 class ResponceRec(ListView):
     model = InviteRecrut
@@ -147,8 +162,6 @@ class ResponceRec(ListView):
 
 
     def get_queryset(self):
-        # company_to_user = self.request.user.company.id
-        # print(company_to_user)
         job_list_id = list(Job.objects.filter(company_id=self.request.user.company.id).values_list('id', flat=True))
         object_list = InviteRecrut.objects.filter(vacansy_id__in=job_list_id)
 

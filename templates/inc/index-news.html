@@ -2,12 +2,12 @@
     <div class="container">
         <header class="section-header">
             <h2>Последние Новости</h2>
-            <p>Самая свежая информация из мира IT-рекрутинга</p>
+            <p>Самая свежая информация из мира IT</p>
         </header>
 
         <div class="row item-blocks-connected">
 
-            {% for item in news %}
+            {% for item in object_list %}
                 {% include 'inc/news_item.html' %}
             {% endfor %}
 

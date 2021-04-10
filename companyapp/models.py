@@ -77,7 +77,6 @@ class Job(models.Model):
     )
 
     GRADE = (
-        ('NO', ''),
         ('TR', 'Trainee'),
         ('JR', 'Junior'),
         ('MD', 'Middle'),
@@ -87,7 +86,6 @@ class Job(models.Model):
     )
 
     CATEGORY = (
-        ('NO', ''),
         ('FLS', 'Full Stack'),
         ('FED', 'Front-end'),
         ('BED', 'Back-end'),
@@ -128,13 +126,13 @@ class Job(models.Model):
 
     company = models.ForeignKey(to=Company, on_delete=models.PROTECT, related_name='jobs', verbose_name='Компания', null=True)
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
-    grade = models.CharField('Классность', max_length=2, choices=GRADE, default='NO', db_index=True)
-    category = models.CharField('Категория', max_length=3, choices=CATEGORY, default='NO', db_index=True)
+    grade = models.CharField('Классность', max_length=2, choices=GRADE, db_index=True)
+    category = models.CharField('Категория', max_length=3, choices=CATEGORY, db_index=True)
     salary = models.PositiveIntegerField('Зарплата', null=True, blank=True, db_index=True)
     city = models.CharField('Город', max_length=255, blank=False, db_index=True)
-    employment = models.CharField('Тип занятости', max_length=2, choices=EMPLOYMENT, default='FT', db_index=True)
-    work_schedule = models.CharField('График работы', max_length=4, choices=WORK_SCHEDULE, default='FD', db_index=True)
-    experience = models.CharField('Опыт работы', max_length=2, choices=EXPERIENCE, default='WE', db_index=True)
+    employment = models.CharField('Тип занятости', max_length=2, choices=EMPLOYMENT, db_index=True)
+    work_schedule = models.CharField('График работы', max_length=4, choices=WORK_SCHEDULE, db_index=True)
+    experience = models.CharField('Опыт работы', max_length=2, choices=EXPERIENCE, db_index=True)
     short_description = models.CharField('Краткое описание', max_length=255, blank=False)
     description = models.TextField('Подробное описание', blank=True, null=True)
     skills = models.CharField('Навыки', max_length=255, blank=True)

@@ -39,7 +39,7 @@ class UpdateNews(LoginRequiredMixin, ModeratorPermissionMixin, UpdateView):
     """
     model = News
     form_class = AddUpdateNewsForm
-    template_name = 'moderapp/obj_datail.html'
+    template_name = 'moderapp/news_datail.html'
     success_url = '/moder'
 
 

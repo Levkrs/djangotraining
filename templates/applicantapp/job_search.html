@@ -25,10 +25,12 @@
                 <div class="row item-blocks-connected">
                     <div class="col-xs-12">
                         <div class="item-block">
-                            <form action="{% url 'applicantapp:job_search_list' %}" method="get">{% csrf_token %}
-                              <input name="q" type="text" placeholder="Search...">
-                                <button type="submit">Поиск</button>
-                            </form>
+                            <div class="search">
+                                <form class="search-form" action="{% url 'applicantapp:job_search_list' %}" method="get">{% csrf_token %}
+                                    {{ form.as_p }}
+                                    <button class="grp-search-button" type="submit">Поиск</button>
+                                </form>
+                            </div>
                         {% include 'inc/job_list.html' %}
                         </div>
                     </div>
