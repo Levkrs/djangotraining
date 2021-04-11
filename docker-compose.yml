@@ -1,10 +1,5 @@
 version: "3"
 
-volumes:
-  static_data:
-  media_data:
-  postgres_data:
-
 services:
 
   postgres:
@@ -21,8 +16,8 @@ services:
   app:
     build: .
     volumes:
-      - static_data:/opt/app/static
-      - media_data:/opt/app/media
+      - /opt/staff/static:/opt/app/static
+      - /opt/staff/static:/opt/app/media
     environment:
       - DEBUG=False
     entrypoint: ./run.sh
@@ -34,8 +29,8 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - static_data:/opt/web/static
-      - media_data:/opt/web/media
+      - /opt/staff/static:/opt/web/static
+      - /opt/staff/static:/opt/web/media
     ports:
       - 8888:80
     depends_on:
