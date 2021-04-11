@@ -44,7 +44,6 @@ class Resume(models.Model):
     )
 
     EMPLOYMENT_CHOICES = (
-        ('NO', ''),
         ('FT', 'Полная занятость'),
         ('PT', 'Частичная занятость'),
         ('PW','Проектная работа'),
@@ -53,7 +52,6 @@ class Resume(models.Model):
     )
 
     WORK_SCHEDULE_CHOICES = (
-        ('NO', ''),
         ('FD', 'Полный день'),
         ('SSCH', 'Сменный график'),
         ('FSCH', 'Гибкий график'),
@@ -62,7 +60,6 @@ class Resume(models.Model):
     )
 
     EDUCATION_CHOICES = (
-        ('NO', ''),
         ('SECONDARY', 'Среднее'),
         ('SPECIAL_SECONDARY','Среднее специальное'),
         ('UNFINISHED_HIGHER','Неоконченное высшее'),

@@ -131,7 +131,7 @@ class JobSearchList(ListView, FormMixin):
                 QUERY.append((Q(description__icontains=field) | Q(short_description__icontains=field)))
             elif field_name == 'city' and field:
                 QUERY.append(Q(city__icontains=field))
-            elif field and field != 'NO':
+            elif field and field != '':
                 QUERY.append(Q(**{field_name: field}))
 
 

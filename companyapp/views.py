@@ -146,7 +146,7 @@ class ResumeSearchList(ListView, FormMixin):
                 QUERY.append((Q(headline__icontains=field) | Q(key_skills__icontains=field)))
             elif field_name == 'city' and field:
                 QUERY.append(Q(city__icontains=field))
-            elif field and field != 'NO':
+            elif field and field != '':
                 QUERY.append(Q(**{field_name: field}))
 
 
