@@ -1,15 +1,15 @@
 from django.db import models
-from django.utils import timezone
 
 from authapp.models import MyUser
 from companyapp.models import Job, Company
 from applicantapp.models import Resume
 
 # Create your models here.
-class InviteRecrut(models.Model):
+
+class FullInvite(models.Model):
 
     class Meta:
-        verbose_name = 'Отклик на вакансию.'
+        verbose_name= 'Общий отклик'
 
     STATUS = (
         ('0', 'На рассмотрении'),
@@ -17,31 +17,10 @@ class InviteRecrut(models.Model):
         ('2', 'Отклонен'),
     )
 
-
-    applicant = models.ForeignKey(to=MyUser, on_delete=models.CASCADE, null=False)
     vacansy = models.ForeignKey(to=Job, on_delete=models.CASCADE, null=False)
-    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE, null=False)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
-    status = models.CharField('Статус', max_length=1, choices=STATUS, default='0', db_index=True)
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-
-
-
-
-class InviteHr(models.Model):
-
-    class Meta:
-        verbose_name = 'Отклик на резюме.'
-
-    STATUS = (
-        ('0', 'На рассмотрении'),
-        ('1', 'Принят'),
-        ('2', 'Отклонен'),
-    )
-
     hr = models.ForeignKey(to=Company, on_delete=models.CASCADE, null=False)
-    vacansy = models.ForeignKey(to=Job, on_delete=models.CASCADE, null=False)
-    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE, null=False)
-    status = models.CharField('Статус', max_length=1, choices=STATUS, default='0', db_index=True)
+    recrut_resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE, null=False)
+    aprove_hr = models.BooleanField('Aprove от hr', default=False)
+    aprove_recrut = models.BooleanField('Aprove от рекрута', default=False)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')

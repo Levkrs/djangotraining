@@ -26,7 +26,7 @@
 
                     <div class="job-list">
                         <table class="job-list__table">
-                            <caption><h2>Отклики:</h2></caption>
+                            <caption><h2>Приглашения:</h2></caption>
                             <tr>
                                 <th class="narrow">№</th>
                                 <th class="wide">Кто откликнулся</th>
@@ -39,7 +39,7 @@
                                 <th class="wide">
                                     {{ item.hr }}
                                 </th>
-                                <th><a href="{% url 'applicantapp:respince_job_detail' item.vacansy.pk item.id %}">{{ item.vacansy }}</a></th>
+                                <th><a href="{% url 'applicantapp:respince_job_detail' item.vacansy.pk  %}">{{ item.vacansy }}</a></th>
 
                             {% endfor %}
                             </tr>

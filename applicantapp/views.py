@@ -9,12 +9,11 @@ from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from applicantapp.forms import UserProfileForm, ResumeUpdateForm, JobSearchForm
-from applicantapp.models import Resume, StatusResume
+from applicantapp.models import Resume
 from authapp.models import MyUser
 from companyapp.models import Job
 from authapp.permissions import PERMISSION_DENIED_MESSAGE, ApplicantPermissionMixin
-# from icecream import ic
-from mainapp.models import InviteHr
+from mainapp.models import FullInvite
 
 
 class ProfileView(LoginRequiredMixin, TemplateView):
@@ -76,10 +75,6 @@ class UpdateResume(LoginRequiredMixin, ApplicantPermissionMixin, UpdateView):
         ctx = super(UpdateResume, self).form_valid(form)
         user_for_reg = MyUser.objects.get(id=self.request.user.id)
         form.instance.user = user_for_reg
-        # if form.data['submit_btn_val']:
-        #     name_status = form.data['submit_btn_val']
-        #     status_val = StatusResume.objects.get(id=name_status)
-        #     form.instance.status = status_val.status_name
         return super(UpdateResume, self).form_valid(form)
 
 
@@ -144,29 +139,34 @@ class JobSearchList(ListView, FormMixin):
 
 
 class ResponceHr(ListView):
-    model = InviteHr
+    """
+    Приглащения от HR
+    """
+
+    model = FullInvite
     template_name = 'applicantapp/responce_hr.html'
 
 
     def get_queryset(self):
         resume_list_id = list(Resume.objects.filter(user=self.request.user.id).values_list('id', flat=True))
-        object_list = InviteHr.objects.filter(resume_id__in=resume_list_id)
+        object_list = FullInvite.objects.filter(recrut_resume_id__in=resume_list_id).filter(aprove_recrut=False)
         print('__')
 
+
         return object_list
+
 
 class ResponceJobDetail(LoginRequiredMixin, DetailView):
     """
     Развернуть резюме подробнро
     """
 
-    model = Resume
+    model = Job
 
     template_name = 'applicantapp/responce_job_detail.html'
 
     def get_queryset(self):
-        req = Job.objects.filter(pk=self.kwargs['pk'])
-        inv_id = self.kwargs['inv_id']
+        req = Job.objects.filter(id=self.kwargs['pk'])
         return req
 
     def get_context_data(self, **kwargs):
