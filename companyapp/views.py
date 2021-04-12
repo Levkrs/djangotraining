@@ -157,6 +157,10 @@ class ResumeSearchList(ListView, FormMixin):
         return Resume.objects.filter(status='3')
 
 class ResponceRec(ListView):
+
+    """
+    Запросы на собеседование от REC
+    """
     model = FullInvite
     template_name = 'companyapp/responce_rec.html'
 

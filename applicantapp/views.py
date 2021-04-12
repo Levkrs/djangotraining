@@ -139,6 +139,10 @@ class JobSearchList(ListView, FormMixin):
 
 
 class ResponceHr(ListView):
+    """
+    Приглащения от HR
+    """
+
     model = FullInvite
     template_name = 'applicantapp/responce_hr.html'
 

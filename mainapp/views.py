@@ -72,7 +72,6 @@ class InviteView(CreateView):
 class InviteFromHr(CreateView):
     """Отклики на резюме"""
     form_class = FullInviteForm
-    # model = FullInvite
     template_name = "mainapp/inve_form.html"
     success_url = reverse_lazy('mainapp:index')
 
@@ -88,12 +87,7 @@ class InviteFromHr(CreateView):
         _id_vacansy = form.data['vacansy']
         form.instance.hr = _company
         form.instance.recrut_resume = _recrut
-        # if (self.request.user.role == 'HR'):
         form.instance.aprove_hr = True
-        # elif (self.request.user.role == "REC"):
-        #     form.instance.aprove_recrut = True
-        # else:
-        #     return reverse_lazy('mainapp:index')
         last_inv = FullInvite.objects.filter(vacansy=_id_vacansy)
         print(last_inv)
 
@@ -105,17 +99,13 @@ class InviteFromHr(CreateView):
         else:
             print('---')
             return super(InviteFromHr, self).form_valid(form)
-        # invite_len = len(FullInvite.objects.filter(recrut_resume=_recrut).filter(hr=_company).filter(vacansy=_id_vacansy))
-        # print(invite_len)
-        # if invite_len != 0:
-        #     print('Уж создано')
-        # return super(InviteFromHr, self).form_valid(form)
-
 
 
 
 def statusInviteUpdate(request, pk):
-    '''Тестовая версия'''
+    """
+    Aprove от REC или HR
+    """
     if request.method == 'POST':
         print('POST')
         role_ = request.user.role
@@ -127,7 +117,10 @@ def statusInviteUpdate(request, pk):
             invite_objects.save()
         elif request.user.role == "HR":
             _resume = Resume.objects.get(id=pk)
+            _company = Company.objects.get(user=request.user)
+            _vacansy = Job.objects.filter(company=_company)
             invite_objects = FullInvite.objects.filter(recrut_resume=_resume).filter(aprove_hr=0).first()
+            invite_objects = FullInvite.objects.filter(vacansy__in=_vacansy).filter(recrut_resume=_resume).filter(aprove_hr=0).first()
             invite_objects.aprove_hr = request.POST['status']
             invite_objects.save()
         return HttpResponseRedirect(reverse('mainapp:index'))
