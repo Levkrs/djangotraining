@@ -9,7 +9,7 @@ from django.views.generic import CreateView, DetailView, ListView, TemplateView,
 from django.views.generic.edit import FormMixin
 
 from authapp.models import MyUser
-from mainapp.models import InviteRecrut
+from mainapp.models import FullInvite
 from .models import Company, Job
 from applicantapp.models import Resume
 from authapp.permissions import CompanyPermissionMixin
@@ -157,17 +157,34 @@ class ResumeSearchList(ListView, FormMixin):
         return Resume.objects.filter(status='3')
 
 class ResponceRec(ListView):
-    model = InviteRecrut
+    model = FullInvite
     template_name = 'companyapp/responce_rec.html'
 
 
     def get_queryset(self):
         job_list_id = list(Job.objects.filter(company_id=self.request.user.company.id).values_list('id', flat=True))
-        object_list = InviteRecrut.objects.filter(vacansy_id__in=job_list_id)
+        object_list = FullInvite.objects.filter(vacansy_id__in=job_list_id).filter(aprove_hr=False)
 
         return object_list
 
-class RespJobDetail(JobDetailView):
+
+
+
+class RespJobDetail(LoginRequiredMixin, DetailView):
+    """
+    Развернуть резюме подробнро
+    """
+
+    model = Resume
 
     template_name = 'companyapp/responce_rec_detail.html'
+
+    def get_queryset(self):
+        req = Resume.objects.filter(id=self.kwargs['pk'])
+        print(req)
+        return req
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
