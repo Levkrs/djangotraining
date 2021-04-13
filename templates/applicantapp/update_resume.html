@@ -15,7 +15,7 @@
 
                 {{ form.as_p }}
 
-                <div id="id_status">
+
                     <button type="submit" class="btn btn-gray btn-save" name="status" value="2">
                         Сохранить
                     </button>
@@ -25,7 +25,8 @@
                     <button type="submit" class="btn btn-gray btn-save" name="status" value="5">
                         Скрыть
                     </button>
-                </div>
+                <a class="btn btn-secondary" href="{% url 'applicantapp:profile' request.user.id %}">Вернуться</a>
+
 
             </form>
         </div>

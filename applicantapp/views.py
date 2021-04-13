@@ -8,7 +8,7 @@ from django.views.generic import CreateView, ListView, TemplateView, UpdateView,
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-from applicantapp.forms import ResumeUpdateForm, JobSearchForm
+from applicantapp.forms import ResumeUpdateForm, JobSearchForm, ResumeCreateForm
 from applicantapp.models import Resume
 from authapp.models import MyUser
 from companyapp.models import Job
@@ -41,7 +41,7 @@ class CreateResume(LoginRequiredMixin, ApplicantPermissionMixin, CreateView):
     Создание резюме
     """
     model = Resume
-    fields = ('headline', 'status', 'first_name', 'surname', 'salary', 'date_of_birth', 'city', 'user_pic', 'links', 'employment', 'work_schedule', 'education_type', 'about_me', 'key_skills', 'phone')
+    form_class = ResumeCreateForm
     template_name = 'applicantapp/create_resume.html'
 
     def get_success_url(self):
@@ -60,7 +60,9 @@ class UpdateResume(LoginRequiredMixin, ApplicantPermissionMixin, UpdateView):
     model = Resume
     form_class = ResumeUpdateForm
     template_name = 'applicantapp/update_resume.html'
-    success_url = '/'
+
+    def get_success_url(self):
+        return reverse_lazy('applicantapp:profile', args=(self.request.user.id,))
 
     def form_valid(self, form):
         ctx = super(UpdateResume, self).form_valid(form)

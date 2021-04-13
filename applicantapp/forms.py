@@ -4,6 +4,20 @@ from applicantapp.models import Resume
 from companyapp.models import Job
 
 
+class ResumeCreateForm(forms.ModelForm):
+    class Meta:
+        model = Resume
+        exclude = ['user', 'moder_comment', 'views_count', 'created_at', 'updated_at']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            if field_name in ['status']:
+                field.widget = forms.HiddenInput()
+
+
 class ResumeUpdateForm(forms.ModelForm):
     class Meta:
         model = Resume
@@ -11,6 +25,12 @@ class ResumeUpdateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+            if field_name in ['status', 'moder_comment', 'views_count']:
+                field.widget.attrs['readonly'] = True
+
 
 
 class JobSearchForm(forms.Form):

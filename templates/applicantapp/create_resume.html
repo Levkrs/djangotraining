@@ -12,26 +12,14 @@
     {% block content %}
         <div class="container resume-container">
 
-            <form method="post" id="form_for_post" class="form-resume" enctype="multipart/form-data">
+            <form method="post" class="form-resume" enctype="multipart/form-data">
                 {% csrf_token %}
 
-                {% for field in form %}
-                    {% if field.name not in 'status' %}
-                        <div>
-                            {{ field.label_tag }}:
-                            {{ field }}
-                            {{ field.errors }}
-                        </div>
-                    {% endif %}
-                {% endfor %}
-
-                {{ form.errors }}
-                {{ form.non_field_errors }}
-
-<!--                {{ form.as_p }}-->
+                 {{ form.as_p }}
 
                 <button class="btn btn-primary" name="status" value="2" type="submit">Опубликовать</button>
                 <button class="btn btn-success" name="status" value="4" type="submit">Сохранить Черновик</button>
+                <a class="btn btn-secondary" href="{% url 'applicantapp:profile' request.user.id %}">Вернуться</a>
 
             </form>
         </div>
