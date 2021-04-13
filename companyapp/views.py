@@ -54,7 +54,6 @@ class JobCreateView(LoginRequiredMixin, CompanyPermissionMixin, CreateView):
     fields = ('status', 'grade', 'category', 'salary', 'city', 'employment', 'skills',
               'work_schedule', 'experience', 'short_description', 'description',)
 
-
     def form_valid(self, form):
         form.instance.company = self.request.user.company
         return super().form_valid(form)

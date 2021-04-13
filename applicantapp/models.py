@@ -87,7 +87,7 @@ class Resume(models.Model):
     key_skills = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ключевые навыки')
     phone = models.CharField(max_length=20, blank=False, verbose_name='Телефон')
     moder_comment = models.TextField(blank=True, null=True, verbose_name='Комментарий модератора')
-    views_count = models.PositiveIntegerField(blank=False, default=0, verbose_name='Кол-во просмотров')
+    views_count = models.PositiveIntegerField(blank=True, default=0, verbose_name='Кол-во просмотров')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
 

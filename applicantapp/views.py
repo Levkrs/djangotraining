@@ -8,7 +8,7 @@ from django.views.generic import CreateView, ListView, TemplateView, UpdateView,
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-from applicantapp.forms import UserProfileForm, ResumeUpdateForm, JobSearchForm
+from applicantapp.forms import ResumeUpdateForm, JobSearchForm
 from applicantapp.models import Resume
 from authapp.models import MyUser
 from companyapp.models import Job
@@ -33,34 +33,25 @@ class ResumeList(LoginRequiredMixin, ListView):
     Список резюме пользователя
     """
     def get_queryset(self):
-        return Resume.objects.filter(user=self.request.user.id)
+        return Resume.objects.filter(user=self.request.user.id).exclude(status=9)
 
 
 class CreateResume(LoginRequiredMixin, ApplicantPermissionMixin, CreateView):
     """
     Создание резюме
     """
-    form_class = UserProfileForm
+    model = Resume
+    fields = ('headline', 'status', 'first_name', 'surname', 'salary', 'date_of_birth', 'city', 'user_pic', 'links', 'employment', 'work_schedule', 'education_type', 'about_me', 'key_skills', 'phone')
     template_name = 'applicantapp/create_resume.html'
 
-
     def get_success_url(self):
-        print(self.object.id)
         return reverse_lazy('applicantapp:profile', args=(self.request.user.id,))
-
-    def get_context_data(self, **kwargs):
-        ctx = super(CreateResume, self).get_context_data(**kwargs)
-        return ctx
 
     def form_valid(self, form):
         user_for_reg = MyUser.objects.get(id=self.request.user.id)
         form.instance.user = user_for_reg
-
         return super(CreateResume, self).form_valid(form)
 
-    def post(self, request, **kwargs):
-        request.POST = request.POST.copy()
-        return super(CreateResume, self).post(request, **kwargs)
 
 class UpdateResume(LoginRequiredMixin, ApplicantPermissionMixin, UpdateView):
     """
