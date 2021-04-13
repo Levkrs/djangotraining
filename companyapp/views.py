@@ -13,7 +13,9 @@ from mainapp.models import FullInvite
 from .models import Company, Job
 from applicantapp.models import Resume
 from authapp.permissions import CompanyPermissionMixin
-from .forms import ResumeSearchForm
+from .forms import ResumeSearchForm, CompanyUpdateForm
+
+
 # from icecream import ic
 
 
@@ -41,11 +43,11 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
 class CompanyUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     """ Редактор карточки компании """
     model = Company
-    fields = ('name', 'logo', 'headline', 'short_description', 'detail', 'location', 'link',)
+    form_class = CompanyUpdateForm
     template_name = 'companyapp/company_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('companyapp:card', args=[self.object.pk])
+        return reverse_lazy('companyapp:profile', args=(self.request.user.id,))
 
 
 class JobCreateView(LoginRequiredMixin, CompanyPermissionMixin, CreateView):
@@ -169,8 +171,6 @@ class ResponceRec(ListView):
         object_list = FullInvite.objects.filter(vacansy_id__in=job_list_id).filter(aprove_hr=False)
 
         return object_list
-
-
 
 
 class RespJobDetail(LoginRequiredMixin, DetailView):

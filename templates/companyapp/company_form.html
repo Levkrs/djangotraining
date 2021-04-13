@@ -3,7 +3,8 @@
 
 {% block header %}
     {% if user.pk == object.user.pk %}
-    <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
          
         <!-- Page header -->
         <header class="page-header alt">
@@ -113,6 +114,7 @@
                         другим пользователям.</p>
                         <br>
                         {{ form.non_field_errors }}
+                        {{ form.errors }}
                         <br>
                         <div id="id_status">
                             <button class="btn btn-primary" name="status" value="2" type="submit">Опубликовать</button>
