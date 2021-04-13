@@ -35,5 +35,6 @@ urlpatterns += [
     path('applicant/', include('applicantapp.urls')),
     path('company/', include('companyapp.urls')),
     path('moder/', include('moderapp.urls')),
+    path('messenger/', include('messenger.urls'))
 
 ]

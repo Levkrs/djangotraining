@@ -60,8 +60,6 @@ class InviteView(CreateView):
                        filter(vacansy=_job).filter(hr=_job.company).
                        filter(recrut_resume=_recrut).
                        filter(aprove_recrut=1))!= 0 ):
-            # return super(InviteView, self).form_valid(form)
-            # form.add_error(None, {"recrut_resume": "element is exist"})
             return HttpResponseRedirect(reverse('applicantapp:job-list-detail',kwargs={'pk':_job.pk}))
         else:
             print('---')

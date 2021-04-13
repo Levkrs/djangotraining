@@ -99,7 +99,13 @@ class ResumeListHR(LoginRequiredMixin, ListView):
     template_name = 'companyapp/resume_list_hr.html'
 
     def get_queryset(self):
-        return Resume.objects.filter(status='3')
+        print('sda')
+        cmp = Job.objects.filter(status=3, company=self.request.user.company).count()
+
+        if Job.objects.filter(status=3, company=self.request.user.company).count() > 0 :
+            return Resume.objects.filter(status='3')
+        else:
+            return []
     
     
 class ResumeListDetail(LoginRequiredMixin, DetailView):

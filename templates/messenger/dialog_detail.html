@@ -4,7 +4,7 @@
 {% block header %}
     <header class="page-header bg-img size-lg">
         <div class="container no-shadow">
-            <h1 class="text-center"> Список резюме</h1>
+            <h1 class="text-center"> Диалог c:  {{ object_list.0.msg_to }}</h1>
         </div>
     </header>
 {% endblock %}
@@ -17,43 +17,29 @@
                 <div class="row item-blocks-connected">
 
                 <!-- Resume list block -->
-                {% if object_list.count > 0 %}
-                    {% for resume in object_list %}
+                    {% for dialog in object_list %}
 
                         <div class="col-xs-12">
                             <div class="item-block">
                                 <header>
                                     <div class="hgroup">
-                                        <h4><a href="{% url 'companyapp:resume-list-detail' pk=resume.id%}">{{ resume.headline }}</a></h4>
+                                        <h4>{{ dialog.msg_text }}</h4>
                                     </div>
 
                                 </header>
 
                                 <footer>
                                     <div class="header-meta">
-                                        <span class="location">{{ resume.city }}</span>
-                                        <span>Дата опубликования - {{ resume.created_at }}</span><br>
-                                        <span>Дата обновления - {{ resume.updated_at }}</span><br>
+{#                                        <span class="location">сообщение от: {{ dialog.msg_from }}</span>#}
+                                        <span>сообщение для: {{ dialog.msg_to }}</span><br>
+{#                                        <span>Дата обновления - {{ dialog.updated_at }}</span><br>#}
                                     </div>
                                 </footer>
                             </div>
                         </div>
 
+
                     {% endfor %}
-
-                    {% else %}
-                        <div class="col-xs-12">
-                            <div class="item-block">
-                                <header>
-                                    <div class="hgroup">
-                                        <h4>У вас нет активных вакансий. <a href="{% url 'companyapp:new-job' user.company.pk%}"> Создать</a> </h4>
-                                    </div>
-
-                                </header>
-
-                            </div>
-                        </div>
-                {% endif %}
 
                  <!-- END Resume list block -->
 
@@ -62,27 +48,34 @@
                         <div class="pagination">
                             <span class="page-links">
                                 {% if page_obj.has_previous %}
-                                    <a href="/company/resume-list/?page={{ page_obj.previous_page_number }}">previous</a>
+{#                                    <a href="/company/resume-list/?page={{ page_obj.previous_page_number }}">previous</a>#}
                                 {% endif %}
                                 <span class="page-current">
-                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+{#                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
                                 </span>
                                 {% if page_obj.has_next %}
-                                    <a href="/company/resume-list/?page={{ page_obj.next_page_number }}">next</a>
+{#                                    <a href="/company/resume-list/?page={{ page_obj.next_page_number }}">next</a>#}
                                 {% endif %}
                             </span>
                         </div>
                     {% endif %}
                 <!-- END Pagination detail  -->
-
-
-
-
-
-
                 </div>
             </div>
+        <br>
+        <form method="POST" action="{% url 'messenger:create_message' pk=view.kwargs.pk%}"> {% csrf_token %}
+{#                {{ form.as_p }}#}
+
+                <textarea name="message" maxlength="255" required id="id_short_description" class="form-control"
+                                        rows="3" placeholder="Сообщение"></textarea>
+            <br>
+                <button class="btn btn-primary btn-block" type="submit"> Отприавить</button>
+                <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-primary btn-block"> Назад </a>
+
+        </form>
         </section>
+
+{#    <span>{{  view.kwargs.pk }}</span>#}
     </main>
     <!-- END Main container -->
 {% endblock %}
