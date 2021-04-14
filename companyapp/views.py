@@ -3,15 +3,18 @@ Views of company
 """
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db import IntegrityError
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
 from django.views.generic.edit import FormMixin
 
 from authapp.models import MyUser
 from mainapp.models import FullInvite
-from .models import Company, Job
-from applicantapp.models import Resume
+from .models import Company, Job, FavoritesVacancies
+from applicantapp.models import Resume, FavoritesResume
 from authapp.permissions import CompanyPermissionMixin
 from .forms import ResumeSearchForm, CompanyUpdateForm
 
@@ -197,3 +200,30 @@ class RespJobDetail(LoginRequiredMixin, DetailView):
         context = super().get_context_data(**kwargs)
         return context
 
+
+class AddDeleteVacancyToFavorites(LoginRequiredMixin, View):
+    """
+    Добавление / удаление вакансии в/из избранное
+    """
+
+    def get(self, request, pk):
+        job = Job.objects.get(id=pk)
+        try:
+            favorite = FavoritesVacancies.objects.create(user=request.user, job=job)
+            favorite.save()
+        except IntegrityError:
+            favorite = FavoritesVacancies.objects.get(user=request.user, job=job)
+            favorite.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class FavoriteResumeList(LoginRequiredMixin, ListView):
+    """
+    Список избранного пользователя
+    """
+    template_name = 'companyapp/favorite_resume_list.html'
+
+    def get_queryset(self):
+        favorite_resume = FavoritesResume.objects.filter(user=self.request.user.id).values('resume')
+        resume_ids = [x['resume'] for x in favorite_resume]
+        return Resume.objects.filter(pk__in=resume_ids).exclude(status=9)

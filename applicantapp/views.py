@@ -2,16 +2,19 @@
 Views of applicant
 """
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db import IntegrityError
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView
 from django.views.generic.edit import FormMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from applicantapp.forms import ResumeUpdateForm, JobSearchForm, ResumeCreateForm
-from applicantapp.models import Resume
+from applicantapp.models import Resume, FavoritesResume
 from authapp.models import MyUser
-from companyapp.models import Job
+from companyapp.models import Job, FavoritesVacancies
 from authapp.permissions import PERMISSION_DENIED_MESSAGE, ApplicantPermissionMixin
 from mainapp.models import FullInvite
 
@@ -168,3 +171,31 @@ class ResponceJobDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+
+class AddDeleteResumeToFavorites(LoginRequiredMixin, View):
+    """
+    Добавление / удаление вакансии в/из избранное
+    """
+
+    def get(self, request, pk):
+        resume = Resume.objects.get(id=pk)
+        try:
+            favorite = FavoritesResume.objects.create(user=request.user, resume=resume)
+            favorite.save()
+        except IntegrityError:
+            favorite = FavoritesResume.objects.get(user=request.user, resume=resume)
+            favorite.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class FavoriteJobList(LoginRequiredMixin, ListView):
+    """
+    Список избранного пользователя
+    """
+    template_name = 'applicantapp/favorite_job_list.html'
+
+    def get_queryset(self):
+        favorite_jobs = FavoritesVacancies.objects.filter(user=self.request.user.id).values('job')
+        jobs_ids = [x['job'] for x in favorite_jobs]
+        return Job.objects.filter(pk__in=jobs_ids).exclude(status=9)

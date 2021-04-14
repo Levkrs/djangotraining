@@ -5,12 +5,7 @@
     <header class="page-header bg-img size-lg">
         <div class="container no-shadow">
             <h1 class="text-center">Личный кабинет - {{ user.email }}</h1>
-            <p class="lead text-center">
-                <a href="{% url 'companyapp:card' user.company.pk %}">| Карточка компании |</a>
-                <a href="{% url 'companyapp:job-list' %}"> Список вакансий |</a>
-                <a href="{% url 'companyapp:resume_search' %}"> Поиск резюме |</a>
-                <a href="#"> Отклики |</a>
-            </p>
+            {% include 'inc/company_header_menu.html' %}
         </div>
     </header>
 {% endblock %}

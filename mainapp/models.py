@@ -19,33 +19,3 @@ class FullInvite(models.Model):
     aprove_recrut = models.BooleanField('Aprove от рекрута', default=False)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
-
-
-class FavoritesResume(models.Model):
-    """
-    Favorites Resume
-    """
-
-    class Meta:
-        get_latest_by = '-id'
-        verbose_name = 'Избранные резюме'
-        verbose_name_plural = 'Избранные резюме'
-        unique_together = (("user", "resume"),)
-
-    user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE, null=True)
-    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
-
-
-class FavoritesVacancies(models.Model):
-    """
-    Favorites Vacancies
-    """
-
-    class Meta:
-        get_latest_by = '-id'
-        verbose_name = 'Избранные вакансии'
-        verbose_name_plural = 'Избранные вакансии'
-        unique_together = (("user", "job"),)
-
-    user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE, null=True)
-    job = models.ForeignKey(to=Job, on_delete=models.CASCADE)

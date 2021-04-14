@@ -98,6 +98,9 @@ class Resume(models.Model):
     def __str__(self):
         return self.headline
 
+    def is_favorite(self, user):
+        return bool(FavoritesResume.objects.filter(user=user, resume=self).count())
+
 
 class Education(models.Model):
     """
@@ -144,3 +147,18 @@ class Experience(models.Model):
 
     def __str__(self):
         return self.company_name
+
+
+class FavoritesResume(models.Model):
+    """
+    Favorites Resume
+    """
+
+    class Meta:
+        get_latest_by = '-id'
+        verbose_name = 'Избранные резюме'
+        verbose_name_plural = 'Избранные резюме'
+        unique_together = (("user", "resume"),)
+
+    user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE, null=True)
+    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)

@@ -123,4 +123,3 @@ def statusInviteUpdate(request, pk):
             invite_objects.save()
         return HttpResponseRedirect(reverse('mainapp:index'))
 
-
