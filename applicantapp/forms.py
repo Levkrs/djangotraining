@@ -21,7 +21,7 @@ class ResumeCreateForm(forms.ModelForm):
 class ResumeUpdateForm(forms.ModelForm):
     class Meta:
         model = Resume
-        exclude = ['user',]
+        exclude = ['user', ]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
