@@ -5,11 +5,7 @@
     <header class="page-header bg-img size-lg">
         <div class="container no-shadow">
             <h1 class="text-center">Личный кабинет - {{ user.email }}</h1>
-            <p class="lead text-center">
-                <a href="{% url 'applicantapp:resume-list' %}"> Список резюме |</a>
-                <a href="{% url 'applicantapp:job_search_list' %}"> Поиск вакансий |</a>
-                <a href="{% url 'applicantapp:responce_resume_list' %}"> Приглашения |</a>
-            </p>
+            {% include 'inc/applicant_header_menu.html' %}
         </div>
     </header>
 {% endblock %}
@@ -25,13 +21,22 @@
                 <div class="row item-blocks-connected">
                     <div class="col-xs-12">
                         <div class="item-block">
+                            {% if resume_count > 0 %}
                             <div class="search">
-                                <form class="search-form" action="{% url 'applicantapp:job_search_list' %}" method="get">{% csrf_token %}
-                                    {{ form.as_p }}
-                                    <button class="grp-search-button" type="submit">Поиск</button>
-                                </form>
+{#                                <span> {{ resume_count }}</span>#}
+
+                                    <form class="search-form" action="{% url 'applicantapp:job_search_list' %}" method="get">{% csrf_token %}
+                                        {{ form.as_p }}
+                                        <button class="grp-search-button" type="submit">Поиск</button>
+                                    </form>
+
+
+
                             </div>
                         {% include 'inc/job_list.html' %}
+                        {% else %}
+                        <span class="item-block">У вас нет активных резюме. <a class="" href="{% url 'applicantapp:createresume'%}">Добавить резюме</a></span>
+                             {% endif %}
                         </div>
                     </div>
                 </div>

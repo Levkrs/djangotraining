@@ -5,11 +5,7 @@
     <header class="page-header bg-img size-lg">
         <div class="container no-shadow">
             <h1 class="text-center">Личный кабинет - {{ user.email }}</h1>
-            <p class="lead text-center">
-                <a href="{% url 'applicantapp:resume-list' %}"> Список резюме |</a>
-                <a href="{% url 'applicantapp:job_search_list' %}"> Поиск вакансий |</a>
-                <a href="{% url 'applicantapp:responce_resume_list' %}"> Приглашения |</a>
-            </p>
+            {% include 'inc/applicant_header_menu.html' %}
         </div>
     </header>
 {% endblock %}
@@ -26,7 +22,7 @@
 
                     <div class="job-list">
                         <table class="job-list__table">
-                            <caption><h2>Отклики:</h2></caption>
+                            <caption><h2>Приглашения:</h2></caption>
                             <tr>
                                 <th class="narrow">№</th>
                                 <th class="wide">Кто откликнулся</th>
@@ -39,7 +35,7 @@
                                 <th class="wide">
                                     {{ item.hr }}
                                 </th>
-                                <th><a href="{% url 'applicantapp:respince_job_detail' item.vacansy.pk item.id %}">{{ item.vacansy }}</a></th>
+                                <th><a href="{% url 'applicantapp:respince_job_detail' item.vacansy.pk  %}">{{ item.vacansy }}</a></th>
 
                             {% endfor %}
                             </tr>

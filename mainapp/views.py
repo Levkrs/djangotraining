@@ -5,8 +5,8 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from applicantapp.models import Resume
 from authapp.models import MyUser
 from companyapp.models import Job, Company
-from mainapp.forms import IviteForm, InviteFromHrForm
-from mainapp.models import InviteHr, InviteRecrut
+from mainapp.forms import FullInviteForm, FullInviteFormUser
+from mainapp.models import FullInvite
 from moderapp.models import News
 
 
@@ -40,26 +40,36 @@ class NewsDetail(DetailView):
 
 class InviteView(CreateView):
     """ Отклик на вакансию """
-    form_class = IviteForm
+    form_class = FullInviteFormUser
     template_name = 'mainapp/inve_form.html'
     success_url = reverse_lazy('mainapp:index')
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx['form'].fields['resume'].queryset = Resume.objects.filter(user=self.request.user.pk).filter(status=3)
+        ctx['form'].fields['recrut_resume'].queryset = Resume.objects.filter(user=self.request.user.pk).filter(status=3)
         return ctx
 
     def form_valid(self, form):
-        print('asd')
-        vac = Job.objects.filter(id=self.kwargs['job_id']).first()
-        _user = MyUser.objects.get(id=self.request.user.id)
-        form.instance.applicant = _user
-        form.instance.vacansy = vac
-        return super(InviteView, self).form_valid(form)
+        _recrut = Resume.objects.filter(id=form.data['recrut_resume']).first()
+        _job = Job.objects.get(id=self.kwargs['job_id'])
+        form.instance.hr = _job.company
+        form.instance.recrut_resume = _recrut
+        form.instance.vacansy = _job
+        form.instance.aprove_recrut = True
+        if (len(FullInvite.objects.
+                       filter(vacansy=_job).filter(hr=_job.company).
+                       filter(recrut_resume=_recrut).
+                       filter(aprove_recrut=1))!= 0 ):
+            return HttpResponseRedirect(reverse('applicantapp:job-list-detail',kwargs={'pk':_job.pk}))
+        else:
+            print('---')
+
+            return super(InviteView, self).form_valid(form)
+
 
 class InviteFromHr(CreateView):
     """Отклики на резюме"""
-    form_class = InviteFromHrForm
+    form_class = FullInviteForm
     template_name = "mainapp/inve_form.html"
     success_url = reverse_lazy('mainapp:index')
 
@@ -70,32 +80,46 @@ class InviteFromHr(CreateView):
         return ctx
 
     def form_valid(self, form):
-        print('asd')
-        _resume = Resume.objects.filter(id=self.kwargs['resume']).first()
+        _recrut = Resume.objects.filter(id=self.kwargs['resume']).first()
         _company = Company.objects.get(user=self.request.user)
+        _id_vacansy = form.data['vacansy']
         form.instance.hr = _company
-        form.instance.resume = _resume
-        return super(InviteFromHr, self).form_valid(form)
+        form.instance.recrut_resume = _recrut
+        form.instance.aprove_hr = True
+        last_inv = FullInvite.objects.filter(vacansy=_id_vacansy)
+        print(last_inv)
+
+        if (len(FullInvite.objects.
+                        filter(vacansy=_id_vacansy).filter(hr=_company).
+                        filter(recrut_resume=_recrut).
+                        filter(aprove_hr=1)) != 0):
+            return HttpResponseRedirect(reverse('companyapp:resume-list-detail', kwargs={'pk': _id_vacansy}))
+        else:
+            print('---')
+            return super(InviteFromHr, self).form_valid(form)
 
 
-def statusInviteUpdate(request, inv_id):
+
+def statusInviteUpdate(request, pk):
+    """
+    Aprove от REC или HR
+    """
     if request.method == 'POST':
         print('POST')
+        role_ = request.user.role
         if request.user.role == "REC":
-            object_inv = InviteHr.objects.get(id=inv_id)
-            resume = object_inv.resume
-            status = request.POST['status']
-            if resume.user_id == request.user.id:
-                object_inv.status = request.POST['status']
-                object_inv.save()
+            _vacansy = Job.objects.get(id=pk)
+            recrut_resume= Resume.objects.filter(user=request.user)
+            invite_objects = FullInvite.objects.filter(vacansy=_vacansy).filter(recrut_resume__in=recrut_resume).filter(aprove_recrut=0).first()
+            invite_objects.aprove_recrut = request.POST['status']
+            invite_objects.save()
         elif request.user.role == "HR":
-            object_inv = InviteRecrut.objects.get(id=inv_id)
-            job = object_inv.vacansy
-            if job.company.user.pk == request.user.pk:
-                object_inv.status = request.POST['status']
-                object_inv.save()
-        else:
-            pass
+            _resume = Resume.objects.get(id=pk)
+            _company = Company.objects.get(user=request.user)
+            _vacansy = Job.objects.filter(company=_company)
+            invite_objects = FullInvite.objects.filter(recrut_resume=_resume).filter(aprove_hr=0).first()
+            invite_objects = FullInvite.objects.filter(vacansy__in=_vacansy).filter(recrut_resume=_resume).filter(aprove_hr=0).first()
+            invite_objects.aprove_hr = request.POST['status']
+            invite_objects.save()
         return HttpResponseRedirect(reverse('mainapp:index'))
-
 

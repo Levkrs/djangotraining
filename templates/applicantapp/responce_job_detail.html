@@ -146,12 +146,12 @@
                         <span class="input-group-addon"><i class=""></i></span>
                         {#                            <button class="btn btn-gray">Откликнуться</button>#}
                         {#                            <a href="{% url 'mainapp:invite_user' object.pk %}" class="btn btn-gray"> Откликнуться </a>#}
-                        <form action="{% url 'mainapp:status_invite_update' view.kwargs.inv_id  %}" method="post" id="form_for_post" class="form-resume"
+                        <form action="{% url 'mainapp:status_invite_update' object.id  %}" method="post" id="form_for_post" class="form-resume"
                               enctype="multipart/form-data"> {% csrf_token %}
                             <button type="submit" class="btn btn-gray btn-save" name="status" value="1">
                                 Откликнуться
                             </button>
-                            <button type="submit" class="btn btn-gray btn-save" name="status" value="2">
+                            <button type="submit" class="btn btn-gray btn-save" name="status" value="0">
                                 Отклонить
                             </button>
                         </form>

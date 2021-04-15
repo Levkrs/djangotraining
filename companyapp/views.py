@@ -3,17 +3,22 @@ Views of company
 """
 
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.db import IntegrityError
 from django.db.models import Q
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
 from django.views.generic.edit import FormMixin
 
 from authapp.models import MyUser
-from mainapp.models import InviteRecrut
-from .models import Company, Job
-from applicantapp.models import Resume
+from mainapp.models import FullInvite
+from .models import Company, Job, FavoritesVacancies
+from applicantapp.models import Resume, FavoritesResume
 from authapp.permissions import CompanyPermissionMixin
-from .forms import ResumeSearchForm
+from .forms import ResumeSearchForm, CompanyUpdateForm
+
+
 # from icecream import ic
 
 
@@ -41,11 +46,11 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
 class CompanyUpdateView(LoginRequiredMixin, CompanyPermissionMixin, UpdateView):
     """ Редактор карточки компании """
     model = Company
-    fields = ('name', 'logo', 'headline', 'short_description', 'detail', 'location', 'link',)
+    form_class = CompanyUpdateForm
     template_name = 'companyapp/company_form.html'
 
     def get_success_url(self):
-        return reverse_lazy('companyapp:card', args=[self.object.pk])
+        return reverse_lazy('companyapp:profile', args=(self.request.user.id,))
 
 
 class JobCreateView(LoginRequiredMixin, CompanyPermissionMixin, CreateView):
@@ -53,7 +58,6 @@ class JobCreateView(LoginRequiredMixin, CompanyPermissionMixin, CreateView):
     model = Job
     fields = ('status', 'grade', 'category', 'salary', 'city', 'employment', 'skills',
               'work_schedule', 'experience', 'short_description', 'description',)
-
 
     def form_valid(self, form):
         form.instance.company = self.request.user.company
@@ -100,7 +104,13 @@ class ResumeListHR(LoginRequiredMixin, ListView):
     template_name = 'companyapp/resume_list_hr.html'
 
     def get_queryset(self):
-        return Resume.objects.filter(status='3')
+        print('sda')
+        cmp = Job.objects.filter(status=3, company=self.request.user.company).count()
+
+        if Job.objects.filter(status=3, company=self.request.user.company).count() > 0 :
+            return Resume.objects.filter(status='3')
+        else:
+            return []
     
     
 class ResumeListDetail(LoginRequiredMixin, DetailView):
@@ -146,7 +156,7 @@ class ResumeSearchList(ListView, FormMixin):
                 QUERY.append((Q(headline__icontains=field) | Q(key_skills__icontains=field)))
             elif field_name == 'city' and field:
                 QUERY.append(Q(city__icontains=field))
-            elif field and field != 'NO':
+            elif field and field != '':
                 QUERY.append(Q(**{field_name: field}))
 
 
@@ -157,17 +167,63 @@ class ResumeSearchList(ListView, FormMixin):
         return Resume.objects.filter(status='3')
 
 class ResponceRec(ListView):
-    model = InviteRecrut
+
+    """
+    Запросы на собеседование от REC
+    """
+    model = FullInvite
     template_name = 'companyapp/responce_rec.html'
 
 
     def get_queryset(self):
         job_list_id = list(Job.objects.filter(company_id=self.request.user.company.id).values_list('id', flat=True))
-        object_list = InviteRecrut.objects.filter(vacansy_id__in=job_list_id)
+        object_list = FullInvite.objects.filter(vacansy_id__in=job_list_id).filter(aprove_hr=False)
 
         return object_list
 
-class RespJobDetail(JobDetailView):
+
+class RespJobDetail(LoginRequiredMixin, DetailView):
+    """
+    Развернуть резюме подробнро
+    """
+
+    model = Resume
 
     template_name = 'companyapp/responce_rec_detail.html'
 
+    def get_queryset(self):
+        req = Resume.objects.filter(id=self.kwargs['pk'])
+        print(req)
+        return req
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class AddDeleteVacancyToFavorites(LoginRequiredMixin, View):
+    """
+    Добавление / удаление вакансии в/из избранное
+    """
+
+    def get(self, request, pk):
+        job = Job.objects.get(id=pk)
+        try:
+            favorite = FavoritesVacancies.objects.create(user=request.user, job=job)
+            favorite.save()
+        except IntegrityError:
+            favorite = FavoritesVacancies.objects.get(user=request.user, job=job)
+            favorite.delete()
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+class FavoriteResumeList(LoginRequiredMixin, ListView):
+    """
+    Список избранного пользователя
+    """
+    template_name = 'companyapp/favorite_resume_list.html'
+
+    def get_queryset(self):
+        favorite_resume = FavoritesResume.objects.filter(user=self.request.user.id).values('resume')
+        resume_ids = [x['resume'] for x in favorite_resume]
+        return Resume.objects.filter(pk__in=resume_ids).exclude(status=9)

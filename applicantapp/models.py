@@ -44,33 +44,19 @@ class Resume(models.Model):
     )
 
     EMPLOYMENT_CHOICES = (
-        ('NO', ''),
         ('FT', 'Полная занятость'),
         ('PT', 'Частичная занятость'),
-        ('PW','Проектная работа'),
-        ('VL','Волонтерство'),
-        ('WP','Стажировка'),
+        ('PW', 'Проектная работа'),
+        ('VL', 'Волонтерство'),
+        ('WP', 'Стажировка'),
     )
 
     WORK_SCHEDULE_CHOICES = (
-        ('NO', ''),
         ('FD', 'Полный день'),
         ('SSCH', 'Сменный график'),
         ('FSCH', 'Гибкий график'),
         ('RW', 'Удаленная работа'),
         ('RBW', 'Вахтовый метод'),
-    )
-
-    EDUCATION_CHOICES = (
-        ('NO', ''),
-        ('SECONDARY', 'Среднее'),
-        ('SPECIAL_SECONDARY','Среднее специальное'),
-        ('UNFINISHED_HIGHER','Неоконченное высшее'),
-        ('HIGHER', 'Высшее'),
-        ('BACHELOR','Бакалавр'),
-        ('MASTER', 'Магистр'),
-        ('CANDIDATE', 'Кандидат наук'),
-        ('DOCTOR', 'Доктор наук'),
     )
 
     user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE, null=True)
@@ -81,47 +67,30 @@ class Resume(models.Model):
     salary = models.PositiveIntegerField(blank=True, null=True, verbose_name='Желаемая заработная плата')
     date_of_birth = models.DateField(blank=False, verbose_name='Дата рождения')
     city = models.CharField(max_length=255, blank=False, verbose_name='Город')
-    user_pic = models.ImageField(upload_to=user_directory_path, blank=True, null=True, verbose_name='Фото')
-    links = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ссылка на профиль в соц. сетях или сайт')
-    employment = models.CharField(max_length=20, blank=False, choices=EMPLOYMENT_CHOICES, verbose_name='Занятость')
-    work_schedule = models.CharField(max_length=20, blank=False, choices=WORK_SCHEDULE_CHOICES, verbose_name='График работы')
-    education_type = models.CharField(max_length=20, blank=False, choices=EDUCATION_CHOICES, verbose_name='Образование')
+    user_pic = models.ImageField(upload_to=user_directory_path, blank=True,
+                                 null=True, verbose_name='Фото')
+    links = models.CharField(max_length=255, blank=True, null=True,
+                             verbose_name='Ссылка на профиль в соц. сетях или сайт')
+    employment = models.CharField(max_length=20, blank=False, choices=EMPLOYMENT_CHOICES,
+                                  verbose_name='Занятость')
+    work_schedule = models.CharField(max_length=20, blank=False, choices=WORK_SCHEDULE_CHOICES,
+                                     verbose_name='График работы')
     about_me = models.TextField(blank=True, null=True, verbose_name='Обо мне')
     key_skills = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ключевые навыки')
     phone = models.CharField(max_length=20, blank=False, verbose_name='Телефон')
     moder_comment = models.TextField(blank=True, null=True, verbose_name='Комментарий модератора')
-    views_count = models.PositiveIntegerField(blank=False, default=0, verbose_name='Кол-во просмотров')
+    views_count = models.PositiveIntegerField(blank=True, default=0, verbose_name='Кол-во просмотров')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
 
-
     def __repr__(self):
         return self.headline
 
     def __str__(self):
         return self.headline
 
-
-class Education(models.Model):
-    """
-    Applicant education institutions
-    """
-
-    class Meta:
-        get_latest_by = '-id'
-        verbose_name = 'Образовательное учреждение'
-        verbose_name_plural = 'Образовательные учреждения'
-
-    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255, blank=False, verbose_name='Название учреждения')
-    specialization = models.CharField(max_length=255, blank=False, verbose_name='Специальность')
-    year_of_ending = models.PositiveIntegerField(blank=False, verbose_name='Год окончания')
-
-    def __repr__(self):
-        return self.name
-
-    def __str__(self):
-        return self.name
+    def is_favorite(self, user):
+        return bool(FavoritesResume.objects.filter(user=user, resume=self).count())
 
 
 class Experience(models.Model):
@@ -134,7 +103,7 @@ class Experience(models.Model):
         verbose_name = 'Опыт работы'
         verbose_name_plural = 'Опыт работы'
 
-    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)
+    resume = models.ForeignKey(Resume, related_name='experience', on_delete=models.CASCADE)
     company_name = models.CharField(max_length=255, blank=False, verbose_name='Название компании')
     company_link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Сайт компании')
     position = models.CharField(max_length=255, blank=False, verbose_name='Дожность')
@@ -147,3 +116,57 @@ class Experience(models.Model):
 
     def __str__(self):
         return self.company_name
+
+
+class Education(models.Model):
+    """
+    Applicant education institutions
+    """
+
+    EDUCATION_CHOICES = (
+        ('SECONDARY', 'Среднее'),
+        ('SPECIAL_SECONDARY', 'Среднее специальное'),
+        ('UNFINISHED_HIGHER', 'Неоконченное высшее'),
+        ('HIGHER', 'Высшее'),
+    )
+
+    GRADE = (
+        ('BACHELOR', 'Бакалавр'),
+        ('MASTER', 'Магистр'),
+        ('CANDIDATE', 'Кандидат наук'),
+        ('DOCTOR', 'Доктор наук'),
+    )
+
+    class Meta:
+        get_latest_by = '-id'
+        verbose_name = 'Образовательное учреждение'
+        verbose_name_plural = 'Образовательные учреждения'
+
+    resume = models.ForeignKey(Resume, related_name='education', on_delete=models.CASCADE)
+    education_type = models.CharField(max_length=20, blank=False, choices=EDUCATION_CHOICES,
+                                      null=True, verbose_name='Тип образования')
+    grade = models.CharField(max_length=20, blank=True, choices=GRADE, verbose_name='Степень')
+    name = models.CharField(max_length=255, blank=False, verbose_name='Название учреждения')
+    specialization = models.CharField(max_length=255, blank=False, verbose_name='Специальность')
+    year_of_ending = models.PositiveIntegerField(blank=False, verbose_name='Год окончания')
+
+    def __repr__(self):
+        return self.name
+
+    def __str__(self):
+        return self.name
+
+
+class FavoritesResume(models.Model):
+    """
+    Favorites Resume
+    """
+
+    class Meta:
+        get_latest_by = '-id'
+        verbose_name = 'Избранные резюме'
+        verbose_name_plural = 'Избранные резюме'
+        unique_together = (("user", "resume"),)
+
+    user = models.ForeignKey(to=MyUser, on_delete=models.CASCADE, null=True)
+    resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE)

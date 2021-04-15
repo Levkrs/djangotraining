@@ -12,26 +12,72 @@
     {% block content %}
         <div class="container resume-container">
 
-            <form method="post" id="form_for_post" class="form-resume" enctype="multipart/form-data"> {% csrf_token %}
+            <form method="post" class="form-resume" enctype="multipart/form-data">
+                {% csrf_token %}
                 {{ form.as_p }}
+                    <table class="table">
+                        {{ education.management_form }}
 
-                <div class="row">
-                    <div class="form-group col-lg-12" style="text-align: center;">
-                        <div class="input-group">
-                            <span class="input-group-addon"><i class=""></i></span>
-                            <div id="id_status">
-                                <button type="submit" class="btn btn-gray btn-save" name="status" value="2">
-                                    Сохранить
-                                </button>
-                                <button type="submit" class="btn btn-gray btn-save" name="status" value="4">
-                                    Черновик
-                                </button>
-                            </div>
+                        {% for form in education.forms %}
+                            {% if forloop.first %}
+                                <thead>
+                                <tr>
+                                    {% for field in form.visible_fields %}
+                                        <th>{{ field.label|capfirst }}</th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                            {% endif %}
+{#                            <tr class="{% cycle row1,row2 %} formset_row">#}
+                                {% for field in form.visible_fields %}
+                                    <td>
+                                        {# Include the hidden fields in the form #}
+                                        {% if forloop.first %}
+                                            {% for hidden in form.hidden_fields %}
+                                                {{ hidden }}
+                                            {% endfor %}
+                                        {% endif %}
+                                        {{ field.errors.as_ul }}
+                                        {{ field }}
+                                    </td>
+                                {% endfor %}
+{#                            </tr>#}
+                        {% endfor %}
+                    </table>
+                    <table class="table">
+                        {{ experience.management_form }}
 
-                            <span class="input-group-addon"><i class=""></i></span>
-                        </div>
-                    </div>
-                </div>
+                        {% for form in experience.forms %}
+                            {% if forloop.first %}
+                                <thead>
+                                <tr>
+                                    {% for field in form.visible_fields %}
+                                        <th>{{ field.label|capfirst }}</th>
+                                    {% endfor %}
+                                </tr>
+                                </thead>
+                            {% endif %}
+{#                            <tr class="{% cycle row1,row2 %} formset_row">#}
+                                {% for field in form.visible_fields %}
+                                    <td>
+                                        {# Include the hidden fields in the form #}
+                                        {% if forloop.first %}
+                                            {% for hidden in form.hidden_fields %}
+                                                {{ hidden }}
+                                            {% endfor %}
+                                        {% endif %}
+                                        {{ field.errors.as_ul }}
+                                        {{ field }}
+                                    </td>
+                                {% endfor %}
+{#                            </tr>#}
+                        {% endfor %}
+                    </table>
+
+                <button class="btn btn-primary" name="status" value="2" type="submit">Опубликовать</button>
+                <button class="btn btn-success" name="status" value="4" type="submit">Сохранить Черновик</button>
+                <a class="btn btn-secondary" href="{% url 'applicantapp:profile' request.user.id %}">Вернуться</a>
+
             </form>
         </div>
 

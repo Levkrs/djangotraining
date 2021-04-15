@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load poll_extras %}
 
 {% block body %}
     {% block header %}
@@ -144,6 +145,11 @@
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
                         <a href="{% url 'mainapp:invite_from_hr' object.pk %}" class="btn btn-gray"> Пригласить </a>
+                        {% if object|favorite:user %}
+                            <a href="{% url 'applicantapp:favorite' object.pk %}" class="btn btn-info"> Удалить из Избранного </a>
+                        {% else %}
+                            <a href="{% url 'applicantapp:favorite' object.pk %}" class="btn btn-primary"> Добавить в Избранное </a>
+                        {% endif %}
                         <a href="{{ request.META.HTTP_REFERER|escape }}" class="btn btn-gray"> Назад </a>
                         <span class="input-group-addon"><i class=""></i></span>
                     </div>

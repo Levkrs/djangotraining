@@ -5,12 +5,7 @@
     <header class="page-header bg-img size-lg">
         <div class="container no-shadow">
             <h1 class="text-center">Личный кабинет - {{ user.email }}</h1>
-            <p class="lead text-center">
-                <a href="{% url 'companyapp:card' user.company.pk %}">| Карточка компании |</a>
-                <a href="{% url 'companyapp:job-list' %}"> Список вакансий |</a>
-                <a href="{% url 'companyapp:resume_search' %}"> Поиск резюме |</a>
-                <a href="#"> Отклики |</a>
-            </p>
+            {% include 'inc/company_header_menu.html' %}
         </div>
     </header>
 {% endblock %}
@@ -39,8 +34,8 @@
                                 <tr>
                                 <th class="narrow">{{ forloop.counter }}</th>
 
-                                <th class="wide"><a href="{% url 'companyapp:resume-list-detail' item.applicant.pk %}">{{ item.applicant }}</a></th>
-                                <th><a href="{% url 'companyapp:responce_job_detail' item.vacansy.pk item.id%}">{{ item.vacansy }}</a></th>
+                                <th class="wide"><a href="{% url 'companyapp:responce_job_detail' item.recrut_resume.pk %}">{{ item.recrut_resume }}</a></th>
+                                <th><a href="{#% url 'companyapp:detail-job' item.vacansy.id%#}">{{ item.vacansy }}</a></th>
 
                             {% endfor %}
                             </tr>
