@@ -1,7 +1,7 @@
 """
 Views of applicant
 """
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView
@@ -131,7 +131,7 @@ class JobSearchList(ListView, FormMixin):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['resume_count'] = Resume.objects.filter(id=self.request.user.id, status=3).count()
+        context['resume_count'] = Resume.objects.filter(user=self.request.user.id, status=3).count()
         print(context)
         return context
 
@@ -168,3 +168,4 @@ class ResponceJobDetail(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
