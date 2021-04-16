@@ -32,7 +32,6 @@ class ResumeUpdateForm(forms.ModelForm):
                 field.widget.attrs['readonly'] = True
 
 
-
 class JobSearchForm(forms.Form):
     search_field = forms.CharField(required=False)
     city_field = forms.CharField(required=False)
@@ -49,5 +48,3 @@ class JobSearchForm(forms.Form):
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'search'
             field.help_text = ''
-
-

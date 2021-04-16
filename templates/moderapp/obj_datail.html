@@ -13,9 +13,29 @@
             <form method="post" class="form-resume" enctype="multipart/form-data">
                 {% csrf_token %}
 
+                <h4>Общая информация</h4>
+
                 {% for field in form %}
                     {% if field.name not in 'status moder_comment' %}
-                        {{ field.label_tag }}:
+                        {{ field.label_tag }}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
+
+                <hr>
+
+                <h4>Образование</h4>
+
+                {% for field in education.forms %}
+                    {% if forloop.first %}
+                        {{ field }}
+                    {% endif %}
+                {% endfor %}
+
+                <h4>Опыт работы</h4>
+
+                {% for field in experience.forms %}
+                    {% if forloop.first %}
                         {{ field }}
                     {% endif %}
                 {% endfor %}

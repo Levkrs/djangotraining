@@ -1,7 +1,7 @@
 """
 Views of applicant
 """
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -11,11 +11,10 @@ from django.views.generic import CreateView, ListView, TemplateView, UpdateView,
 from django.views.generic.edit import FormMixin
 from django.forms import inlineformset_factory
 
+from authapp.permissions import ApplicantPermissionMixin
 from applicantapp.forms import ResumeUpdateForm, JobSearchForm, ResumeCreateForm
 from applicantapp.models import Resume, FavoritesResume, Experience, Education
-from authapp.models import MyUser
 from companyapp.models import Job, FavoritesVacancies
-from authapp.permissions import ApplicantPermissionMixin
 from mainapp.models import FullInvite
 
 
@@ -35,7 +34,6 @@ class ResumeList(LoginRequiredMixin, ListView):
     """
     Список резюме пользователя
     """
-
     def get_queryset(self):
         return Resume.objects.filter(user=self.request.user.id).exclude(status=9)
 
@@ -47,7 +45,6 @@ class CreateResume(LoginRequiredMixin, ApplicantPermissionMixin, CreateView):
     model = Resume
     template_name = 'applicantapp/create_resume.html'
     form_class = ResumeCreateForm
-    # fields = []
 
     def get_success_url(self):
         return reverse_lazy('applicantapp:profile', args=(self.request.user.id,))
@@ -57,8 +54,10 @@ class CreateResume(LoginRequiredMixin, ApplicantPermissionMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super(CreateResume, self).get_context_data(**kwargs)
-        EducationFormSet = inlineformset_factory(Resume, Education, form=ResumeCreateForm, extra=1)
-        ExperienceFormSet = inlineformset_factory(Resume, Experience, form=ResumeCreateForm, extra=1)
+        EducationFormSet = inlineformset_factory(
+            Resume, Education, form=ResumeCreateForm, extra=1)
+        ExperienceFormSet = inlineformset_factory(
+            Resume, Experience, form=ResumeCreateForm, extra=1)
 
         if self.request.POST:
             education_formset = EducationFormSet(self.request.POST)
@@ -104,8 +103,10 @@ class UpdateResume(LoginRequiredMixin, ApplicantPermissionMixin, UpdateView):
     def get_context_data(self, **kwargs):
         data = super(UpdateResume, self).get_context_data(**kwargs)
 
-        EducationFormSet = inlineformset_factory(Resume, Education, form=ResumeUpdateForm, extra=1)
-        ExperienceFormSet = inlineformset_factory(Resume, Experience, form=ResumeUpdateForm, extra=1)
+        EducationFormSet = inlineformset_factory(
+            Resume, Education, form=ResumeUpdateForm, extra=1)
+        ExperienceFormSet = inlineformset_factory(
+            Resume, Experience, form=ResumeUpdateForm, extra=1)
 
         if self.request.POST:
             data['education'] = EducationFormSet(self.request.POST, instance=self.object)
@@ -113,8 +114,10 @@ class UpdateResume(LoginRequiredMixin, ApplicantPermissionMixin, UpdateView):
         else:
             queryset_education = self.object.education.select_related()
             queryset_experience = self.object.experience.select_related()
-            education_formset = EducationFormSet(instance=self.object, queryset=queryset_education)
-            experience_formset = ExperienceFormSet(instance=self.object, queryset=queryset_experience)
+            education_formset = EducationFormSet(
+                instance=self.object, queryset=queryset_education)
+            experience_formset = ExperienceFormSet(
+                instance=self.object, queryset=queryset_experience)
 
             data['education'] = education_formset
             data['experience'] = experience_formset
@@ -213,8 +216,10 @@ class ResponceHr(ListView):
     template_name = 'applicantapp/responce_hr.html'
 
     def get_queryset(self):
-        resume_list_id = list(Resume.objects.filter(user=self.request.user.id).values_list('id', flat=True))
-        object_list = FullInvite.objects.filter(recrut_resume_id__in=resume_list_id).filter(aprove_recrut=False)
+        resume_list_id = list(Resume.objects.filter(
+            user=self.request.user.id).values_list('id', flat=True))
+        object_list = FullInvite.objects.filter(
+            recrut_resume_id__in=resume_list_id).filter(aprove_recrut=False)
         print('__')
 
         return object_list
@@ -224,9 +229,7 @@ class ResponceJobDetail(LoginRequiredMixin, DetailView):
     """
     Развернуть резюме подробнро
     """
-
     model = Job
-
     template_name = 'applicantapp/responce_job_detail.html'
 
     def get_queryset(self):
