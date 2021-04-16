@@ -34,7 +34,7 @@
                             </div>
                             {% include 'inc/resume_list_inc.html' %}
                             {% else %}
-                        <span class="item-block">У вас нет активных вакансий. <a class="" href="{% url 'companyapp:new-job' user.company.pk%}">Добавить вакансию</a></span>
+                            <span class="item-block">У вас нет активных вакансий. <a class="" href="{% url 'companyapp:new-job' user.company.pk%}">Добавить вакансию</a></span>
                              {% endif %}
                         </div>
                     </div>
