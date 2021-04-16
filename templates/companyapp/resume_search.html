@@ -25,6 +25,7 @@
                 <div class="row item-blocks-connected">
                     <div class="col-xs-12">
                         <div class="item-block">
+                            {% if job_count > 0 %}
                             <div class="search">
                                 <form class="search-form" action="{% url 'companyapp:resume_search' %}" method="get">{% csrf_token %}
                                     {{ form.as_p }}
@@ -32,6 +33,9 @@
                                 </form>
                             </div>
                             {% include 'inc/resume_list_inc.html' %}
+                            {% else %}
+                            <span class="item-block">У вас нет активных вакансий. <a class="" href="{% url 'companyapp:new-job' user.company.pk%}">Добавить вакансию</a></span>
+                             {% endif %}
                         </div>
                     </div>
                 </div>
