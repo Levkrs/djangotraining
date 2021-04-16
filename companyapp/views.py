@@ -92,7 +92,7 @@ class JobListView(LoginRequiredMixin, ListView):
     fields = '__all__'
 
     def get_queryset(self):
-        return Job.objects.filter(company__user=self.request.user, status=3)
+        return Job.objects.filter(company__user=self.request.user)
 
 
 class ResumeListHR(LoginRequiredMixin, ListView):
@@ -168,7 +168,8 @@ class ResumeSearchList(ListView, FormMixin):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['job_count'] = Job.objects.filter(company__user=self.request.user,status=3).count()
+        context['job_count']= Job.objects.filter(company= self.request.user.company.id, status=3).count()
+        # context['resume_count'] = Resume.objects.filter(user=self.request.user.id, status=3).count()
         print(context)
         return context
 
