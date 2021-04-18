@@ -25,6 +25,7 @@
 
                 <h4>Образование</h4>
 
+                {{ education.management_form }}
                 {% for field in education.forms %}
                     {% if forloop.first %}
                         {{ field }}
@@ -33,6 +34,7 @@
 
                 <h4>Опыт работы</h4>
 
+                {{ experience.management_form }}
                 {% for field in experience.forms %}
                     {% if forloop.first %}
                         {{ field }}

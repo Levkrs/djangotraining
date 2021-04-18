@@ -22,9 +22,12 @@ class ResumeSearchForm(forms.Form):
     blank_choice = (('', '--- Пусто ---'),)
     search_field = forms.CharField(required=False)
     city_field = forms.CharField(required=False)
-    education_type = forms.ChoiceField(choices=blank_choice + Education.EDUCATION_CHOICES)
-    employment = forms.ChoiceField(choices=blank_choice + Resume.EMPLOYMENT_CHOICES)
-    work_schedule = forms.ChoiceField(choices=blank_choice + Resume.WORK_SCHEDULE_CHOICES)
+    education_type = forms.ChoiceField(choices=blank_choice + Education.EDUCATION_CHOICES,
+                                       required=False)
+    employment = forms.ChoiceField(choices=blank_choice + Resume.EMPLOYMENT_CHOICES,
+                                   required=False)
+    work_schedule = forms.ChoiceField(choices=blank_choice + Resume.WORK_SCHEDULE_CHOICES,
+                                      required=False)
 
 
 
