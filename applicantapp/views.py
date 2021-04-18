@@ -213,8 +213,7 @@ class ResponceHr(ListView):
 
     def get_queryset(self):
         resume_list_id = list(Resume.objects.filter(user=self.request.user.id).values_list('id', flat=True))
-        object_list = FullInvite.objects.filter(recrut_resume_id__in=resume_list_id).filter(aprove_recrut=False)
-        print('__')
+        object_list = FullInvite.objects.filter(recrut_resume_id__in=resume_list_id)
 
         return object_list
 
