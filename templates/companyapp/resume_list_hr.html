@@ -17,7 +17,6 @@
                 <div class="row item-blocks-connected">
 
                 <!-- Resume list block -->
-                {% if object_list.count > 0 %}
                     {% for resume in object_list %}
 
                         <div class="col-xs-12">
@@ -40,20 +39,6 @@
                         </div>
 
                     {% endfor %}
-
-                    {% else %}
-                        <div class="col-xs-12">
-                            <div class="item-block">
-                                <header>
-                                    <div class="hgroup">
-                                        <h4>У вас нет активных вакансий. <a href="{% url 'companyapp:new-job' user.company.pk%}"> Создать</a> </h4>
-                                    </div>
-
-                                </header>
-
-                            </div>
-                        </div>
-                {% endif %}
 
                  <!-- END Resume list block -->
 

@@ -144,7 +144,11 @@
                 <div class="form-group col-lg-12" style="text-align: center;">
                     <div class="input-group">
                         <span class="input-group-addon"><i class=""></i></span>
+                    {% if job_count > 0 %}
                         <a href="{% url 'mainapp:invite_from_hr' object.pk %}" class="btn btn-gray"> Пригласить </a>
+                    {% else %}
+                        <a href="{% url 'companyapp:new-job' user.company.pk %}" class="btn btn-gray"> Для приглашения создайте вакансию </a>
+                    {% endif %}
                         {% if object|favorite:user %}
                             <a href="{% url 'applicantapp:favorite' object.pk %}" class="btn btn-info"> Удалить из Избранного </a>
                         {% else %}
