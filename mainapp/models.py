@@ -17,7 +17,6 @@ class FullInvite(models.Model):
     class Meta:
         verbose_name= 'Общий отклик'
 
-    
     vacansy = models.ForeignKey(to=Job, on_delete=models.CASCADE, null=False)
     hr = models.ForeignKey(to=Company, on_delete=models.CASCADE, null=False)
     recrut_resume = models.ForeignKey(to=Resume, on_delete=models.CASCADE, null=False)

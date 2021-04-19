@@ -1,31 +1,31 @@
-<ul class="nav-menu">
-
-
-    {% if user.role == "REC" %}
-        <li>
-            <a href="{% url 'applicantapp:job_search_list' %}">Вакансии </a>
+{#<ul class="nav-menu">#}
+{##}
+{##}
+{#    {% if user.role == "REC" %}#}
+{#        <li>#}
+{#            <a href="{% url 'applicantapp:job_search_list' %}">Вакансии </a>#}
             {#        <ul>#}
             {#            <li><a href="{% url 'mainapp:job_search' %}">Поиск вакансий</a></li>#}
             {#            <li><a href="#">Подробная вакансия</a></li>#}
             {#            <li><a href="#">Разместить вакансию</a></li>#}
             {#            <li><a href="{% url 'mainapp:job_list' %}">Управление вакансиями</a></li>#}
             {#        </ul>#}
-        </li>
-    {% endif %}
-
-    {% if user.role == "HR" %}
-
-
-        <li>
-            <a href="{% url 'companyapp:resume-list' %}">Список резюмезюме</a>
+{#        </li>#}
+{#    {% endif %}#}
+{##}
+{#    {% if user.role == "HR" %}#}
+{##}
+{##}
+{#        <li>#}
+{#            <a href="{% url 'companyapp:resume-list' %}">Список резюме</a>#}
             {#        <ul>#}
             {#            <li><a href="{% url 'companyapp:resume-list'%}">Список резюме</a></li>#}
             {#            <li><a href="{% url 'companyapp:resume-list'%}">Список резюме</a></li>#}
             {#            <li><a href="{% url 'applicantapp:createresume'%}">Создать резюме</a></li>#}
             {#            <li><a href="{% url 'applicantapp:resume-list'%}">Управление резюме</a></li>#}
             {#        </ul>#}
-        </li>
-    {% endif %}
+{#        </li>#}
+{#    {% endif %}#}
     {#    <li>#}
     {#        <a href="#">IT-Компании</a>#}
     {#        <ul>#}
@@ -43,4 +43,4 @@
     {#            <li><a href="#">F.A.Q.</a></li>#}
     {#        </ul>#}
     {#    </li>#}
-</ul>
+{#</ul>#}

@@ -153,7 +153,6 @@ class JobListDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['resume_count'] = Resume.objects.filter(id=self.request.user.id, status=3).count()
         return context
 
 
@@ -200,6 +199,8 @@ class JobSearchList(ListView, FormMixin):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['resume_count'] = Resume.objects.filter(id=self.request.user.id, status=3).count()
+        print(context)
         return context
 
 
@@ -213,7 +214,8 @@ class ResponceHr(ListView):
 
     def get_queryset(self):
         resume_list_id = list(Resume.objects.filter(user=self.request.user.id).values_list('id', flat=True))
-        object_list = FullInvite.objects.filter(recrut_resume_id__in=resume_list_id)
+        object_list = FullInvite.objects.filter(recrut_resume_id__in=resume_list_id).filter(aprove_recrut=False)
+        print('__')
 
         return object_list
 

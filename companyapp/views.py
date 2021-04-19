@@ -104,8 +104,14 @@ class ResumeListHR(LoginRequiredMixin, ListView):
     template_name = 'companyapp/resume_list_hr.html'
 
     def get_queryset(self):
-        return Resume.objects.filter(status='3')
+        print('sda')
+        cmp = Job.objects.filter(status=3, company=self.request.user.company).count()
 
+        if Job.objects.filter(status=3, company=self.request.user.company).count() > 0 :
+            return Resume.objects.filter(status='3')
+        else:
+            return []
+    
     
 class ResumeListDetail(LoginRequiredMixin, DetailView):
     """
@@ -120,7 +126,6 @@ class ResumeListDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['job_count']= Job.objects.filter(company= self.request.user.company.id, status=3).count()
         return context
 
 class ResumeSearchList(ListView, FormMixin):
@@ -163,7 +168,9 @@ class ResumeSearchList(ListView, FormMixin):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['job_count']= Job.objects.filter(company= self.request.user.company.id, status=3).count()
+        context['job_count']= Job.objects.filter(company= self.request.user.company.id, status=3).count()
+        # context['resume_count'] = Resume.objects.filter(user=self.request.user.id, status=3).count()
+        print(context)
         return context
 
 class ResponceRec(ListView):
