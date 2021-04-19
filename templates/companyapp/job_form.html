@@ -188,6 +188,7 @@
                     <div id="id_status">
                         <button class="btn btn-primary" name="status" value="2" type="submit">Опубликовать</button>
                         <button class="btn btn-success" name="status" value="4" type="submit">Сохранить Черновик</button>
+                        <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-gray"> Назад </a>
                     </div>
                 </header>
             </div>
