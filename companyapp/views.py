@@ -92,7 +92,7 @@ class JobListView(LoginRequiredMixin, ListView):
     fields = '__all__'
 
     def get_queryset(self):
-        return Job.objects.filter(company__user=self.request.user)
+        return Job.objects.filter(company__user=self.request.user).exclude(status=9)
 
 
 class ResumeListHR(LoginRequiredMixin, ListView):
