@@ -195,7 +195,7 @@ class JobSearchList(ListView, FormMixin):
                 QUERY.append(Q(**{field_name: field}))
 
         if any(QUERY):
-            object_list = Job.objects.filter(*QUERY)
+            object_list = Job.objects.filter(*QUERY, status='3')
             return object_list
 
         return Job.objects.filter(status='3')

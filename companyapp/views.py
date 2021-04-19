@@ -161,16 +161,16 @@ class ResumeSearchList(ListView, FormMixin):
 
 
         if any(QUERY):
-            object_list = Resume.objects.filter(*QUERY)
+            object_list = Resume.objects.filter(*QUERY, status='3')
             return object_list
 
         return Resume.objects.filter(status='3')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['job_count']= Job.objects.filter(company= self.request.user.company.id, status=3).count()
+        context['job_count'] = Job.objects.filter(company=self.request.user.company.id, status=3).count()
         # context['resume_count'] = Resume.objects.filter(user=self.request.user.id, status=3).count()
-        print(context)
+
         return context
 
 class ResponceRec(ListView):

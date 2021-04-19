@@ -21,28 +21,22 @@
                         <a class="btn btn-primary btn-sm" href="{% url 'companyapp:new-job' user.company.pk %}">Добавить вакансию</a>
                     </div>
                     <section class="no-padding-top bg-alt">
-            <div class="container">
-                <div class="row item-blocks-connected">
-                    <div class="col-xs-12">
-                        <div class="item-block">
-                            {% if job_count > 0 %}
-                            <div class="search">
-                                <form class="search-form" action="{% url 'companyapp:resume_search' %}" method="get">{% csrf_token %}
-                                    {{ form.as_p }}
-                                    <button class="grp-search-button" type="submit">Поиск</button>
-                                </form>
+                        <div class="container">
+                            <div class="row item-blocks-connected">
+                                <div class="col-xs-12">
+                                    <div class="item-block">
+                                        <div class="search">
+                                            <form class="search-form" action="{% url 'companyapp:resume_search' %}" method="get">{% csrf_token %}
+                                                {{ form.as_p }}
+                                                <button class="grp-search-button" type="submit">Поиск</button>
+                                            </form>
+                                        </div>
+                                        {% include 'inc/resume_list_inc.html' %}
+                                    </div>
+                                </div>
                             </div>
-                            {% include 'inc/resume_list_inc.html' %}
-                            {% else %}
-                            <span class="item-block">У вас нет активных вакансий. <a class="" href="{% url 'companyapp:new-job' user.company.pk%}">Добавить вакансию</a></span>
-                             {% endif %}
                         </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </section>
+                    </section>
                 </div>
             </div>
         </section>

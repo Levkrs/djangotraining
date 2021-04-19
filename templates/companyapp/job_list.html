@@ -1,58 +1,66 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block body %}
-    {% block header %}
-        {% include 'inc/nav.html' %}
-        {% include 'inc/company_header_menu.html' %}
-    {% endblock %}
 
-    {% block nav %}
-    {% endblock %}
-
-    {% block content %}
-        <div class="container">
-            <div class="job-list">
-                <table class="job-list__table">
-                    <caption><h2>Вакансии:</h2></caption>
-                    <tr>
-                        <th class="narrow">№</th>
-                        <th class="wide">Описание</th>
-                        <th>Город</th>
-                        <th class="narrow">Просмотров</th>
-                        <th>Статус</th>
-                    </tr>
-
-                    {% for item in object_list.select_related %}
-                        <tr>
-                        <th class="narrow">{{ forloop.counter }}</th>
-
-                        <th class="wide"><a href="{% url 'companyapp:edit-job' item.pk %}">{{ item.short_description }}</a></th>
-                        <th>{{ item.city }}</th>
-                        <th class="narrow">{{item.views_count}}</th>
-                        {% if item.status == "0" %}
-                            <th>Отклонена модератором</th>
-                        {% elif item.status == "1" %}
-                            <th>Заготовка</th>
-                        {% elif item.status == "2" %}
-                            <th>На модерации</th>
-                        {% elif item.status == "3" %}
-                            <th>Опубликована</th>
-                        {% elif item.status == "4" %}
-                            <th>Черновик</th>
-                        {% elif item.status == "5" %}
-                            <th>Скрыта</th>
-                        {% elif item.status == "6" %}
-                            <th>Закрыта</th>
-                        {% elif item.status == "9" %}
-                            <th>Удалена</th>
-                        {% endif %}
-
-                    {% endfor %}
-                    </tr>
-                </table>
-            </div>
+{% block header %}
+    <header class="page-header bg-img size-lg">
+        <div class="container no-shadow">
+            <h1 class="text-center">Личный кабинет - {{ user.email }}</h1>
+            {% include 'inc/company_header_menu.html' %}
         </div>
-    {% endblock %}
-
+    </header>
 {% endblock %}
+{% block content %}
+    <!-- Main container -->
+    <main>
+        <section class="no-padding-top bg-alt">
+            <div class="container">
+                {% for job in object_list %}
+                    <div class="col-xs-12">
+                        <div class="item-block">
+                            <header>
+                                <div class="hgroup">
+                                    <h5><a href="{% url 'companyapp:edit-job' job.pk %}">{{ job }} </a></h5>
+                                </div>
+                                <div class="header-meta">
+                                    <span ><i class="fa fa-map-marker"></i> {{ job.city }} </span><br>
+                                    <span class="rate">{{ job.salary }} руб. </span>
+                                    <span> Просмотров : {{ job.views_count }} </span><br>
+                                    {% if job.status == "0" %}#}
+                                        <span> Статус : Отклонена модератером </span>
+                                    {% elif job.status == "1" %}
+                                        <span> Статус : Заготовка </span>
+                                    {% elif job.status == "2" %}
+                                        <span> Статус : На модерации </span>
+                                    {% elif job.status == "3" %}
+                                        <span> Статус : Опубликована </span>
+                                    {% elif job.status == "4" %}
+                                        <span> Статус : Черновик </span>
+                                    {% elif job.status == "5" %}
+                                        <span> Статус : Скрыта </span>
+                                    {% elif job.status == "6" %}
+                                        <span> Статус : Закрыта </span>
+                                    {% elif job.status == "9" %}
+                                        <span> Статус : Удалена </span>
+                                    {% endif %}
+                                </div>
+                            </header>
+
+                            <footer>
+                                <div class="header-meta">
+                                    <span class="location">{{ job.city }}</span>
+                                    <span>Дата опубликования - {{ job.created_at }}</span><br>
+                                    <span>Дата обновления - {{ job.updated_at }}</span><br>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+    <!-- END Main container -->
+{% endblock %}
+
+{% block footer %} {% endblock %}
+

@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="form-group col-lg-6">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="">Классность</i></span>
+                            <span class="input-group-addon"><i class="">Компетенция</i></span>
                             <span class="form-control form_control_centr_heigh"
                                   id="id_first_name"> {{ object.get_grade_display }}</span>
                             <span class="input-group-addon"><i class=""></i></span>
@@ -135,7 +135,7 @@
                     <div class="form-group col-lg-12" style="text-align: center;">
                         <div class="input-group">
                             <span class="input-group-addon"><i class=""></i></span>
-                            <a href="{% url 'mainapp:invite_user' object.pk %}" class="btn btn-gray"> Согласиться </a>
+                            <a href="{% url 'mainapp:invite_user' object.pk %}" class="btn btn-success"> Согласиться </a>
 
                             {% if object|favorite:user %}
                             <a href="{% url 'companyapp:favorite' object.pk %}" class="btn btn-info"> Удалить из Избранного </a>

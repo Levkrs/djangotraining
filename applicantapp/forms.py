@@ -33,15 +33,20 @@ class ResumeUpdateForm(forms.ModelForm):
 
 
 class JobSearchForm(forms.Form):
-    search_field = forms.CharField(required=False)
-    city_field = forms.CharField(required=False)
+    search_field = forms.CharField(required=False, help_text='Поиск..')
+    city_field = forms.CharField(required=False, help_text='Город')
 
     blank_choice = (('', '--- Пусто ---'),)
-    choice_grade = forms.ChoiceField(choices=blank_choice + Job.GRADE, required=False)
-    choice_category = forms.ChoiceField(choices=blank_choice + Job.CATEGORY, required=False)
-    choice_employment = forms.ChoiceField(choices=blank_choice + Job.EMPLOYMENT, required=False)
-    choice_work_shedule= forms.ChoiceField(choices=blank_choice + Job.WORK_SCHEDULE, required=False)
-    choice_experience = forms.ChoiceField(choices=blank_choice + Job.EXPERIENCE, required=False)
+    choice_grade = forms.ChoiceField(choices=blank_choice + Job.GRADE, required=False,
+                                     help_text='Степень')
+    choice_category = forms.ChoiceField(choices=blank_choice + Job.CATEGORY, required=False,
+                                        help_text='Направление')
+    choice_employment = forms.ChoiceField(choices=blank_choice + Job.EMPLOYMENT, required=False,
+                                          help_text='Образование')
+    choice_work_shedule= forms.ChoiceField(choices=blank_choice + Job.WORK_SCHEDULE, required=False,
+                                           help_text='График работы')
+    choice_experience = forms.ChoiceField(choices=blank_choice + Job.EXPERIENCE, required=False,
+                                          help_text='Опыт работы')
 
     def __init__(self, *args, **kwargs):
         super(JobSearchForm, self).__init__(*args, **kwargs)
