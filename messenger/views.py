@@ -41,10 +41,6 @@ class DialogDetail(ListView):
 
     def get_queryset(self):
         req = MessengerModel.objects.all()
-        # print(req)
-        invite_object = FullInvite.objects.get(id=self.kwargs['pk'])
-        # print(invite_object.__dict__)
-
         return req
 
     def get_context_data(self, **kwargs):
