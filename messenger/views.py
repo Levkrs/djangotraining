@@ -26,7 +26,7 @@ class DialogList(ListView):
             return object_list
         elif self.request.user.role == "REC":
             my_resume = Resume.objects.filter(id=self.request.user.id)
-            print(my_resume)
+            # print(my_resume)
             object_list = FullInvite.objects.filter(recrut_resume__in=my_resume, aprove_hr=True, aprove_recrut=True)
             print(object_list)
             return object_list
@@ -41,9 +41,9 @@ class DialogDetail(ListView):
 
     def get_queryset(self):
         req = MessengerModel.objects.all()
-        print(req)
+        # print(req)
         invite_object = FullInvite.objects.get(id=self.kwargs['pk'])
-        print(invite_object.__dict__)
+        # print(invite_object.__dict__)
 
         return req
 

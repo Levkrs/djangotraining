@@ -126,6 +126,8 @@ class ResumeListDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['job_count'] = Job.objects.filter(company=self.request.user.company).count()
+        print('--')
         return context
 
 class ResumeSearchList(ListView, FormMixin):
@@ -184,7 +186,7 @@ class ResponceRec(ListView):
 
     def get_queryset(self):
         job_list_id = list(Job.objects.filter(company_id=self.request.user.company.id).values_list('id', flat=True))
-        object_list = FullInvite.objects.filter(vacansy_id__in=job_list_id).filter(aprove_hr=False)
+        object_list = FullInvite.objects.filter(vacansy_id__in=job_list_id)
 
         return object_list
 
@@ -205,6 +207,11 @@ class RespJobDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['invite_count'] = FullInvite.objects.filter(
+            recrut_resume= self.kwargs['pk'],
+            hr = self.request.user.company.pk,
+            aprove_hr= True,
+        ).count()
         return context
 
 

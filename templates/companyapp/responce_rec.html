@@ -27,6 +27,7 @@
                                 <th class="narrow">№</th>
                                 <th class="wide">Кто откликнулся</th>
                                 <th>Вакансия</th>
+                                <th> Статус </th>
 {#                                <th class="narrow">Вакансия</th>#}
 {#                                <th>Статус</th>#}
                             </tr>
@@ -35,7 +36,22 @@
                                 <th class="narrow">{{ forloop.counter }}</th>
 
                                 <th class="wide"><a href="{% url 'companyapp:responce_job_detail' item.recrut_resume.pk %}">{{ item.recrut_resume }}</a></th>
-                                <th><a href="{#% url 'companyapp:detail-job' item.vacansy.id%#}">{{ item.vacansy }}</a></th>
+                                <th> Вакансия 1</th>
+                                {% if item.aprove_hr == False and item.aprove_recrut == True %}
+                                    {% if item.status == "0" %}
+                                        <th>  Отклонено </th>
+                                    {% elif item.status == "1" %}
+                                        <th> Соискатель откликнулся на вакансию  </th>
+                                    {% endif %}
+                                {% elif  item.aprove_hr == True and item.aprove_recrut == True%}
+                                    <th> Принято </th>
+                                    {% elif item.aprove_hr == True and item.aprove_recrut == False %}
+                                        {% if item.status == "0" %}
+                                            <th>  Отклонено </th>
+                                        {% elif item.status == "1" %}
+                                            <th> На рассмотрении соискателя  </th>
+                                        {% endif %}
+                                {% endif %}
 
                             {% endfor %}
                             </tr>

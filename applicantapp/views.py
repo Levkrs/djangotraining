@@ -167,7 +167,6 @@ class JobSearchList(ListView, FormMixin):
 
         search_field = self.request.GET.get('search_field', None)
         city_field = self.request.GET.get('city_field', None)
-        # salary_field = self.request.GET.get('salary_field', None)
         choice_grade = self.request.GET.get('choice_grade', None)
         choice_category = self.request.GET.get('choice_category', None)
         choice_employment = self.request.GET.get('choice_employment', None)
@@ -214,7 +213,7 @@ class ResponceHr(ListView):
 
     def get_queryset(self):
         resume_list_id = list(Resume.objects.filter(user=self.request.user.id).values_list('id', flat=True))
-        object_list = FullInvite.objects.filter(recrut_resume_id__in=resume_list_id).filter(aprove_recrut=False)
+        object_list = FullInvite.objects.filter(recrut_resume_id__in=resume_list_id)
         print('__')
 
         return object_list
@@ -235,6 +234,11 @@ class ResponceJobDetail(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['invite_count'] = FullInvite.objects.filter(
+            vacansy_id=self.kwargs['pk'],
+            hr = self.object.company_id,
+            aprove_recrut= True,
+        ).count()
         return context
 
 
