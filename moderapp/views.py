@@ -1,7 +1,8 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import inlineformset_factory
 from django.views.generic import TemplateView, UpdateView, CreateView
 
-from applicantapp.models import Resume
+from applicantapp.models import Resume, Education, Experience
 from companyapp.models import Job, Company
 from moderapp.forms import ResumeModerateForm, JobModerateForm, CompanyModerateForm, AddUpdateNewsForm
 from authapp.permissions import ModeratorPermissionMixin
@@ -51,6 +52,30 @@ class ModerateResume(LoginRequiredMixin, ModeratorPermissionMixin, UpdateView):
     form_class = ResumeModerateForm
     template_name = 'moderapp/obj_datail.html'
     success_url = '/moder'
+
+    def get_context_data(self, **kwargs):
+        data = super(ModerateResume, self).get_context_data(**kwargs)
+
+        EducationFormSet = inlineformset_factory(
+            Resume, Education, form=ResumeModerateForm, extra=1)
+        ExperienceFormSet = inlineformset_factory(
+            Resume, Experience, form=ResumeModerateForm, extra=1)
+
+        if self.request.POST:
+            data['education'] = EducationFormSet(self.request.POST, instance=self.object)
+            data['experience'] = ExperienceFormSet(self.request.POST, instance=self.object)
+        else:
+            queryset_education = self.object.education.select_related()
+            queryset_experience = self.object.experience.select_related()
+            education_formset = EducationFormSet(
+                instance=self.object, queryset=queryset_education)
+            experience_formset = ExperienceFormSet(
+                instance=self.object, queryset=queryset_experience)
+
+            data['education'] = education_formset
+            data['experience'] = experience_formset
+
+        return data
 
 
 class ModerateJob(LoginRequiredMixin, ModeratorPermissionMixin, UpdateView):

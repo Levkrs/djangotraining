@@ -1,7 +1,6 @@
 """
 Models for applicant
 """
-
 from django.db import models
 
 from authapp.models import MyUser
@@ -64,7 +63,8 @@ class Resume(models.Model):
     status = models.CharField('Статус', max_length=1, choices=STATUS, default='1', db_index=True)
     first_name = models.CharField(max_length=255, blank=False, verbose_name='Имя')
     surname = models.CharField(max_length=255, blank=False, verbose_name='Фамилия')
-    salary = models.PositiveIntegerField(blank=True, null=True, verbose_name='Желаемая заработная плата')
+    salary = models.PositiveIntegerField(blank=True, null=True,
+                                         verbose_name='Желаемая заработная плата')
     date_of_birth = models.DateField(blank=False, verbose_name='Дата рождения')
     city = models.CharField(max_length=255, blank=False, verbose_name='Город')
     user_pic = models.ImageField(upload_to=user_directory_path, blank=True,
@@ -76,10 +76,12 @@ class Resume(models.Model):
     work_schedule = models.CharField(max_length=20, blank=False, choices=WORK_SCHEDULE_CHOICES,
                                      verbose_name='График работы')
     about_me = models.TextField(blank=True, null=True, verbose_name='Обо мне')
-    key_skills = models.CharField(max_length=255, blank=True, null=True, verbose_name='Ключевые навыки')
+    key_skills = models.CharField(max_length=255, blank=True, null=True,
+                                  verbose_name='Ключевые навыки')
     phone = models.CharField(max_length=20, blank=False, verbose_name='Телефон')
     moder_comment = models.TextField(blank=True, null=True, verbose_name='Комментарий модератора')
-    views_count = models.PositiveIntegerField(blank=True, default=0, verbose_name='Кол-во просмотров')
+    views_count = models.PositiveIntegerField(blank=True, default=0,
+                                              verbose_name='Кол-во просмотров')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления')
 
@@ -105,7 +107,8 @@ class Experience(models.Model):
 
     resume = models.ForeignKey(Resume, related_name='experience', on_delete=models.CASCADE)
     company_name = models.CharField(max_length=255, blank=False, verbose_name='Название компании')
-    company_link = models.CharField(max_length=255, blank=True, null=True, verbose_name='Сайт компании')
+    company_link = models.CharField(max_length=255, blank=True, null=True,
+                                    verbose_name='Сайт компании')
     position = models.CharField(max_length=255, blank=False, verbose_name='Дожность')
     data_from = models.DateField(blank=False, verbose_name='Дата начала работы')
     data_to = models.DateField(blank=False, verbose_name='Дата окончания работы')

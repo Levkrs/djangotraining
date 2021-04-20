@@ -25,17 +25,33 @@
                             <caption><h2>Приглашения:</h2></caption>
                             <tr>
                                 <th class="narrow">№</th>
-                                <th class="wide">Кто откликнулся</th>
+{#                                <th class="wide">Кто откликнулся</th>#}
                                 <th>Вакансия</th>
+                                <th> Статус </th>
                             </tr>
                             {% for item in object_list %}
                                 <tr>
                                 <th class="narrow">{{ forloop.counter }}</th>
 
-                                <th class="wide">
-                                    {{ item.hr }}
-                                </th>
+{#                                <th class="wide">#}
+{#                                    {{ item.hr_id }}#}
+{#                                </th>#}
                                 <th><a href="{% url 'applicantapp:respince_job_detail' item.vacansy.pk  %}">{{ item.vacansy }}</a></th>
+                                {% if item.aprove_hr == True and item.aprove_recrut == False %}
+                                    {% if item.status == "0" %}
+                                        <th>  Отклонено </th>
+                                    {% elif item.status == "1" %}
+                                        <th> Вы приглашены работодателем  </th>
+                                    {% endif %}
+                                {% elif  item.aprove_hr == True and item.aprove_recrut == True%}
+                                    <th> Принято </th>
+                                    {% elif item.aprove_hr == False and item.aprove_recrut == True %}
+                                        {% if item.status == "0" %}
+                                            <th>  Отклонено </th>
+                                        {% elif item.status == "1" %}
+                                            <th> На рассмотрении работодателем  </th>
+                                        {% endif %}
+                                {% endif %}
 
                             {% endfor %}
                             </tr>

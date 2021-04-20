@@ -1,8 +1,8 @@
-from companyapp.models import Job, Company
 import django.forms as forms
 
 from applicantapp.models import Resume
 from moderapp.models import News
+from companyapp.models import Job, Company
 
 
 class AddUpdateNewsForm(forms.ModelForm):
