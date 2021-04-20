@@ -4,7 +4,13 @@
 {% block header %}
     <header class="page-header bg-img size-lg">
         <div class="container no-shadow">
-            <h1 class="text-center"> Диалог c:  {{ object_list.0.msg_to }}</h1>
+            <h1 class="text-center">
+                {% if user.role == "REC" %}
+                    Диалог c:  {{ object_list.0.msg_to }}
+                {% elif user.role == "HR" %}
+                    Диалог c:  {{ object_list.1.msg_to }}
+                {% endif %}
+            </h1>
         </div>
     </header>
 {% endblock %}
@@ -16,7 +22,7 @@
             <div class="container">
                 <div class="row item-blocks-connected">
 
-                <!-- Resume list block -->
+                    <!-- Resume list block -->
                     {% for dialog in object_list %}
 
                         <div class="col-xs-12">
@@ -30,9 +36,9 @@
 
                                 <footer>
                                     <div class="header-meta">
-{#                                        <span class="location">сообщение от: {{ dialog.msg_from }}</span>#}
+                                        {#                                        <span class="location">сообщение от: {{ dialog.msg_from }}</span>#}
                                         <span>сообщение для: {{ dialog.msg_to }}</span><br>
-{#                                        <span>Дата обновления - {{ dialog.updated_at }}</span><br>#}
+                                        {#                                        <span>Дата обновления - {{ dialog.updated_at }}</span><br>#}
                                     </div>
                                 </footer>
                             </div>
@@ -41,41 +47,41 @@
 
                     {% endfor %}
 
-                 <!-- END Resume list block -->
+                    <!-- END Resume list block -->
 
-                <!-- Pagination detail -->
+                    <!-- Pagination detail -->
                     {% if is_paginated %}
                         <div class="pagination">
                             <span class="page-links">
                                 {% if page_obj.has_previous %}
-{#                                    <a href="/company/resume-list/?page={{ page_obj.previous_page_number }}">previous</a>#}
+                                    {#                                    <a href="/company/resume-list/?page={{ page_obj.previous_page_number }}">previous</a>#}
                                 {% endif %}
                                 <span class="page-current">
 {#                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.#}
                                 </span>
                                 {% if page_obj.has_next %}
-{#                                    <a href="/company/resume-list/?page={{ page_obj.next_page_number }}">next</a>#}
+                                    {#                                    <a href="/company/resume-list/?page={{ page_obj.next_page_number }}">next</a>#}
                                 {% endif %}
                             </span>
                         </div>
                     {% endif %}
-                <!-- END Pagination detail  -->
+                    <!-- END Pagination detail  -->
                 </div>
             </div>
-        <br>
-        <form method="POST" action="{% url 'messenger:create_message' pk=view.kwargs.pk%}"> {% csrf_token %}
-{#                {{ form.as_p }}#}
+            <br>
+            <form method="POST" action="{% url 'messenger:create_message' pk=view.kwargs.pk %}"> {% csrf_token %}
+                {#                {{ form.as_p }}#}
 
                 <textarea name="message" maxlength="255" required id="id_short_description" class="form-control"
-                                        rows="3" placeholder="Сообщение"></textarea>
-            <br>
+                          rows="3" placeholder="Сообщение"></textarea>
+                <br>
                 <button class="btn btn-primary btn-block" type="submit"> Отприавить</button>
-                <a href="{{request.META.HTTP_REFERER|escape}}" class="btn btn-primary btn-block"> Назад </a>
+                <a href="{{ request.META.HTTP_REFERER|escape }}" class="btn btn-primary btn-block"> Назад </a>
 
-        </form>
+            </form>
         </section>
 
-{#    <span>{{  view.kwargs.pk }}</span>#}
+        {#    <span>{{  view.kwargs.pk }}</span>#}
     </main>
     <!-- END Main container -->
 {% endblock %}

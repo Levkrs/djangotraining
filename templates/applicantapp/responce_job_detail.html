@@ -148,9 +148,14 @@
                         {#                            <a href="{% url 'mainapp:invite_user' object.pk %}" class="btn btn-gray"> Откликнуться </a>#}
                         <form action="{% url 'mainapp:status_invite_update' object.id  %}" method="post" id="form_for_post" class="form-resume"
                               enctype="multipart/form-data"> {% csrf_token %}
+
+                            {% if invite_count == 0 %}
                             <button type="submit" class="btn btn-gray btn-save" name="status" value="1">
                                 Откликнуться
                             </button>
+                            {% else %}
+                            <span class="btn btn-gray btn-save"> Вы уже откликнулись на вакансию</span>
+                            {% endif %}
                             <button type="submit" class="btn btn-gray btn-save" name="status" value="0">
                                 Отклонить
                             </button>

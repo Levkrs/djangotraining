@@ -114,7 +114,7 @@ textarea {
 }
 .btn-save{
     border-radius: 0.35rem;
-    width: 135px;
+    width: auto;
 }
 .btn-save-pos{
     text-align: center;

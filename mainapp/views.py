@@ -112,6 +112,7 @@ def statusInviteUpdate(request, pk):
             recrut_resume= Resume.objects.filter(user=request.user)
             invite_objects = FullInvite.objects.filter(vacansy=_vacansy).filter(recrut_resume__in=recrut_resume).filter(aprove_recrut=0).first()
             invite_objects.aprove_recrut = request.POST['status']
+            invite_objects.status = request.POST['status']
             invite_objects.save()
         elif request.user.role == "HR":
             _resume = Resume.objects.get(id=pk)
@@ -120,6 +121,7 @@ def statusInviteUpdate(request, pk):
             invite_objects = FullInvite.objects.filter(recrut_resume=_resume).filter(aprove_hr=0).first()
             invite_objects = FullInvite.objects.filter(vacansy__in=_vacansy).filter(recrut_resume=_resume).filter(aprove_hr=0).first()
             invite_objects.aprove_hr = request.POST['status']
+            invite_objects.status = request.POST['status']
             invite_objects.save()
         return HttpResponseRedirect(reverse('mainapp:index'))
 
