@@ -1,6 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
@@ -34,6 +33,3 @@ class Logout(LoginRequiredMixin, LogoutView):
     def get_next_page(self):
         return super().get_next_page()
 
-
-def forget_pass(request):
-    return render(request, 'authapp/user-forget-pass.html')
